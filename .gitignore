@@ -8,8 +8,8 @@ node_modules
 # Tools
 app/widgets/devTools.js
 
-# files
-build
+# build still included?
+build 
 *.zip
 Backup -f
 .vscode
