@@ -5,13 +5,13 @@ logs
 
 # Dependency directories
 node_modules
+# Tools
 app/widgets/devTools.js
-node_modules
+
+# files
 build
 *.zip
 Backup -f
 .vscode
-devTools.js
-
 *.yaml
 *.txt
