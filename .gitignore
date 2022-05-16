@@ -2,9 +2,16 @@
 logs
 *.log
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
 
 # Dependency directories
 node_modules
 app/widgets/devTools.js
+node_modules
+build
+*.zip
+Backup -f
+.vscode
+devTools.js
+
+*.yaml
+*.txt
