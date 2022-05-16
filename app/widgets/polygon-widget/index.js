@@ -31,7 +31,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
             // Initialisation:
             (function () {    // we use an IIFE so that its memory can be freed after execution
 
-                parseConfig(el,attribute => {
+                parseConfig(el, attribute => {
                     // This anonymous function is called for every attribute in config.
                     // attribute is {name:attributeName, value:attributeValue}
                     switch (attribute.name) {
@@ -106,6 +106,9 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
              
             //sets coords of lines depending on points p and <next> 
             i = 0;
+            let npt = this.next ?? 1;
+            console.log(`${this.id}.next:${this.next}`)
+            //THIS LOGS UNDEFINED, IF SET IN SVG: BUT WHYYYYY?
             while (i < this.points) {
 
                 let l = outerLines[ i ];
@@ -116,7 +119,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
                 l.y1 = p[ i ].y;
 
                 //end points
-                let npt = this.next ?? 1;
+                
                 let nextPt = p[ (i + npt) % this.points ] ?? p[ 0 ];
                 l.x2 = nextPt.x;
                 l.y2 = nextPt.y;
