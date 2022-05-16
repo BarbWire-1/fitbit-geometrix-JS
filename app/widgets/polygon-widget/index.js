@@ -14,6 +14,8 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     const circle = el.getElementById('radius');
     const radius = circle.r
     
+        
+    
     class Point {
         constructor(x = 0, y = 0) {
             this.x = x;
@@ -25,6 +27,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     let scale;
     class Polygon {
         constructor() {
+           
             this.id = el.id;
             this.radius = radius;
             this.points = points;
@@ -34,6 +37,33 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
             this.rotate = rotate;
             this.scale = scale;
             this.next = next;
+            // Initialisation:
+            (function () {    // we use an IIFE so that its memory can be freed after execution
+
+                parseConfig(el, attribute => {
+                    // This anonymous function is called for every attribute in config.
+                    // attribute is {name:attributeName, value:attributeValue}
+                    switch (attribute.name) {
+
+                        case 'radius':
+                            radius = Number(attribute.value);   // this won't like embedded semi-colons, and quotes will require care
+                            break;
+                        case 'points':
+                            points = Number(attribute.value);
+                            break;
+                        case 'strokeWidth':
+                            strokeWidth = Number(attribute.value);
+                            break;
+                        case 'next':
+                            next = Number(attribute.value);
+                            break;
+
+                    }
+                });
+
+
+            })();
+            
         };
 
         //THE MATHS
@@ -74,7 +104,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
                 l.y1 = p[ i ].y;
 
                 //end points
-                let npt = this.next ?? 2; 
+                let npt = this.next ?? 2;
                 let nextPt = p[ (i + npt) % this.points ] ?? p[ 0 ];
                 l.x2 = nextPt.x;
                 l.y2 = nextPt.y;
@@ -93,7 +123,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     Object.defineProperty(el, 'rotate', {
         get() { return rotate },
         // equal rotate too to be able to log, as not in _recalc()
-        set(newValue) { rotate = transform.groupTransform.rotate.angle = newValue}
+        set(newValue) { rotate = transform.groupTransform.rotate.angle = newValue }
 
     })
     //this doesn't only influence radius, but also strokeWidth!!!
@@ -139,6 +169,9 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     })
 
     el = Object.seal(new Polygon())
+        
+        
+    
     
     // dumpProperties('el', el)
     // inspectObject('el', el)
