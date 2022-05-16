@@ -1,5 +1,5 @@
 
-import { constructWidgets, parseConfig } from "../construct-widgets";   // TODO 6 Don't import parseConfig if you don't use a config element in your widget.
+import { constructWidgets, parseConfig } from "../construct-widgets";
 //import { dumpProperties, inspectObject } from "../devTools/";
 import {validInput} from "./validation"
 
@@ -7,8 +7,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     //GET ELEMENTS FOR POLYGON
     const transform = el.getElementById("transform");
     const outerLines = el.getElementsByClassName("lines");
-    const rotate = transform.groupTransform.rotate.angle;
-    
+   
     // this is a dummy element to correspond to <radius>
     // is this really necessary? as radius is just use as any abstract value
     const circle = el.getElementById('radius');
@@ -24,7 +23,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     };
     
     
-    let scale;
+    let rotate,scale;
     class Polygon {
         constructor() {
            
@@ -38,25 +37,19 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
 
                         case 'radius':
                             radius = Number(attribute.value);
-                            console.log(`radius from switch: ${radius}`)// ok
                             break;
                         case 'points':
                             points = Number(attribute.value);
-                            console.log(`points from switch: ${points}`)//ok
                             break;
                         case 'strokeWidth':
                             strokeWidth = Number(attribute.value);
-                            console.log(`strokeWidth from switch: ${strokeWidth}`)//ok
                             break;
                         case 'next':
                             next = Number(attribute.value);
-                            console.log(`next from switch: ${next}`)// gets read, but not applied??
                             break;
                         case 'rotate':
                             //WHY NOT JUST <rotate> here???
                             rotate = transform.groupTransform.rotate.angle = Number(attribute.value);
-                            
-                            console.log(`rotate from switch: ${rotate}`)//ok
                             break;
 
                     }
@@ -74,8 +67,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
             this.rotate = rotate
             this.scale = scale;
             this.next = next ?? 1;
-            console.log(this.next) // logs value from config which is nice - so far
-            
+    
         };
 
         //THE MATHS
@@ -106,9 +98,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
              
             //sets coords of lines depending on points p and <next> 
             i = 0;
-            let npt = next// ?? 1;
-            console.log(`${this.id}.next: ${this.next}`)
-            //THIS LOGS UNDEFINED, IF SET IN SVG: BUT WHYYYYY?
+            let npt = next;// TODO why this.next is undefined if not set from js?
             while (i < this.points) {
 
                 let l = outerLines[ i ];
@@ -214,4 +204,4 @@ constructWidgets('polygon', construct);
 
 //TODO  implement validation? or remove it?
 
-//TODO check why <next> from config doesn't get applied?
+// TODO remove class Polygon and go on el directly instead?

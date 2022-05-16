@@ -1,8 +1,8 @@
 <!-- This file is not a part of the widget template. It demonstrates how to use the sample widget code.-->
 <svg>
-    <use id="myPolygon" href="#polygon" fill="#66ff00" />
-    <use id="myPolygon2" href="#polygon" fill="#ff00fb" >
-        <set href="#config" attributeName="text-buffer" to="radius: 50; next: 1; rotate: 180; points: 5; strokeWidth: 10; " />
+    <use id="myPolygon"  href="#polygon" x="50%" y="50%" fill="#66ff00" />
+    <use id="myPolygon2" href="#polygon" x="50%" y="50%" fill="#ff00fb" >
+        <set href="#config" attributeName="text-buffer" to="radius: 50; next: 2; rotate: 180; points: 8; strokeWidth: 4; " />
         <!-- <set href="radius" attributeName="r" to="50" />
         <set href="transform" attributeName="transform" to="rotate(180)" /> -->
     </use>

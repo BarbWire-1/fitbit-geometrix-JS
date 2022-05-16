@@ -2,7 +2,7 @@
 <svg>
   <defs>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="widgets/polygon-widget/styles.css" /> 
+    <link rel="stylesheet" href="widgets/polygon-widget/polygon.css" /> 
     <link rel="import" href="/mnt/sysassets/system_widget.defs" />
     <link rel="import" href="widgets/polygon-widget/polygon.defs" />
   </defs>

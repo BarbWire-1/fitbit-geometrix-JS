@@ -1,46 +1,35 @@
-// This file is not a part of the widget template. It demonstrates how to use the sample widget code.
+
 import document from 'document'
 import './widgets/polygon-widget'
 //import { dumpProperties, inspectObject } from './widgets/devTools';
 
 let myPolygon = document.getElementById('myPolygon');
+
+
+//NOTE: if there are are no dynamic changes, it doesn't even to be "instantiated" here!
 let myPolygon2 = document.getElementById('myPolygon2');
+
+//set lines[0] to different color to show rotation and connected next point
+//changed in updateProps()
 myPolygon.lines[ 0 ].style.fill = 'orange';
 myPolygon.lines[ 0 ].x1 = 0;
-//myPolygon.radius = 200;
 myPolygon.points = 10;
-myPolygon.rotate = 60;
-//myPolygon.next = 3;
-//myPolygon.scale = 2
-myPolygon.strokeWidth = 1;
+//myPolygon2.next = 3;
+
+for (let i = 0; i < myPolygon2.points; i++) {
+    if (i % myPolygon2.next == 0)
+    myPolygon2.lines[i].style.fill = 'orange'
+}
 
 
-
-myPolygon.x = 168;
-myPolygon.y = 168;
-
-myPolygon2.x = 168;
-myPolygon2.y = 168;
 console.log(JSON.stringify(myPolygon))// this returns an EMPTY OBJECT!!! 😭
 // TODO there must be something fundamentally wrong, in how I create my object LOL
-
-
-// // x,y and style for ALL can be set on <use> without any API,
-// // But I'd love to see it as own property!
-// myPolygon.style.fill = "aqua"
-// myPolygon.style.opacity = 0.5;
-
- //inspectObject('myPolygon', myPolygon)
-//dumpProperties('myPolygon', myPolygon, 1)
-
-console.log(myPolygon2.next)
-
-
 
 let i = 0;
 function updateProps() {
     //i %= 24;
     myPolygon.rotate = 15 * i;
+    //note: scaling also impacts strokeWidth!
     myPolygon.scale = 1 + (i % 2)/2;
     myPolygon.next = i;
     // console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
@@ -62,9 +51,6 @@ const limitedInterval = setInterval(() => {
     a++;
 }, delay * 1000);
 
-//TODO radius now applicable via <set> in svg having a dummy circle, to correspond to it's <r>
-// do I need corresponding elements for each value to apply????
-// not clear, as in template, we only needed <style>
-// could I solve this using config? so having text and convert to number???
-// just confused
+
+// just confused... mixed at least 3 approaches, I fear
 // do I need to create virtual classes for <transform> and <style>> instead of going on the subElements directly??
