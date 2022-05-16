@@ -28,34 +28,35 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     class Polygon {
         constructor() {
            
-            this.id = el.id;
-            this.radius = radius;
-            this.points = points;
-            this.strokeWidth = strokeWidth;
-            this.redraw = this._recalc();
-            this.lines = outerLines;
-            this.rotate = rotate;
-            this.scale = scale;
-            this.next = next;
             // Initialisation:
             (function () {    // we use an IIFE so that its memory can be freed after execution
 
-                parseConfig(el, attribute => {
+                parseConfig(el,attribute => {
                     // This anonymous function is called for every attribute in config.
                     // attribute is {name:attributeName, value:attributeValue}
                     switch (attribute.name) {
 
                         case 'radius':
-                            radius = Number(attribute.value);   // this won't like embedded semi-colons, and quotes will require care
+                            radius = Number(attribute.value);
+                            console.log(`radius from switch: ${radius}`)// ok
                             break;
                         case 'points':
                             points = Number(attribute.value);
+                            console.log(`points from switch: ${points}`)//ok
                             break;
                         case 'strokeWidth':
                             strokeWidth = Number(attribute.value);
+                            console.log(`strokeWidth from switch: ${strokeWidth}`)//ok
                             break;
                         case 'next':
                             next = Number(attribute.value);
+                            console.log(`next from switch: ${next}`)// gets read, but not applied??
+                            break;
+                        case 'rotate':
+                            //WHY NOT JUST <rotate> here???
+                            rotate = transform.groupTransform.rotate.angle = Number(attribute.value);
+                            
+                            console.log(`rotate from switch: ${rotate}`)//ok
                             break;
 
                     }
@@ -63,6 +64,17 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
 
 
             })();
+
+            this.id = el.id;
+            this.radius = radius;
+            this.points = points;
+            this.strokeWidth = strokeWidth;
+            this.redraw = this._recalc();
+            this.lines = outerLines;
+            this.rotate = rotate
+            this.scale = scale;
+            this.next = next;
+            console.log(this.next) // logs value from config which is nice - so far
             
         };
 
@@ -104,7 +116,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
                 l.y1 = p[ i ].y;
 
                 //end points
-                let npt = this.next ?? 2;
+                let npt = this.next ?? 1;
                 let nextPt = p[ (i + npt) % this.points ] ?? p[ 0 ];
                 l.x2 = nextPt.x;
                 l.y2 = nextPt.y;
@@ -198,3 +210,5 @@ constructWidgets('polygon', construct);
 // although it`s working as desired, I don't like the structure 
 
 //TODO  implement validation? or remove it?
+
+//TODO check why <next> from config doesn't get applied?

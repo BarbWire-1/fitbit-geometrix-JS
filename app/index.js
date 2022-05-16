@@ -10,7 +10,7 @@ myPolygon.lines[ 0 ].x1 = 0;
 //myPolygon.radius = 200;
 myPolygon.points = 10;
 myPolygon.rotate = 60;
-myPolygon.next = 3;
+//myPolygon.next = 3;
 //myPolygon.scale = 2
 myPolygon.strokeWidth = 1;
 
@@ -33,7 +33,7 @@ console.log(JSON.stringify(myPolygon))// this returns an EMPTY OBJECT!!! 😭
  //inspectObject('myPolygon', myPolygon)
 //dumpProperties('myPolygon', myPolygon, 1)
 
-
+console.log(myPolygon2.next)
 
 
 
@@ -43,8 +43,8 @@ function updateProps() {
     myPolygon.rotate = 15 * i;
     myPolygon.scale = 1 + (i % 2)/2;
     myPolygon.next = i;
-    console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
-    console.log(`myPolygon.scale = ${myPolygon.scale}`)
+    // console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
+    // console.log(`myPolygon.scale = ${myPolygon.scale}`)
     i++;
 };
 //to stop animation and logging
