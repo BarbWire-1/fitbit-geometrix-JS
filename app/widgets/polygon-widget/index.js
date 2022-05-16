@@ -73,7 +73,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
             this.lines = outerLines;
             this.rotate = rotate
             this.scale = scale;
-            this.next = next;
+            this.next = next ?? 1;
             console.log(this.next) // logs value from config which is nice - so far
             
         };
@@ -106,8 +106,8 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
              
             //sets coords of lines depending on points p and <next> 
             i = 0;
-            let npt = this.next ?? 1;
-            console.log(`${this.id}.next:${this.next}`)
+            let npt = next// ?? 1;
+            console.log(`${this.id}.next: ${this.next}`)
             //THIS LOGS UNDEFINED, IF SET IN SVG: BUT WHYYYYY?
             while (i < this.points) {
 
@@ -163,7 +163,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     Object.defineProperty(el, 'next', {
         get() { return next },
         set(newValue) {
-            el.next = newValue;
+            next = el.next = newValue;
             el._recalc();
         }
     })
