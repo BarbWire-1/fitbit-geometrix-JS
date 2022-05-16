@@ -7,3 +7,4 @@ build/Release
 
 # Dependency directories
 node_modules
+app/widgets/devTools.js

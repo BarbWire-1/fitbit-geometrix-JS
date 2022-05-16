@@ -1,6 +1,6 @@
 
 import { constructWidgets, parseConfig } from "../construct-widgets";   // TODO 6 Don't import parseConfig if you don't use a config element in your widget.
-import { dumpProperties, inspectObject } from "./devTools";
+//import { dumpProperties, inspectObject } from "../devTools/";
 import {validInput} from "./validation"
 
 const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
@@ -141,7 +141,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     el = Object.seal(new Polygon())
     
     // dumpProperties('el', el)
-    inspectObject('el', el)
+    // inspectObject('el', el)
 
   return el;
 };
@@ -163,3 +163,5 @@ constructWidgets('polygon', construct);
 // and none of the Polygon-properties.
 // I actually don't know how to creacte the widgetAPI to achieve an independent object, 
 // although it`s working as desired, I don't like the structure 
+
+//TODO  implement validation? or remove it?

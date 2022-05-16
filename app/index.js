@@ -1,7 +1,7 @@
 // This file is not a part of the widget template. It demonstrates how to use the sample widget code.
 import document from 'document'
 import './widgets/polygon-widget'
-import { dumpProperties, inspectObject } from './widgets/polygon-widget/devTools';
+//import { dumpProperties, inspectObject } from './widgets/devTools';
 
 let myPolygon = document.getElementById('myPolygon');
 let myPolygon2 = document.getElementById('myPolygon2');
@@ -31,7 +31,7 @@ console.log(JSON.stringify(myPolygon))// this returns an EMPTY OBJECT!!! 😭
 // myPolygon.style.opacity = 0.5;
 
  //inspectObject('myPolygon', myPolygon)
-dumpProperties('myPolygon', myPolygon, 1)
+//dumpProperties('myPolygon', myPolygon, 1)
 
 
 
