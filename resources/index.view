@@ -1,0 +1,8 @@
+<!-- This file is not a part of the widget template. It demonstrates how to use the sample widget code.-->
+<svg>
+    <use id="myPolygon" href="#polygon" fill="#66ff00" />
+    <use id="myPolygon2" href="#polygon" fill="#ff00fb" >
+        <set href="radius" attributeName="r" to="50" />
+        <set href="transform" attributeName="transform" to="rotate(180)" />
+    </use>
+</svg>
