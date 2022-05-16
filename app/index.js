@@ -41,7 +41,8 @@ let i = 0;
 function updateProps() {
     //i %= 24;
     myPolygon.rotate = 15 * i;
-    myPolygon.scale = 1 + i % 2;
+    myPolygon.scale = 1 + (i % 2)/2;
+    myPolygon.next = i;
     console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
     console.log(`myPolygon.scale = ${myPolygon.scale}`)
     i++;
