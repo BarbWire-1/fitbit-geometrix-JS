@@ -17,10 +17,17 @@ myPolygon.points = 10;
 //myPolygon2.next = 3;
 //TODO restrict access to <lines> on style only!!!
 //myPolygon2.lines[0].x1 = 100
+console.log(`myPolygon2.points: ${myPolygon2.points}`)//aaaah... this way 'undefined'
+myPolygon2.points = 8;
+console.log(`myPolygon2.next: ${myPolygon2.next}`)//aaaah... this way 'undefined'
+myPolygon2.next = 2;
+//why doesn't this get applied????????
 for (let i = 0; i < myPolygon2.points; i++) {
     if (i % myPolygon2.next == 0)
-    myPolygon2.lines[i].style.fill = 'orange'
+        myPolygon2.lines[ i ].style.fill = 'orange'
+    console.log(`i: ${i}`)
 }
+myPolygon2.lines[3].style.fill = 'orange'
 
 console.log(JSON.stringify(myPolygon))// this returns an EMPTY OBJECT!!! 😭
 // TODO there must be something fundamentally wrong, in how I create my object LOL

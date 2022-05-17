@@ -20,6 +20,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     class Polygon {
         constructor() {
            
+           
             // Initialisation:
             (function () {    // we use an IIFE so that its memory can be freed after execution
 
@@ -116,20 +117,22 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     };
     
     //rotate not working, needs to equal to groupTransfom
-    rotate = transform.groupTransform.rotate.angle// why doesn't this get applied???
-    const settings = [ 'radius', 'points', 'strokeWidth', 'next', 'rotate' ];
+ 
+    const settings =['radius', 'points', 'strokeWidth', 'next'];
 
-    settings.forEach(function (prop) {
-        Object.defineProperty(el, prop, {
-            get key() { return prop },
-            set(newValue) {
-                el[prop]  = newValue;
-                console.log(`setter: ${el.id}.${prop} = ${newValue}`)
-                el._recalc()
-            },
-            //enumerable: false
+    settings.forEach((prop) => {
+            Object.defineProperty(el, prop, {
+                get key() { return prop; },
+                set(newValue) {
+                    el[ prop ] = newValue;
+                    console.log(`setter: ${el.prop}`);//there is really a mess with private and outer, el and this.
+                    //<next> from js gets read and applied but can't log el.prop here (undefined)
+                    el._recalc();
+                },
+                // iterable: true,
+                // enumerable: true,
+            });
         });
-    });
     
     
     
@@ -139,12 +142,12 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
         get() { return el.lines },
         
     })
-//     Object.defineProperty(el, 'rotate', {
-//         get() { return rotate },
-//         // equal rotate too to be able to log, as not in _recalc()
-//         set(newValue) { rotate = transform.groupTransform.rotate.angle = newValue }
-// 
-//     })
+    Object.defineProperty(el, 'rotate', {
+        get() { return rotate },
+        // equal rotate too to be able to log, as not in _recalc()
+        set(newValue) { rotate = transform.groupTransform.rotate.angle = newValue }
+
+    })
     //this doesn't only influence radius, but also strokeWidth!!!
     // split into x, y object?
     Object.defineProperty(el, 'scale', {
