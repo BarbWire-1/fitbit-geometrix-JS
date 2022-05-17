@@ -15,7 +15,8 @@ myPolygon.lines[ 0 ].style.fill = 'orange';
 myPolygon.lines[ 0 ].x1 = 0;
 myPolygon.points = 10;
 //myPolygon2.next = 3;
-
+//TODO restrict access to <lines> on style only!!!
+//myPolygon2.lines[0].x1 = 100
 for (let i = 0; i < myPolygon2.points; i++) {
     if (i % myPolygon2.next == 0)
     myPolygon2.lines[i].style.fill = 'orange'
