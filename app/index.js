@@ -21,7 +21,6 @@ for (let i = 0; i < myPolygon2.points; i++) {
     myPolygon2.lines[i].style.fill = 'orange'
 }
 
-
 console.log(JSON.stringify(myPolygon))// this returns an EMPTY OBJECT!!! 😭
 // TODO there must be something fundamentally wrong, in how I create my object LOL
 

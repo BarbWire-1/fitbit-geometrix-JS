@@ -8,13 +8,6 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     const transform = el.getElementById("transform");
     const outerLines = el.getElementsByClassName("lines");
    
-    // this is a dummy element to correspond to <radius>
-    // is this really necessary? as radius is just use as any abstract value
-    const circle = el.getElementById('radius');
-    const radius = circle.r
-    
-        
-    
     class Point {
         constructor(x = 0, y = 0) {
             this.x = x;
@@ -23,7 +16,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     };
     
     
-    let rotate,scale;
+    let radius,rotate,scale;
     class Polygon {
         constructor() {
            

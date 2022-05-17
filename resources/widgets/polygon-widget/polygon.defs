@@ -2,7 +2,6 @@
  
 
   <symbol id="polygon" x="0" y="0" type="polygon" >
-  <circle id="radius" cx="50%" cy="50%" r="100" display="none" />
     <g id="transform">
         <line class="lines " />
         <line class="lines" />
@@ -18,6 +17,6 @@
         <line class="lines" />
     </g>
    
-    <text id="config" display="none" text-length="50" />      <!-- TODO 5 Don't include a config element unless you need it for SVG/CSS declarations -->
+    <text id="config" display="none" text-length="50" />  
   </symbol>
 </defs>
