@@ -47,6 +47,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
 
                     }
                 });
+                
 
 
             })();
@@ -57,7 +58,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
             this.strokeWidth = strokeWidth;
             this.redraw = this._recalc();
             this.lines = outerLines;
-            this.rotate = rotate
+            this.rotate = rotate;
             this.scale = scale;
             this.next = next ?? 1;
     
@@ -91,7 +92,7 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
              
             //sets coords of lines depending on points p and <next> 
             i = 0;
-            let npt = next;// TODO why this.next is undefined if not set from js?
+            let npt = this.next ?? next;// TODO this is extremly strange: one working for js, one for svg. I made a mess, I fear
             while (i < this.points) {
 
                 let l = outerLines[ i ];
@@ -110,7 +111,27 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
             };
 
         };
+        
+    
     };
+    
+    //rotate not working, needs to equal to groupTransfom
+    rotate = transform.groupTransform.rotate.angle// why doesn't this get applied???
+    const settings = [ 'radius', 'points', 'strokeWidth', 'next', 'rotate' ];
+
+    settings.forEach(function (prop) {
+        Object.defineProperty(el, prop, {
+            get key() { return prop },
+            set(newValue) {
+                el[prop]  = newValue;
+                console.log(`setter: ${el.id}.${prop} = ${newValue}`)
+                el._recalc()
+            },
+            //enumerable: false
+        });
+    });
+    
+    
     
     
     // Properties set on <use>
@@ -118,12 +139,12 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
         get() { return el.lines },
         
     })
-    Object.defineProperty(el, 'rotate', {
-        get() { return rotate },
-        // equal rotate too to be able to log, as not in _recalc()
-        set(newValue) { rotate = transform.groupTransform.rotate.angle = newValue }
-
-    })
+//     Object.defineProperty(el, 'rotate', {
+//         get() { return rotate },
+//         // equal rotate too to be able to log, as not in _recalc()
+//         set(newValue) { rotate = transform.groupTransform.rotate.angle = newValue }
+// 
+//     })
     //this doesn't only influence radius, but also strokeWidth!!!
     // split into x, y object?
     Object.defineProperty(el, 'scale', {
@@ -136,35 +157,35 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
                 = newValue;
         }
     });
-    Object.defineProperty(el, 'radius', {
-        get() { return radius },
-        set(newValue) {
-            el.radius = newValue;
-            el._recalc()
-        }
-    });
-    Object.defineProperty(el, 'next', {
-        get() { return next },
-        set(newValue) {
-            next = el.next = newValue;
-            el._recalc();
-        }
-    })
-    Object.defineProperty(el, 'points', {
-        get() { return points },
-        set(newValue) {
-            el.points = newValue;
-            el._recalc();
-        }
-    })
-    Object.defineProperty(el, 'strokeWidth', {
-        get() { return strokeWidth },
-        set(newValue) {
-            console.log(newValue);
-            el.strokeWidth = newValue;
-            el._recalc();
-        }
-    })
+    // Object.defineProperty(el, 'radius', {
+    //     get() { return radius },
+    //     set(newValue) {
+    //         el.radius = newValue;
+    //         el._recalc()
+    //     }
+    // });
+    // Object.defineProperty(el, 'next', {
+    //     get() { return next },
+    //     set(newValue) {
+    //         next = el.next = newValue;
+    //         el._recalc();
+    //     }
+    // })
+    // Object.defineProperty(el, 'points', {
+    //     get() { return points },
+    //     set(newValue) {
+    //         el.points = newValue;
+    //         el._recalc();
+    //     }
+    // })
+    // Object.defineProperty(el, 'strokeWidth', {
+    //     get() { return strokeWidth },
+    //     set(newValue) {
+    //         console.log(newValue);
+    //         el.strokeWidth = newValue;
+    //         el._recalc();
+    //     }
+    // })
 
     el = Object.seal(new Polygon())
         
