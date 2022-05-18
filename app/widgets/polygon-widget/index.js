@@ -78,13 +78,8 @@ const construct = (el) => {
     let _radius = el.radius ?? 100;
     let _points = el.points ?? 5;
     let _next = el.next ?? 1;
-    let _strokeWidth = el.strokeWidth
-        //TODO why does this bring wrong result? overwrites el2 with el1 value??
-        // = linesEl.forEach(line => {
-        //     line.style.strokeWidth
-        // }) 
-        ?? 4;
-        
+    let _strokeWidth = el.strokeWidth ?? 4;
+   
 
     // CALCULATE POINTS AND APPLY TO LINES
     const redraw = () => {
@@ -96,7 +91,7 @@ const construct = (el) => {
         linesEl.forEach(line => {
             line.style.display = 'none'
         });
-        // array to keep calculated points for further use in connecting lines
+        // array to keep calculated point-objects for further use in connecting lines
         let p = []
 
         // recalc radius depending on strokeW to fit inside
@@ -139,9 +134,59 @@ const construct = (el) => {
     };
     // calculate and layout
     redraw();
+    Object.defineProperty(el, 'radius', {
+        get radius() { return el.radius },// why does this log <undefined>???
+        set(newValue) {
+            _radius = newValue;
+            redraw();
+        }
+    });
+    Object.defineProperty(el, 'points', {
+        //get points() { return el.points },// why does this log <undefined>???
+        set(newValue) {
+            _points = newValue;
+            redraw();
+        }
+    });
+    Object.defineProperty(el, 'strokeWidth', {
+        //get strokeWidth() { return el.strokeWidth},// why does this log <undefined>???
+        set(newValue) {
+            _strokeWidth = newValue;
+            redraw();
+        }
+    });
+    Object.defineProperty(el, 'next', {
+        //get points() { return el.points },// why does this log <undefined>???
+        set(newValue) {
+            _next = newValue;
+            redraw();
+        }
+    });
+    Object.defineProperty(el, 'rotate', {
+        //get points() { return el.points },// why does this log <undefined>???
+        set(newValue) {
+            transformEl.groupTransform.rotate.angle
+                = newValue;
+        }
+    });
     
-    // dumpProperties('el', el)
-    inspectObject('el', el)
+    Object.defineProperty(el, 'scale', {
+        get scale() { return el.scale },// why does this log <undefined>???
+        set(newValue) {
+            transformEl.groupTransform.scale.x
+                = transformEl.groupTransform.scale.y
+                = newValue;
+        }
+    });
+    // this way everything gets applied, but can't be read
+    // everything appears as undefined!
+    
+    // properties from config are recognised as members of <el>
+    // can be read from js, but NOT be modified!!
+    // TODO add constructor and API
+   
+     dumpProperties('el', el)
+    //inspectObject('el', el)
 
   return el;
 };

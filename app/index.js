@@ -49,23 +49,40 @@ const delay = 1;
 const limit = 24;
 let a = 1;
 
-const limitedInterval = setInterval(() => {
-    updateProps()
-    if (a > limit) {
-        clearInterval(limitedInterval);
-        console.log('-------------------');
-        console.warn('Interval cleared!');
-    };
-    a++;
-}, delay * 1000);
+// const limitedInterval = setInterval(() => {
+//     updateProps()
+//     if (a > limit) {
+//         clearInterval(limitedInterval);
+//         console.log('-------------------');
+//         console.warn('Interval cleared!');
+//     };
+//     a++;
+// }, delay * 1000);
 
 
 // just confused... mixed at least 3 approaches, I fear
 // do I need to create virtual classes for <transform> and <style>> instead of going on the subElements directly??
 dumpProperties('myPolygon2', myPolygon2, 1)
 
-// props from config set/readable/ ownProperties
-// now add API#s 
-// how to get API on lienesArray forEach???
-// til noe no approach worked
+//TEST DEFINE PROPERTIES
+myPolygon.radius = 150 // gets applied
+console.log(myPolygon.radius)// but logged as <undefined>
+
+myPolygon.points = 7 // gets applied
+console.log(myPolygon.points)// but logged as <undefined>
+
+myPolygon.strokeWidth = 6 // gets applied
+console.log(myPolygon.strokeWidth)// but logged as <undefined>
+
+myPolygon.next = 1 // gets applied
+console.log(myPolygon.next)// but logged as <undefined>
+
+myPolygon.rotate = 20 // gets applied
+console.log(myPolygon.rotate)
+
+myPolygon.scale = 0.5 // gets applied
+console.log(myPolygon.scale)// but logged as <undefined>
+
+
+
 
