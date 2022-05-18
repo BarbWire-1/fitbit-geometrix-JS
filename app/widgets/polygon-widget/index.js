@@ -1,12 +1,13 @@
 
 import { constructWidgets, parseConfig } from "../construct-widgets";
-//import { dumpProperties, inspectObject } from "../devTools/";
+import { dumpProperties, inspectObject } from "../devTools/";
 import {validInput} from "./validation"
 
-const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
+const construct = (el) => {
     //GET ELEMENTS FOR POLYGON
-    const transform = el.getElementById("transform");
-    const outerLines = el.getElementsByClassName("lines");
+    const transformEl = el.getElementById("transform");
+    const linesEl = el.getElementsByClassName("lines");
+    const _style = el.style
    
     class Point {
         constructor(x = 0, y = 0) {
@@ -15,10 +16,81 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
         }
     };
     
+    let radius, next
+    // FUNCTIONS------------------------------------------------------------------------
+    /**
+     * FUNCTION TO DEFINE PROPERTY
+     * (getter/setter optional bound to different objects)
+     * @param {*} obj    object to set prop on. Depending on use case this or el
+     * @param {*} prop   property
+     * @param {*} target outer object to apply property
+     * @param {*} source optional object to read property, if not set = target
+     */
+    const defineProp = (obj, prop, target, source = target) => {
+        Object.defineProperty(obj, prop, {
+            set(newValue) { target[ prop ] = newValue; },
+            get() { return source[ prop ] },
+        });
+    };
+    // FUNCTION TO DEFINE LINESPROPERTIES (STYLE)
+    // pass to all subElements
+    function passStyleToAll(obj, prop) {
+        const equalAll = (prop, value) => {
+            linesEl.forEach(sub => {
+                sub[ prop ] = value;
+            })
+        };
+// 
+//         Object.defineProperty(obj, prop, {
+//             set(newValue) { equalAll(prop, newValue) },
+//             //added getter here to be able to use text.length
+//             get() { return el[ prop ] },
+//             enumerable: true
+//         });
+    };
     
-    let radius,rotate,scale;
-    class Polygon {
-        constructor() {
+    
+    // style properties applicable to widget (useElement)
+    class StyleWidget {
+        constructor(_style) {
+            
+            //pass style from el._style to all lineElements
+            passStyleToAll(el, 'opacity');
+            passStyleToAll(el, 'display');
+            passStyleToAll(el, 'fill')
+        }
+    };
+    
+    // CREATE API's-------------------------------------------------------------------
+    // FUNCTION TO EXPOSE TO CORRESPONDING OBJECT
+    function connectAPI(subElement, API) {
+        Object.defineProperty(el, subElement, {
+            get() { return API; },
+        });
+    };
+
+    //creates main: opacity, display, getBBox()
+    let linesAPI = linesEl.forEach(line => {
+        Object.seal({
+            style: Object.seal(new StyleWidget(line.style)),
+        })  
+    });
+    
+    
+    
+    // CONNECT OUTER TO VIRTUAL STYLE
+    // creates widget-use(instance): text-related, mainEl.fill, el.getBBox(), all useOwn
+    let widgetStyleAPI = Object.seal({
+        style: Object.seal(new StyleWidget(_style)),
+        lines: connectAPI('lines', linesAPI),
+        
+        enumerable: true,
+    });
+    
+    
+    //let radius,rotate,scale;
+   
+       
            
            
             // Initialisation:
@@ -30,20 +102,26 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
                     switch (attribute.name) {
 
                         case 'radius':
-                            radius = Number(attribute.value);
+                            el.radius = Number(attribute.value) ?? 100;
                             break;
                         case 'points':
-                            points = Number(attribute.value);
+                            el.points = Number(attribute.value)?? 5;
                             break;
                         case 'strokeWidth':
-                            strokeWidth = Number(attribute.value);
+                            el.strokeWidth = Number(attribute.value)?? 4;
                             break;
                         case 'next':
-                            next = Number(attribute.value);
+                            el.next = Number(attribute.value)?? 1;
                             break;
                         case 'rotate':
                             //WHY NOT JUST <rotate> here???
-                            rotate = transform.groupTransform.rotate.angle = Number(attribute.value);
+                            el.rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value) ?? 0;
+                            break;
+                        case 'scale':
+                            //WHY NOT JUST <rotate> here???
+                            el.scale = transformEl.groupTransform.scale.x
+                                = transformEl.groupTransform.scale.y
+                                = Number(attribute.value) ?? 1;
                             break;
 
                     }
@@ -53,35 +131,25 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
 
             })();
 
-            this.id = el.id;
-            this.radius = radius;
-            this.points = points;
-            this.strokeWidth = strokeWidth;
-            this.redraw = this._recalc();
-            this.lines = outerLines;
-            this.rotate = rotate;
-            this.scale = scale;
-            this.next = next ?? 1;
-    
-        };
+           
 
         //THE MATHS
-        _recalc() {
+        //const _recalc() {
             
             //TODO do calculating and assigning in one?
             //set all not "used" lines to 'none'
-            outerLines.forEach(el => {
+            linesEl.forEach(el => {
                 el.style.display = 'none'
             });
             let p = []
 
             //recalc radius depending on strokeW to fit inside
-            let iRadius = this.radius;
-            iRadius -= Math.round(this.strokeWidth / 2);
-            const fract = (2 * Math.PI / this.points);
+            let iRadius = el.radius;
+            iRadius -= Math.round(el.strokeWidth / 2);
+            const fract = (2 * Math.PI / el.points);
 
             let i = 0;
-            while (i < this.points) {
+            while (i < el.points) {
                 p.push(new Point(0, 0))
 
                 //calcs x,y to start pt0 at (0,-radius)relative to PolygonCenter
@@ -93,11 +161,11 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
              
             //sets coords of lines depending on points p and <next> 
             i = 0;
-            let npt = this.next ?? next;// TODO this is extremly strange: one working for js, one for svg. I made a mess, I fear
-            while (i < this.points) {
+            let npt = el.next ?? next;// TODO this is extremly strange: one working for js, one for svg. I made a mess, I fear
+            while (i < el.points) {
 
-                let l = outerLines[ i ];
-                l.style.strokeWidth = this.strokeWidth;
+                let l = linesEl[ i ];
+                l.style.strokeWidth = el.strokeWidth;
                 l.style.display = 'inline'
                 //start points
                 l.x1 = p[ i ].x;
@@ -105,84 +173,84 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
 
                 //end points
                 
-                let nextPt = p[ (i + npt) % this.points ] ?? p[ 0 ];
+                let nextPt = p[ (i + npt) % el.points ] ?? p[ 0 ];
                 l.x2 = nextPt.x;
                 l.y2 = nextPt.y;
                 i++;
             };
 
-        };
+       
         
     
-    };
-    
-    //rotate not working, needs to equal to groupTransfom
- 
-    const settings =['radius', 'points', 'strokeWidth', 'next'];
 
-    settings.forEach((prop) => {
-            Object.defineProperty(el, prop, {
-                get key() { return prop; },
-                set(newValue) {
-                    el[ prop ] = newValue;
-                    console.log(`setter: ${el.prop}`);//there is really a mess with private and outer, el and this.
-                    //<next> from js gets read and applied but can't log el.prop here (undefined)
-                    el._recalc();
-                },
-                // iterable: true,
-                // enumerable: true,
-            });
-        });
+    
+//     //rotate not working, needs to equal to groupTransfom
+//  
+//     const settings =['radius', 'points', 'strokeWidth', 'next'];
+// 
+//     settings.forEach((prop) => {
+//             Object.defineProperty(el, prop, {
+//                 get key() { return prop; },
+//                 set(newValue) {
+//                     el[ prop ] = newValue;
+//                     console.log(`setter: ${el.prop}`);//there is really a mess with private and outer, el and this.
+//                     //<next> from js gets read and applied but can't log el.prop here (undefined)
+//                     el._recalc();
+//                 },
+//                 // iterable: true,
+//                 // enumerable: true,
+//             });
+//         });
+//     
     
     
     
-    
-    // Properties set on <use>
-    Object.defineProperty(el, 'lines', {
-        get() { return el.lines },
-        
-    })
-    Object.defineProperty(el, 'rotate', {
-        get() { return rotate },
-        // equal rotate too to be able to log, as not in _recalc()
-        set(newValue) { rotate = transform.groupTransform.rotate.angle = newValue }
-
-    })
-    //this doesn't only influence radius, but also strokeWidth!!!
-    // split into x, y object?
-    Object.defineProperty(el, 'scale', {
-        get() { return scale },
-        // equal scale too to be able to log, as not in _recalc()
-        set(newValue) {
-            scale =
-                transform.groupTransform.scale.x
-                = transform.groupTransform.scale.y
-                = newValue;
-        }
-    });
+    //Properties set on <use>
+    // Object.defineProperty(el, 'lines', {
+    //     get() { return linesAPI},
+    //     
+    // });
+//     Object.defineProperty(el, 'rotate', {
+//         get() { return el.rotate },
+//         // equal rotate too to be able to log, as not in _recalc()
+//         set(newValue) {transformEl.groupTransform.rotate.angle = newValue }
+// 
+//     });
+//     //this doesn't only influence radius, but also strokeWidth!!!
+//     // split into x, y object?
+//     Object.defineProperty(el, 'scale', {
+//         get() { return  el.scale },
+//         // equal scale too to be able to log, as not in _recalc()
+//         set(newValue) {
+//            
+//                 transformEl.groupTransform.scale.x
+//                 = transformEl.groupTransform.scale.y
+//                 = newValue;
+//         }
+//     });
     // Object.defineProperty(el, 'radius', {
-    //     get() { return radius },
+    //     get() { return el.radius },
     //     set(newValue) {
     //         el.radius = newValue;
     //         el._recalc()
     //     }
     // });
     // Object.defineProperty(el, 'next', {
-    //     get() { return next },
+    //     get() { return el.next },
     //     set(newValue) {
     //         next = el.next = newValue;
     //         el._recalc();
     //     }
     // })
     // Object.defineProperty(el, 'points', {
-    //     get() { return points },
+    //     get() { return el.points },
     //     set(newValue) {
     //         el.points = newValue;
     //         el._recalc();
     //     }
     // })
     // Object.defineProperty(el, 'strokeWidth', {
-    //     get() { return strokeWidth },
+    //     get() { return el.strokeWidth },
     //     set(newValue) {
     //         console.log(newValue);
     //         el.strokeWidth = newValue;
@@ -190,13 +258,13 @@ const construct = (el, radius = 100, points = 5, strokeWidth = 4, next = 1) => {
     //     }
     // })
 
-    el = Object.seal(new Polygon())
+    //el = Object.seal(new Polygon())
         
         
     
     
     // dumpProperties('el', el)
-    // inspectObject('el', el)
+     inspectObject('el', el)
 
   return el;
 };

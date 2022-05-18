@@ -1,7 +1,7 @@
 
 import document from 'document'
 import './widgets/polygon-widget'
-//import { dumpProperties, inspectObject } from './widgets/devTools';
+import { dumpProperties, inspectObject } from './widgets/devTools';
 
 let myPolygon = document.getElementById('myPolygon');
 
@@ -11,8 +11,9 @@ let myPolygon2 = document.getElementById('myPolygon2');
 
 //set lines[0] to different color to show rotation and connected next point
 //changed in updateProps()
-myPolygon.lines[ 0 ].style.fill = 'orange';
-myPolygon.lines[ 0 ].x1 = 0;
+// console.log(JSON.stringify(myPolygon.lines))
+// myPolygon.lines[ 0 ].style.fill = 'orange';
+// myPolygon.lines[ 0 ].x1 = 0;
 myPolygon.points = 10;
 //myPolygon2.next = 3;
 //TODO restrict access to <lines> on style only!!!
@@ -22,12 +23,12 @@ myPolygon2.points = 8;
 console.log(`myPolygon2.next: ${myPolygon2.next}`)//aaaah... this way 'undefined'
 myPolygon2.next = 2;
 //why doesn't this get applied????????
-for (let i = 0; i < myPolygon2.points; i++) {
-    if (i % myPolygon2.next == 0)
-        myPolygon2.lines[ i ].style.fill = 'orange'
-    console.log(`i: ${i}`)
-}
-myPolygon2.lines[3].style.fill = 'orange'
+// for (let i = 0; i < myPolygon2.points; i++) {
+//     if (i % myPolygon2.next == 0)
+//         myPolygon2.lines[ i ].style.fill = 'orange'
+//     console.log(`i: ${i}`)
+// }
+// myPolygon2.lines[3].style.fill = 'orange'
 
 console.log(JSON.stringify(myPolygon))// this returns an EMPTY OBJECT!!! 😭
 // TODO there must be something fundamentally wrong, in how I create my object LOL
@@ -39,8 +40,8 @@ function updateProps() {
     //note: scaling also impacts strokeWidth!
     myPolygon.scale = 1 + (i % 2)/2;
     myPolygon.next = i;
-    // console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
-    // console.log(`myPolygon.scale = ${myPolygon.scale}`)
+    console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
+    console.log(`myPolygon.scale = ${myPolygon.scale}`)
     i++;
 };
 //to stop animation and logging
@@ -61,3 +62,4 @@ const limitedInterval = setInterval(() => {
 
 // just confused... mixed at least 3 approaches, I fear
 // do I need to create virtual classes for <transform> and <style>> instead of going on the subElements directly??
+inspectObject('myPolygon2', myPolygon2)
