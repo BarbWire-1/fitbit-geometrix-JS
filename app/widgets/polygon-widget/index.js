@@ -80,7 +80,6 @@ const construct = (el) => {
     let _next = el.next ?? 1;
     let _strokeWidth = el.strokeWidth ?? 4;
    
-
     // CALCULATE POINTS AND APPLY TO LINES
     const redraw = () => {
         
@@ -134,6 +133,7 @@ const construct = (el) => {
     };
     // calculate and layout
     redraw();
+    
     Object.defineProperty(el, 'radius', {
         get radius() { return el.radius },// why does this log <undefined>???
         set(newValue) {
