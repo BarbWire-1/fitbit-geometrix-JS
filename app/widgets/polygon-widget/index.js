@@ -74,13 +74,13 @@ const construct = (el) => {
         
     })();
     
-    // private vars and defaults
+    // PRIVATE VARS AND DEFAULTS
     let _radius = el.radius ?? 100;
     let _points = el.points ?? 5;
     let _next = el.next ?? 1;
     let _strokeWidth = el.strokeWidth ?? 4;
 
-    //calculate points and apply to lines start/end
+    // CALCULATE POINTS AND APPLY TO LINES
     const redraw = () => {
         
         // set all lines (back) to 'none'
@@ -90,7 +90,7 @@ const construct = (el) => {
         // array to keep calculated points for further use in connecting lines
         let p = []
 
-        //recalc radius depending on strokeW to fit inside
+        // recalc radius depending on strokeW to fit inside
         let iRadius = _radius ?? 100;
         iRadius -= Math.round(_strokeWidth  / 2);
         const fract = (2 * Math.PI / _points);
@@ -112,6 +112,7 @@ const construct = (el) => {
         while (i < _points) {
 
             let l = linesEl[ i ];
+            //TODO do this connection to element somewhere else later to keep abstract here?
             l.style.strokeWidth = _strokeWidth;
             // set 'used' lines to 'inline'
             l.style.display = 'inline';
