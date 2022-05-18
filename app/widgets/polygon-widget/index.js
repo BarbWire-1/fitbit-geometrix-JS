@@ -1,5 +1,5 @@
 /**
- * MIT License
+* MIT License
 
 Copyright (c) 2022 Barbara Kälin
 
@@ -20,8 +20,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
- */
+*/
 
 import { constructWidgets, parseConfig } from "../construct-widgets";
 import { dumpProperties, inspectObject } from "../devTools/";
@@ -41,7 +40,7 @@ const construct = (el) => {
         };
     };
     
-    // Initialisation:
+    // INITIALISATION:
     (function () {   //IIFE
         
         parseConfig(el, attribute => {
@@ -84,7 +83,6 @@ const construct = (el) => {
     //calculate points and apply to lines start/end
     const redraw = () => {
         
-
         // set all lines (back) to 'none'
         linesEl.forEach(el => {
             el.style.display = 'none'
@@ -140,12 +138,14 @@ const construct = (el) => {
 
 constructWidgets('polygon', construct);
 
+//TODO 0
 /**
+ * 
  * APIs:
  * el:      
- *          radius, points, next (abstract values only)
- *          strokeWidth => lines.forEach.style.strokeWidth
- *          radius, scale => transformEl.groupTransform
+ *          radius, points, next (abstract values only) + redraw()
+ *          strokeWidth => lines.forEach.style.strokeWidth + redraw()
+ *          rotate, scale => transformEl.groupTransform
  *          lines (array!)
  *          (use just style and x,y of use for el, or make own?)
  * 

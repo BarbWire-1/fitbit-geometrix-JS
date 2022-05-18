@@ -68,3 +68,4 @@ dumpProperties('myPolygon2', myPolygon2, 1)
 // now add API#s 
 // how to get API on lienesArray forEach???
 // til noe no approach worked
+
