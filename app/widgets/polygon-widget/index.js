@@ -43,8 +43,6 @@ const construct = (el) => {
     
     // Initialisation:
     (function () {   //IIFE
-        // TODO config needs to be set in svg/css to get read,
-        // so defaults from here don't get applied
         
         parseConfig(el, attribute => {
             // This anonymous function is called for every attribute in config.
@@ -52,24 +50,24 @@ const construct = (el) => {
             switch (attribute.name) {
 
                 case 'radius':
-                    el.radius = Number(attribute.value) ?? 100;
+                    el.radius = Number(attribute.value);
                     break;
                 case 'points':
-                    el.points = Number(attribute.value) ?? 5;
+                    el.points = Number(attribute.value);
                     break;
                 case 'strokeWidth':
-                    el.strokeWidth = Number(attribute.value) ?? 4;
+                    el.strokeWidth = Number(attribute.value);
                     break;
                 case 'next':
-                    el.next = Number(attribute.value) ?? 1;
+                    el.next = Number(attribute.value);
                     break;
                 case 'rotate':
-                    el.rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value) ?? 0;
+                    el.rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
                     break;
                 case 'scale':
                     el.scale = transformEl.groupTransform.scale.x
                         = transformEl.groupTransform.scale.y
-                        = Number(attribute.value) ?? 1;
+                        = Number(attribute.value);
                     break;
 
             };
