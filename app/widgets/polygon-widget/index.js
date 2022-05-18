@@ -78,7 +78,13 @@ const construct = (el) => {
     let _radius = el.radius ?? 100;
     let _points = el.points ?? 5;
     let _next = el.next ?? 1;
-    let _strokeWidth = el.strokeWidth ?? 4;
+    let _strokeWidth = el.strokeWidth
+        //TODO why does this bring wrong result? overwrites el2 with el1 value??
+        // = linesEl.forEach(line => {
+        //     line.style.strokeWidth
+        // }) 
+        ?? 4;
+        
 
     // CALCULATE POINTS AND APPLY TO LINES
     const redraw = () => {
