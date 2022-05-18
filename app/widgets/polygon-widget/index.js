@@ -108,8 +108,8 @@ const construct = (el) => {
         // calculate and write points to array
         while (i < _points) {
             p.push(new Point(0, 0))
-            //calcs x,y to start pt0 at (0,-radius)relative to PolygonCenter
-            //to start at top, running clockwise
+            // calculates x,y to start pt0 at (0,-radius)relative to PolygonCenter
+            // to start at top, running clockwise
             p[ i ].x = Math.round(iRadius * Math.sin(i * fract));
             p[ i ].y = Math.round(iRadius * -Math.cos(i * fract));
             i++;
