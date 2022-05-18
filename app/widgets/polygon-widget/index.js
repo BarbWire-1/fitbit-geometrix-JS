@@ -90,8 +90,11 @@ const construct = (el) => {
     const redraw = () => {
         
         // set all lines (back) to 'none'
-        linesEl.forEach(el => {
-            el.style.display = 'none'
+        // TODO only necessary if points != previous.
+        // better check for that or just change for any redraw()???
+        // possible to include this in setter for <points>? Perhaps???
+        linesEl.forEach(line => {
+            line.style.display = 'none'
         });
         // array to keep calculated points for further use in connecting lines
         let p = []
