@@ -1,3 +1,27 @@
+/**
+ * MIT License
+
+Copyright (c) 2022 Barbara Kälin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+ */
 
 import { constructWidgets, parseConfig } from "../construct-widgets";
 import { dumpProperties, inspectObject } from "../devTools/";
@@ -8,108 +32,127 @@ const construct = (el) => {
     const transformEl = el.getElementById("transform");
     const linesEl = el.getElementsByClassName("lines");
     const _style = el.style
+    
    
     class Point {
         constructor(x = 0, y = 0) {
             this.x = x;
             this.y = y;
-        }
+        };
     };
     
-    let  next
-//    
-            // Initialisation:
-            (function () {    // we use an IIFE so that its memory can be freed after execution
+    // Initialisation:
+    (function () {   //IIFE
+        // TODO config needs to be set in svg/css to get read,
+        // so defaults from here don't get applied
+        
+        parseConfig(el, attribute => {
+            // This anonymous function is called for every attribute in config.
+            // attribute is {name:attributeName, value:attributeValue}
+            switch (attribute.name) {
 
-                parseConfig(el, attribute => {
-                    // This anonymous function is called for every attribute in config.
-                    // attribute is {name:attributeName, value:attributeValue}
-                    switch (attribute.name) {
+                case 'radius':
+                    el.radius = Number(attribute.value) ?? 100;
+                    break;
+                case 'points':
+                    el.points = Number(attribute.value) ?? 5;
+                    break;
+                case 'strokeWidth':
+                    el.strokeWidth = Number(attribute.value) ?? 4;
+                    break;
+                case 'next':
+                    el.next = Number(attribute.value) ?? 1;
+                    break;
+                case 'rotate':
+                    el.rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value) ?? 0;
+                    break;
+                case 'scale':
+                    el.scale = transformEl.groupTransform.scale.x
+                        = transformEl.groupTransform.scale.y
+                        = Number(attribute.value) ?? 1;
+                    break;
 
-                        case 'radius':
-                            el.radius = Number(attribute.value) ?? 100;
-                            break;
-                        case 'points':
-                            el.points = Number(attribute.value)?? 5;
-                            break;
-                        case 'strokeWidth':
-                            el.strokeWidth = Number(attribute.value)?? 4;
-                            break;
-                        case 'next':
-                            el.next = Number(attribute.value)?? 1;
-                            break;
-                        case 'rotate':
-                            //WHY NOT JUST <rotate> here???
-                            el.rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value) ?? 0;
-                            break;
-                        case 'scale':
-                            //WHY NOT JUST <rotate> here???
-                            el.scale = transformEl.groupTransform.scale.x
-                                = transformEl.groupTransform.scale.y
-                                = Number(attribute.value) ?? 1;
-                            break;
-
-                    }
-                });
-                
-
-
-            })();
-
-           
-
-        //THE MATHS
-        //const _recalc() {
-            
-            //TODO do calculating and assigning in one?
-            //set all not "used" lines to 'none'
-            linesEl.forEach(el => {
-                el.style.display = 'none'
-            });
-            let p = []
-
-            //recalc radius depending on strokeW to fit inside
-            let iRadius = el.radius;
-            iRadius -= Math.round(el.strokeWidth / 2);
-            const fract = (2 * Math.PI / el.points);
-
-            let i = 0;
-            while (i < el.points) {
-                p.push(new Point(0, 0))
-
-                //calcs x,y to start pt0 at (0,-radius)relative to PolygonCenter
-                //to start at top, running clockwise
-                p[ i ].x = Math.round(iRadius * Math.sin(i * fract));
-                p[ i ].y = Math.round(iRadius * -Math.cos(i * fract));
-                i++;
             };
+        });
+        
+    })();
+    
+    // private vars and defaults
+    let _radius = el.radius ?? 100;
+    let _points = el.points ?? 5;
+    let _next = el.next ?? 1;
+    let _strokeWidth = el.strokeWidth ?? 4;
+
+    //calculate points and apply to lines start/end
+    const redraw = () => {
+        
+
+        // set all lines (back) to 'none'
+        linesEl.forEach(el => {
+            el.style.display = 'none'
+        });
+        // array to keep calculated points for further use in connecting lines
+        let p = []
+
+        //recalc radius depending on strokeW to fit inside
+        let iRadius = _radius ?? 100;
+        iRadius -= Math.round(_strokeWidth  / 2);
+        const fract = (2 * Math.PI / _points);
+
+        let i = 0;
+        // calculate and write points to array
+        while (i < _points) {
+            p.push(new Point(0, 0))
+            //calcs x,y to start pt0 at (0,-radius)relative to PolygonCenter
+            //to start at top, running clockwise
+            p[ i ].x = Math.round(iRadius * Math.sin(i * fract));
+            p[ i ].y = Math.round(iRadius * -Math.cos(i * fract));
+            i++;
+        };
              
-            //sets coords of lines depending on points p and <next> 
-            i = 0;
-            let npt = el.next ?? next;// TODO this is extremly strange: one working for js, one for svg. I made a mess, I fear
-            while (i < el.points) {
+        //sets coords of lines depending on points p and <next> 
+        i = 0;
+        let npt = _next
+        while (i < _points) {
 
-                let l = linesEl[ i ];
-                l.style.strokeWidth = el.strokeWidth;
-                l.style.display = 'inline'
-                //start points
-                l.x1 = p[ i ].x;
-                l.y1 = p[ i ].y;
-
-                //end points
+            let l = linesEl[ i ];
+            l.style.strokeWidth = _strokeWidth;
+            // set 'used' lines to 'inline'
+            l.style.display = 'inline';
                 
-                let nextPt = p[ (i + npt) % el.points ] ?? p[ 0 ];
-                l.x2 = nextPt.x;
-                l.y2 = nextPt.y;
-                i++;
-            };
+            //start points
+            l.x1 = p[ i ].x;
+            l.y1 = p[ i ].y;
 
-     
+            //end points
+            let nextPt = p[ (i + npt) % _points ] ?? p[ 0 ];
+            l.x2 = nextPt.x;
+            l.y2 = nextPt.y;
+            i++;
+        };
+    };
+    // calculate and layout
+    redraw();
     
     // dumpProperties('el', el)
-     inspectObject('el', el)
+    inspectObject('el', el)
 
   return el;
 };
 
 constructWidgets('polygon', construct);
+
+/**
+ * APIs:
+ * el:      
+ *          radius, points, next (abstract values only)
+ *          strokeWidth => lines.forEach.style.strokeWidth
+ *          radius, scale => transformEl.groupTransform
+ *          lines (array!)
+ *          (use just style and x,y of use for el, or make own?)
+ * 
+ * lines:
+ *          forEach(!!!)
+ *          style ONLY!
+ */
+
