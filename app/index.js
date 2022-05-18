@@ -62,4 +62,9 @@ const limitedInterval = setInterval(() => {
 
 // just confused... mixed at least 3 approaches, I fear
 // do I need to create virtual classes for <transform> and <style>> instead of going on the subElements directly??
-inspectObject('myPolygon2', myPolygon2)
+dumpProperties('myPolygon2', myPolygon2, 1)
+
+// props from config set/readable/ ownProperties
+// now add API#s 
+// how to get API on lienesArray forEach???
+// til noe no approach worked
