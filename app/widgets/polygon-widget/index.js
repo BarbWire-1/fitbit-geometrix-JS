@@ -135,7 +135,7 @@ const construct = (el) => {
     // calculate and layout
     redraw();
     
-    let rotate, scale
+    let rotate , scale
     let lines = linesEl
    
     // Properties set on <use>
@@ -144,7 +144,7 @@ const construct = (el) => {
     Object.defineProperty(el, 'lines', {
         get() { return lines },
 
-    })
+    });
     
     Object.defineProperty(el, 'rotate', {
         get() { return rotate },
@@ -194,16 +194,19 @@ const construct = (el) => {
             redraw();
         }
     })
+    
     // values get applied and logged. So step 1, 
-    // BUT: only can read if set in config!!
-    //(check relation inner/outer - abstract/applied... 🤯)
+    // BUT: only mem of el if set in config!!
+    // those set in js get read as undefined values in el here
+    //(check relation inner/outer - abstract/applied... 🤯 🔫)
     // TODO write constructure, restrict access/inheritance
     // try to create style on linesEl.forEach as own object?
    
     //dumpProperties('el', el)
-    inspectObject('el', el)
-
-  return Object.seal(el);
+    
+    //inspectObject('el', el)
+    return el;
+    
 };
 
 constructWidgets('polygon', construct);

@@ -35,6 +35,7 @@ console.log(JSON.stringify(myPolygon))// this returns an EMPTY OBJECT!!! 😭
 
 let i = 0;
 function updateProps() {
+    //inspectObject('myPolygon', myPolygon)//logging ok HERE
     //i %= 24;
     myPolygon.rotate = 15 * i;
     //note: scaling also impacts strokeWidth!
@@ -83,8 +84,8 @@ myPolygon.rotate = 20 // gets applied
 myPolygon.scale = 0.5 // gets applied
 //console.log(myPolygon.scale)// but logged as <undefined>
 
-dumpProperties('myPolygon', myPolygon,1)
-
+//dumpProperties('myPolygon', myPolygon,1)
+//inspectObject('myPolygon', myPolygon)
 
 
 
