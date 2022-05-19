@@ -136,9 +136,13 @@ const construct = (el) => {
     redraw();
     
     let rotate, scale
+    let lines = linesEl
+   
     // Properties set on <use>
+    
+    // <lines> is accessible, but not 
     Object.defineProperty(el, 'lines', {
-        get() { return linesEl },
+        get() { return lines },
 
     })
     
@@ -191,11 +195,13 @@ const construct = (el) => {
         }
     })
     // values get applied and logged. So step 1, 
+    // BUT: only can read if set in config!!
+    //(check relation inner/outer - abstract/applied... 🤯)
     // TODO write constructure, restrict access/inheritance
     // try to create style on linesEl.forEach as own object?
    
     //dumpProperties('el', el)
-    //inspectObject('el', el)
+    inspectObject('el', el)
 
   return Object.seal(el);
 };
