@@ -39,6 +39,11 @@ const construct = (el) => {
             this.y = y;
         };
     };
+    // PRIVATE VARS AND DEFAULTS
+    let _radius = el.radius ?? 100;
+    let _points = el.points ?? 5;
+    let _next = el.next ?? 1;
+    let _strokeWidth = el.strokeWidth ?? 4;
     
     // INITIALISATION:
     (function () {   //IIFE
@@ -49,7 +54,7 @@ const construct = (el) => {
             switch (attribute.name) {
 
                 case 'radius':
-                    el.radius = Number(attribute.value);
+                    el.radius = _radius = Number(attribute.value);
                     break;
                 case 'points':
                     el.points = Number(attribute.value);
@@ -74,11 +79,7 @@ const construct = (el) => {
         
     })();
     
-    // PRIVATE VARS AND DEFAULTS
-    let _radius = el.radius ?? 100;
-    let _points = el.points ?? 5;
-    let _next = el.next ?? 1;
-    let _strokeWidth = el.strokeWidth ?? 4;
+    
    
     // CALCULATE POINTS AND APPLY TO LINES
     const redraw = () => {
@@ -185,7 +186,7 @@ const construct = (el) => {
     // can be read from js, but NOT be modified!!
     // TODO add constructor and API
    
-     dumpProperties('el', el)
+    // dumpProperties('el', el)
     //inspectObject('el', el)
 
   return el;

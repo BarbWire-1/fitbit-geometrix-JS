@@ -38,7 +38,7 @@ function updateProps() {
     //i %= 24;
     myPolygon.rotate = 15 * i;
     //note: scaling also impacts strokeWidth!
-    myPolygon.scale = 1 + (i % 2)/2;
+    myPolygon.scale = .5 + (i % 2)/2;
     myPolygon.next = i;
     console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
     console.log(`myPolygon.scale = ${myPolygon.scale}`)
@@ -49,20 +49,20 @@ const delay = 1;
 const limit = 24;
 let a = 1;
 
-// const limitedInterval = setInterval(() => {
-//     updateProps()
-//     if (a > limit) {
-//         clearInterval(limitedInterval);
-//         console.log('-------------------');
-//         console.warn('Interval cleared!');
-//     };
-//     a++;
-// }, delay * 1000);
+const limitedInterval = setInterval(() => {
+    updateProps()
+    if (a > limit) {
+        clearInterval(limitedInterval);
+        console.log('-------------------');
+        console.warn('Interval cleared!');
+    };
+    a++;
+}, delay * 1000);
 
 
 // just confused... mixed at least 3 approaches, I fear
 // do I need to create virtual classes for <transform> and <style>> instead of going on the subElements directly??
-dumpProperties('myPolygon2', myPolygon2, 1)
+
 
 //TEST DEFINE PROPERTIES
 myPolygon.radius = 150 // gets applied
@@ -82,6 +82,8 @@ console.log(myPolygon.rotate)
 
 myPolygon.scale = 0.5 // gets applied
 console.log(myPolygon.scale)// but logged as <undefined>
+
+inspectObject('myPolygon', myPolygon)
 
 
 
