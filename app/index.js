@@ -12,7 +12,7 @@ let myPolygon2 = document.getElementById('myPolygon2');
 //set lines[0] to different color to show rotation and connected next point
 //changed in updateProps()
 // console.log(JSON.stringify(myPolygon.lines))
-// myPolygon.lines[ 0 ].style.fill = 'orange';
+myPolygon.lines[ 0 ].style.fill = 'orange';
 // myPolygon.lines[ 0 ].x1 = 0;
 myPolygon.points = 10;
 //myPolygon2.next = 3;
@@ -28,7 +28,7 @@ myPolygon2.next = 2;
 //         myPolygon2.lines[ i ].style.fill = 'orange'
 //     console.log(`i: ${i}`)
 // }
-// myPolygon2.lines[3].style.fill = 'orange'
+ //myPolygon2.lines[0].style.fill = 'orange'
 
 console.log(JSON.stringify(myPolygon))// this returns an EMPTY OBJECT!!! 😭
 // TODO there must be something fundamentally wrong, in how I create my object LOL
@@ -40,8 +40,8 @@ function updateProps() {
     //note: scaling also impacts strokeWidth!
     myPolygon.scale = .5 + (i % 2)/2;
     myPolygon.next = i;
-    console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
-    console.log(`myPolygon.scale = ${myPolygon.scale}`)
+    // console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
+    // console.log(`myPolygon.scale = ${myPolygon.scale}`)
     i++;
 };
 //to stop animation and logging
@@ -66,24 +66,24 @@ const limitedInterval = setInterval(() => {
 
 //TEST DEFINE PROPERTIES
 myPolygon.radius = 150 // gets applied
-console.log(myPolygon.radius)// but logged as <undefined>
+//console.log(myPolygon.radius)// but logged as <undefined>
 
 myPolygon.points = 7 // gets applied
-console.log(myPolygon.points)// but logged as <undefined>
+//console.log(myPolygon.points)// but logged as <undefined>
 
 myPolygon.strokeWidth = 6 // gets applied
-console.log(myPolygon.strokeWidth)// but logged as <undefined>
+//console.log(myPolygon.strokeWidth)// but logged as <undefined>
 
 myPolygon.next = 1 // gets applied
-console.log(myPolygon.next)// but logged as <undefined>
+//console.log(myPolygon.next)// but logged as <undefined>
 
 myPolygon.rotate = 20 // gets applied
-console.log(myPolygon.rotate)
+//console.log(myPolygon.rotate)
 
 myPolygon.scale = 0.5 // gets applied
-console.log(myPolygon.scale)// but logged as <undefined>
+//console.log(myPolygon.scale)// but logged as <undefined>
 
-inspectObject('myPolygon', myPolygon)
+dumpProperties('myPolygon', myPolygon,1)
 
 
 

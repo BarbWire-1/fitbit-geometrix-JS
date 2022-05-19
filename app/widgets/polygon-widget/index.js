@@ -135,61 +135,69 @@ const construct = (el) => {
     // calculate and layout
     redraw();
     
-    Object.defineProperty(el, 'radius', {
-        get radius() { return el.radius },// why does this log <undefined>???
-        set(newValue) {
-            _radius = newValue;
-            redraw();
-        }
-    });
-    Object.defineProperty(el, 'points', {
-        //get points() { return el.points },// why does this log <undefined>???
-        set(newValue) {
-            _points = newValue;
-            redraw();
-        }
-    });
-    Object.defineProperty(el, 'strokeWidth', {
-        //get strokeWidth() { return el.strokeWidth},// why does this log <undefined>???
-        set(newValue) {
-            _strokeWidth = newValue;
-            redraw();
-        }
-    });
-    Object.defineProperty(el, 'next', {
-        //get points() { return el.points },// why does this log <undefined>???
-        set(newValue) {
-            _next = newValue;
-            redraw();
-        }
-    });
-    Object.defineProperty(el, 'rotate', {
-        //get points() { return el.points },// why does this log <undefined>???
-        set(newValue) {
-            transformEl.groupTransform.rotate.angle
-                = newValue;
-        }
-    });
+    let rotate, scale
+    // Properties set on <use>
+    Object.defineProperty(el, 'lines', {
+        get() { return linesEl },
+
+    })
     
+    Object.defineProperty(el, 'rotate', {
+        get() { return rotate },
+        // equal rotate too to be able to log, as not in _recalc()
+        set(newValue) { rotate = transformEl.groupTransform.rotate.angle = newValue }
+
+    })
+    //this doesn't only influence radius, but also strokeWidth!!!
+    // split into x, y object?
     Object.defineProperty(el, 'scale', {
-        get scale() { return el.scale },// why does this log <undefined>???
+        get() { return scale },
+        // equal scale too to be able to log, as not in _recalc()
         set(newValue) {
-            transformEl.groupTransform.scale.x
+            scale =
+                transformEl.groupTransform.scale.x
                 = transformEl.groupTransform.scale.y
                 = newValue;
         }
     });
-    // this way everything gets applied, but can't be read
-    // everything appears as undefined!
-    
-    // properties from config are recognised as members of <el>
-    // can be read from js, but NOT be modified!!
-    // TODO add constructor and API
+    Object.defineProperty(el, 'radius', {
+        get() { return _radius },
+        set(newValue) {
+            _radius = newValue;
+            redraw()
+        }
+    });
+    Object.defineProperty(el, 'next', {
+        get() { return _next },
+        set(newValue) {
+            _next =  newValue;
+            redraw();
+        }
+    })
+    let points
+    Object.defineProperty(el, 'points', {
+        get() { return _points },
+        set(newValue) {
+            _points = newValue;
+            redraw();
+        }
+    })
+    Object.defineProperty(el, 'strokeWidth', {
+        get() { return _strokeWidth },
+        set(newValue) {
+            console.log(newValue);
+            _strokeWidth = newValue;
+            redraw();
+        }
+    })
+    // values get applied and logged. So step 1, 
+    // TODO write constructure, restrict access/inheritance
+    // try to create style on linesEl.forEach as own object?
    
-    // dumpProperties('el', el)
+    //dumpProperties('el', el)
     //inspectObject('el', el)
 
-  return el;
+  return Object.seal(el);
 };
 
 constructWidgets('polygon', construct);
