@@ -1,5 +1,7 @@
 import { dumpProperties, inspectObject } from "../devTools";
 import document from 'document'
+
+//TODO add another use to play from here
 let el = document.getElementById('myPolygon');
 let linesEl = el.getElementsByClassName('lines')
 
@@ -19,13 +21,13 @@ class PolygonStyle {
         });
         Object.defineProperty(this, 'fill', {
             set(newValue) { elStyle.fill = newValue },
-            get fill() { return this.style.fill }
         })
     }
 
 };
 
 let lineStyle = Object.seal(new PolygonStyle(elStyle))
+
 dumpProperties('lineStyle', lineStyle, 1)
 class Point {
     constructor(x = 0, y = 0) {
@@ -38,9 +40,15 @@ export class Line extends PolygonStyle {
         super(elStyle)
         this.style = lineStyle
     }
-
+    
 };
 linesEl.forEach(line => {
-    Object.seal(new Line(line, elStyle))
+    Object.seal(new Line(line))
 })
-el.lines[ 2 ].style.fill = "limegreen"
+
+
+
+//elStyle = widgetStyle
+//el.lines[ 2 ].style.fill = "limegreen"
+console.log(`linesEl[0]: ${JSON.stringify(linesEl[ 0 ])}`)// are children of uses always hidden? or why can't I read them directly anywhere?
+console.log(linesEl[0].style.fill) //undefined
