@@ -97,4 +97,6 @@ dumpProperties('line', line, 1)
 dumpProperties('line.style', line.style, 1)// inherits ALL style on level 1
 inspectObject('line.style', line.style)
 
+ //myPolygon.lines[ 2 ].style.fill = "blue"
 
+myPolygon.line[0].x1 = -100

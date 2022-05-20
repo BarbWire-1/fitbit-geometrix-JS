@@ -1,7 +1,9 @@
 import { dumpProperties, inspectObject } from "../devTools";
 import document from 'document'
-let myPolygon = document.getElementById('myPolygon');
-let elStyle = myPolygon.lines[0].style
+let el = document.getElementById('myPolygon');
+let linesEl = el.getElementsByClassName('lines')
+
+let elStyle =el.style
 
 class PolygonStyle {
     constructor(elStyle) {
@@ -9,7 +11,7 @@ class PolygonStyle {
         // this.display = display;
         // this.fill = fill;
         Object.defineProperty(this, 'opacity', {
-            
+
             set(newValue) { elStyle.opacity = newValue }
         });
         Object.defineProperty(this, 'display', {
@@ -17,25 +19,28 @@ class PolygonStyle {
         });
         Object.defineProperty(this, 'fill', {
             set(newValue) { elStyle.fill = newValue },
-            get fill() {return this.style.fill}
+            get fill() { return this.style.fill }
         })
-    } 
-    
+    }
+
 };
 
 let lineStyle = Object.seal(new PolygonStyle(elStyle))
-dumpProperties('lineStyle', lineStyle,1)
+dumpProperties('lineStyle', lineStyle, 1)
 class Point {
     constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
     };
 };
-export class Line extends PolygonStyle{
-    constructor(elStyle){
-    super(elStyle)
+export class Line extends PolygonStyle {
+    constructor(elStyle) {
+        super(elStyle)
         this.style = lineStyle
     }
-    
-};
 
+};
+linesEl.forEach(line => {
+    Object.seal(new Line(line, elStyle))
+})
+el.lines[ 2 ].style.fill = "limegreen"
