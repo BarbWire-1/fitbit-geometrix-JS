@@ -23,7 +23,7 @@
 
 import document from 'document';
 
-export const constructWidgets = (widgetType, construct) => {
+export const constructWidgets = (construct, widgetType) => {
   // Finds widget elements of the specified type in the current document and calls construct() for each instance.
   // Ignores widgets that have class 'widget-manual'.
   // Searching the whole document for widgets is slow if the SVG is large.

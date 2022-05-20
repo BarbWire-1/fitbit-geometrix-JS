@@ -32,7 +32,7 @@ const construct = (el) => {
     const linesEl = el.getElementsByClassName("lines");
   
     
-    let elStyle = el.style
+    
     
     class Point {
         constructor(x = 0, y = 0) {
@@ -40,7 +40,8 @@ const construct = (el) => {
             this.y = y;
         };
     };
-// 
+//      //desperate nonsense only!!
+//      let elStyle = el.style
 //     class PolygonStyle {
 //         constructor(elStyle) {
 //            
@@ -254,7 +255,7 @@ const construct = (el) => {
     // TODO write constructure, restrict access/inheritance
     // try to create style on linesEl.forEach as own object?
    
-    dumpProperties('el', el)
+    //dumpProperties('el', el)
     
     inspectObject('el', el)
     
@@ -272,7 +273,8 @@ const construct = (el) => {
     
 };
 
-constructWidgets('polygon', construct);
+constructWidgets(construct, 'polygonA');
+constructWidgets(construct, 'polygonB')
 
 //TODO 0
 /**

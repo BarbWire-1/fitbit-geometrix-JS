@@ -4,39 +4,41 @@ import './widgets/polygon-widget'
 import { dumpProperties, inspectObject } from './widgets/devTools';
 import {Line} from './widgets/polygon-widget/polygonClass'
 
-let myPolygon = document.getElementById('myPolygon');
-dumpProperties('myPolygon top', myPolygon, 1)
+let myPolygonA = document.getElementById('myPolygonA');
+//dumpProperties('myPolygon top', myPolygon, 1)
 
 
-let myPolygon2 = document.getElementById('myPolygon2');
+let myPolygonB = document.getElementById('myPolygonB');
+myPolygonB.lines[ 0 ].style.fill = 'orange';
 
 //set lines[0] to different color to show rotation and connected next point
 //changed in updateProps()
 // console.log(JSON.stringify(myPolygon.lines))
 //myPolygon.lines[ 0 ].style.fill = 'orange';
-myPolygon.points = 10;
+myPolygonA.points = 10;
 
 //TODO restrict access to <lines> on style only!!!
 //myPolygon2.lines[0].x1 = 100
-
-for (let i = 0; i < myPolygon2.points; i++) {
-    if (i % myPolygon2.next == 0)
-        myPolygon2.lines[ i ].style.fill = 'orange'
+myPolygonB.points = 8;
+myPolygonB.next = 2
+for (let i = 0; i < myPolygonB.points; i++) {
+    if (i % myPolygonB.next == 0)
+        myPolygonB.lines[ i ].style.fill = 'orange'
     
 }
  //myPolygon2.lines[0].style.fill = 'orange'
 
-console.log(JSON.stringify(myPolygon))// this returns an EMPTY OBJECT!!! 😭
+console.log(JSON.stringify(myPolygonA))// this returns an EMPTY OBJECT!!! 😭
 // TODO there must be something fundamentally wrong, in how I create my object LOL
 
 let i = 0;
 function updateProps() {
     //inspectObject('myPolygon', myPolygon)//logging ok HERE
     //i %= 24;
-    myPolygon.rotate = 15 * i;
+    myPolygonA.rotate = 15 * i;
     //note: scaling also impacts strokeWidth!
-    myPolygon.scale = .5 + (i % 2)/2;
-    myPolygon.next = i;
+    myPolygonA.scale = .5 + (i % 2)/2;
+    myPolygonA.next = i;
     // console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
     // console.log(`myPolygon.scale = ${myPolygon.scale}`)
     i++;
@@ -62,25 +64,25 @@ const limitedInterval = setInterval(() => {
 
 
 //TEST DEFINE PROPERTIES
-myPolygon.radius = 150 // gets applied
+myPolygonA.radius = 150 // gets applied
 //console.log(myPolygon.radius)// but logged as <undefined>
 
-myPolygon.points = 7 // gets applied
+myPolygonA.points = 7 // gets applied
 //console.log(myPolygon.points)// but logged as <undefined>
 
-myPolygon.strokeWidth = 6 // gets applied
+myPolygonA.strokeWidth = 6 // gets applied
 //console.log(myPolygon.strokeWidth)// but logged as <undefined>
 
-myPolygon.next = 1 // gets applied
+myPolygonA.next = 1 // gets applied
 //console.log(myPolygon.next)// but logged as <undefined>
 
-myPolygon.rotate = 20 // gets applied
+myPolygonA.rotate = 20 // gets applied
 //console.log(myPolygon.rotate)
 
-myPolygon.scale = 0.5 // gets applied
+myPolygonA.scale = 0.5 // gets applied
 //console.log(myPolygon.scale)// but logged as <undefined>
 
-dumpProperties('myPolygon btm', myPolygon,1)
+//dumpProperties('myPolygon btm', myPolygon,1)
 //inspectObject('myPolygon', myPolygon)
 
 // let line = Object.seal(new Line())
@@ -100,10 +102,16 @@ dumpProperties('myPolygon btm', myPolygon,1)
 // console.log(myPolygon.style.fill)
 // console.log(myPolygon.lines[0].style.fill)
 
-myPolygon.style.fill = "blue"// gets inherited to lines
-myPolygon.lines[ 0 ].style.fill = 'limegreen';// directly on line - trumps inherited
-myPolygon.style.fill = "aqua"; //only applied to lines without OWN fill!
+myPolygonA.style.fill = "blue"// gets inherited to lines
+myPolygonA.lines[ 0 ].style.fill = 'limegreen';// directly on line - trumps inherited
+myPolygonA.style.fill = "aqua"; //only applied to lines without OWN fill!
 
 //hmmm instance still as <any>
 // I could define some APIs earlier, but not able to do anything working on lines Array.
 // 
+
+//TODO having 2 different symbol uses as symbol variations only works static ?
+//factory doesn't handle subTypes?
+
+//strange, now construct A/B separately: for B not all props from config get applied
+// check which and why? (points/next ??)
