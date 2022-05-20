@@ -90,7 +90,11 @@ myPolygon.scale = 0.5 // gets applied
 
 let line = Object.seal(new Line())
 line.style.fill = 'red'
-dumpProperties('line', line,1)
+line.style.opacity = 0.5
+console.log(line.style.fill)
 
+dumpProperties('line', line, 1)
+dumpProperties('line.style', line.style, 1)// inherits ALL style on level 1
+inspectObject('line.style', line.style)
 
 

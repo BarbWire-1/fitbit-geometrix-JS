@@ -2,6 +2,7 @@ import { inspectObject } from "../devTools";
 import document from 'document'
 let myPolygon = document.getElementById('myPolygon');
 let elStyle = myPolygon.lines[0].style
+
 class PolygonStyle {
     constructor(elStyle) {
         //this.opacity = opacity;
@@ -15,7 +16,8 @@ class PolygonStyle {
             set(newValue) { elStyle.display = newValue }
         });
         Object.defineProperty(this, 'fill', {
-            set(newValue) { elStyle.fill = newValue }
+            set(newValue) { elStyle.fill = newValue },
+            get fill(){return this.style.fill}
         })
     } 
     
@@ -29,10 +31,9 @@ class Point {
     };
 };
 export class Line extends PolygonStyle{
-    constructor(style){
-    super(style)
-        this.style = elStyle
+    constructor(elStyle){
+    super(elStyle)
+        this.style = lineStyle
     }
-    //get style() {return this.style}
 };
 
