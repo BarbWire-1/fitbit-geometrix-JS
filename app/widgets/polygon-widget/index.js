@@ -32,13 +32,56 @@ const construct = (el) => {
     const linesEl = el.getElementsByClassName("lines");
     const _style = el.style
     
-   
+//     let elStyle = el.style
+// 
+//     class PolygonStyle {
+//         constructor(elStyle) {
+//             //this.opacity = opacity;
+//             // this.display = display;
+//             // this.fill = fill;
+//             Object.defineProperty(this, 'opacity', {
+// 
+//                 set(newValue) { elStyle.opacity = newValue }
+//             });
+//             Object.defineProperty(this, 'display', {
+//                 set(newValue) { elStyle.display = newValue }
+//             });
+//             Object.defineProperty(this, 'fill', {
+//                 set(newValue) { elStyle.fill = newValue },
+//             })
+//             Object.defineProperty(this, 'strokeWidth', {
+//                 set(newValue) { elStyle.strokeWidth = newValue }
+//             })
+//         }
+// 
+//     };
+// 
+//     let lineStyle = Object.seal(new PolygonStyle(elStyle))
+// 
+//     dumpProperties('lineStyle', lineStyle, 1)
     class Point {
         constructor(x = 0, y = 0) {
             this.x = x;
             this.y = y;
         };
     };
+//     class Line extends PolygonStyle {
+//         constructor(elStyle) {
+//             super(elStyle)
+//             this.style = lineStyle
+//         }
+// 
+//     };
+//     let lineAPI = Object.seal({
+//         style: new Line()
+//     });
+//     
+//     let lines = []
+//    linesEl.forEach(line => {
+//        lines.push(Object.seal({ style: new Line(line) }) ) 
+//     })
+    //console.log(lines[ 0 ])
+
     // PRIVATE VARS AND DEFAULTS
     let _radius = el.radius ?? 100;
     let _points = el.points ?? 5;
@@ -82,7 +125,7 @@ const construct = (el) => {
     
    
     // CALCULATE POINTS AND APPLY TO LINES
-    const redraw = () => {
+    const redraw = (el) => {
         
         // set all lines (back) to 'none'
         // TODO only necessary if points != previous.
@@ -141,7 +184,6 @@ const construct = (el) => {
     // Properties set on <use>
     Object.defineProperty(el, 'lines', {
         get() { return linesEl },
-
     });
     
     Object.defineProperty(el, 'rotate', {

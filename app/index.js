@@ -5,7 +5,7 @@ import { dumpProperties, inspectObject } from './widgets/devTools';
 import {Line} from './widgets/polygon-widget/polygonClass'
 
 let myPolygon = document.getElementById('myPolygon');
-
+dumpProperties('myPolygon top', myPolygon, 1)
 
 //NOTE: if there are are no dynamic changes, it doesn't even to be "instantiated" here!
 let myPolygon2 = document.getElementById('myPolygon2');
@@ -24,11 +24,11 @@ myPolygon2.points = 8;
 console.log(`myPolygon2.next: ${myPolygon2.next}`)//aaaah... this way 'undefined'
 myPolygon2.next = 2;
 //why doesn't this get applied????????
-// for (let i = 0; i < myPolygon2.points; i++) {
-//     if (i % myPolygon2.next == 0)
-//         myPolygon2.lines[ i ].style.fill = 'orange'
-//     console.log(`i: ${i}`)
-// }
+for (let i = 0; i < myPolygon2.points; i++) {
+    if (i % myPolygon2.next == 0)
+        myPolygon2.lines[ i ].style.fill = 'orange'
+    console.log(`i: ${i}`)
+}
  //myPolygon2.lines[0].style.fill = 'orange'
 
 console.log(JSON.stringify(myPolygon))// this returns an EMPTY OBJECT!!! 😭
@@ -85,7 +85,7 @@ myPolygon.rotate = 20 // gets applied
 myPolygon.scale = 0.5 // gets applied
 //console.log(myPolygon.scale)// but logged as <undefined>
 
-//dumpProperties('myPolygon', myPolygon,1)
+dumpProperties('myPolygon btm', myPolygon,1)
 //inspectObject('myPolygon', myPolygon)
 
 // let line = Object.seal(new Line())
@@ -104,3 +104,6 @@ myPolygon.scale = 0.5 // gets applied
 // myPolygon.style.fill = 'orange'// set on widget => inherits if not defined!!!
 // console.log(myPolygon.style.fill)
 // console.log(myPolygon.lines[0].style.fill)
+
+myPolygon.style.fill = "blue"
+myPolygon.lines[ 0 ].style.fill = 'orange';
