@@ -13,7 +13,7 @@ let myPolygon2 = document.getElementById('myPolygon2');
 //set lines[0] to different color to show rotation and connected next point
 //changed in updateProps()
 // console.log(JSON.stringify(myPolygon.lines))
-myPolygon.lines[ 0 ].style.fill = 'limegreen';
+myPolygon.lines[ 0 ].style.fill = 'orange';
 // myPolygon.lines[ 0 ].x1 = 0;
 myPolygon.points = 10;
 //myPolygon2.next = 3;
@@ -88,17 +88,19 @@ myPolygon.scale = 0.5 // gets applied
 //dumpProperties('myPolygon', myPolygon,1)
 //inspectObject('myPolygon', myPolygon)
 
-let line = Object.seal(new Line())
-line.style.fill = 'red'
-line.style.opacity = 0.5
-console.log(line.style.fill)// currently logs undefined. had it working but crashed it
+// let line = Object.seal(new Line())
+// line.style.fill = 'red'
+// line.style.opacity = 0.5
+// console.log(line.style.fill)// currently logs undefined. had it working but crashed it
+// 
+// dumpProperties('line', line, 1)
+// dumpProperties('line.style', line.style, 1)// inherits ALL style on level 1
+// inspectObject('line.style', line.style)
 
-dumpProperties('line', line, 1)
-dumpProperties('line.style', line.style, 1)// inherits ALL style on level 1
-inspectObject('line.style', line.style)
-
-myPolygon.lines[ 2 ].style.fill = "blue"// set on line directly
-
-//myPolygon2.lines[ 0 ].x1 = -100// buhuuuuu
-
-myPolygon.style.fill = 'orange'// set on widget => inherits if not defined!!!
+// myPolygon.lines[ 2 ].style.fill = "blue"// set on line directly
+// 
+// //myPolygon2.lines[ 0 ].x1 = -100// buhuuuuu
+// 
+// myPolygon.style.fill = 'orange'// set on widget => inherits if not defined!!!
+// console.log(myPolygon.style.fill)
+// console.log(myPolygon.lines[0].style.fill)
