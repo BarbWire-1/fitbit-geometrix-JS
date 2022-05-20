@@ -132,17 +132,15 @@ const construct = (el) => {
             i++;
         };
     };
-    // calculate and layout
+    // calculate and layout lines
     redraw();
     
     let rotate , scale
-    let lines = linesEl
+    //let lines = linesEl
    
     // Properties set on <use>
-    
-    // <lines> is accessible, but not 
     Object.defineProperty(el, 'lines', {
-        get() { return lines },
+        get() { return linesEl },
 
     });
     
@@ -227,3 +225,7 @@ constructWidgets('polygon', construct);
  *          style ONLY!
  */
 
+// TODO test creating abstract prototype and creating el from there?
+// needs to have class line as can't firgure out how to set props on linesEL.forEach?
+
+//All in all: working, but still not happy as I can't find a nice solution to restrict access and "cut" from prototype-chain 
