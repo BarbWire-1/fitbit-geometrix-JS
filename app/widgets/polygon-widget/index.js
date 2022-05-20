@@ -41,10 +41,12 @@ const construct = (el) => {
     };
     
     // // PRIVATE VARS AND DEFAULTS
-    // let _radius = el.radius ?? 100;
-    // let _points = el.points ?? 5;
-    // let _next = el.next ?? 1;
-    // let _strokeWidth = el.strokeWidth ?? 4;
+    let radius = el.radius ?? 100;
+    let points = el.points ?? 5;
+    let next = el.next ?? 1;
+    let strokeWidth = el.strokeWidth ?? 4;
+    let rotate = el.rotate ?? 0;
+    let scale = el.scale ?? 0;
     // FUNCTIONS------------------------------------------------------------------------
     /**
      * FUNCTION TO DEFINE PROPERTY
@@ -54,78 +56,7 @@ const construct = (el) => {
      * @param {*} target outer object to apply property
      * @param {*} source optional object to read property, if not set = target
      */
-    const defineProp = (obj, prop, target=obj) => {
-        Object.defineProperty(obj, prop, {
-            set(newValue) { prop = newValue; },
-            get() { return  prop  },
-        });
-    };
-    //defineProp(el, 'points')
-    // FUNCTION TO DEFINE TEXTPROPERTIES
-    // pass to all subElements
-    function passStyleToAll(obj, prop) {
-        const equalAll = (prop, value) => {
-            linesEl.forEach(line => {
-               line[ prop ] = value;
-            })
-        };
-
-        Object.defineProperty(obj, prop, {
-            set(newValue) { equalAll(prop, newValue) },
-            //added getter here to be able to use text.length
-            get() { return el[ prop ] },
-            enumerable: true
-        });
-    };
-    class StyleWidget {
-        constructor(elStyle) {
-            //super(elStyle);
-            //pass text-style from el._style to all
-            passStyleToAll(this, 'display');
-            passStyleToAll(this, 'opacity');
-            passStyleToAll(this, 'fill');
-            passStyleToAll(this, 'strokeWidth');
-            
-        }
-    };
-    
-    // CREATE API's-------------------------------------------------------------------
-    // FUNCTION TO EXPOSE TO CORRESPONDING OBJECT
-    function connectAPI(subElement, API) {
-        Object.defineProperty(el, subElement, {
-            get() { return API; },
-        });
-    };
-    let linesAPI = []
-    linesEl.forEach(line => {
-        linesAPI.push(
-            Object.seal({
-                style: Object.seal(new StyleWidget(line.style)),
-            })
-        )
-    });
-    
-    
-    // let widgetStyleAPI = Object.seal({
-    //     //we kept a reference to the real .style in _style
-    //     style: Object.seal(new StyleWidget(elStyle)),
-    //     lines: connectAPI('lines', linesAPI),
-    //     //get lines() {return linesEl},
-    //     set points(newValue) { points = newValue; el.redraw() },
-    //     set next(newValue) { next = newValue; redraw() },
-    //     set strokeWidth(newValue) { strokeWidth = newValue; redraw() },
-    //     set radius(newValue) { radius = newValue; redraw() },
-    //     set rotate(newValue) { transformEl.groupTransform.rotate.angle= newValue },
-    //     set scale(newValue) {
-    //         transformEl.groupTransform.scale.x
-    //             = transformEl.groupTransform.scale.y
-    //             = newValue;
-    //         },
-    //    
-    //     get() { return widgetStyleAPI; },//seems not to be needed
-    //     enumerable: true,
-    // });
-        
+   
         
     
     
@@ -140,25 +71,27 @@ const construct = (el) => {
             switch (attribute.name) {
 
                 case 'radius':
-                    el.radius =  Number(attribute.value);
+                    el.radius =  radius = Number(attribute.value);
                     break;
                 case 'points':
-                    el.points = Number(attribute.value);
+                    el.points = points = Number(attribute.value);
                     break;
                 case 'strokeWidth':
-                    el.strokeWidth = Number(attribute.value);
+                    el.strokeWidth = strokeWidth = Number(attribute.value);
                     break;
                 case 'next':
-                    el.next = Number(attribute.value);
+                    el.next = next = Number(attribute.value);
                     break;
                 case 'rotate':
-                    el.rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
+                    el.rotate = rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
                     break;
                 case 'scale':
-                    el.scale = transformEl.groupTransform.scale.x
+                    el.scale = scale = transformEl.groupTransform.scale.x
                         = transformEl.groupTransform.scale.y
                         = Number(attribute.value);
                     break;
+                case 'lines':
+                    el.lines = linesEl
 
             };
         });
@@ -181,13 +114,13 @@ const construct = (el) => {
         let p = []
 
         // recalc radius depending on strokeW to fit inside
-        let iRadius = el.radius ?? 100;
-        iRadius -= Math.round(el.strokeWidth  / 2);
-        const fract = (2 * Math.PI / el.points);
+        let iRadius = radius ?? 100;
+        iRadius -= Math.round(strokeWidth  / 2);
+        const fract = (2 * Math.PI / points);
 
         let i = 0;
         // calculate and write points to array
-        while (i < el.points) {
+        while (i < points) {
             p.push(new Point(0, 0))
             // calculates x,y to start pt0 at (0,-radius)relative to PolygonCenter
             // to start at top, running clockwise
@@ -199,11 +132,11 @@ const construct = (el) => {
         //sets coords of lines depending on points p and <next> 
         i = 0;
         let npt = el.next
-        while (i < el.points) {
+        while (i < points) {
 
             let l = linesEl[ i ];
             //TODO do this connection to element somewhere else later to keep abstract here?
-            l.style.strokeWidth = el.strokeWidth;
+            l.style.strokeWidth = strokeWidth;
             // set 'used' lines to 'inline'
             l.style.display = 'inline';
                 
@@ -222,6 +155,18 @@ const construct = (el) => {
     redraw();
   
 //     //dumpProperties('el', el)
+    
+    const defineProp = (obj, prop, target='') => {
+        Object.defineProperty(obj, prop, {
+            set(newValue) {target[ prop ] = newValue; redraw() },
+           
+        });
+    };
+
+    defineProp(el, 'radius')
+    defineProp(el, 'points')
+    defineProp(el, 'next')
+    defineProp(el, 'rotate')
     
     inspectObject('el', el)
     

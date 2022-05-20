@@ -9,7 +9,7 @@ dumpProperties('myPolygonA top', myPolygonA, 1)
 myPolygonA.points = 3
 
 let myPolygonB = document.getElementById('myPolygon2');
-//myPolygonB.lines[ 0 ].style.fill = 'orange';
+myPolygonB.lines[ 0 ].style.fill = 'orange';
 
 //set lines[0] to different color to show rotation and connected next point
 //changed in updateProps()
