@@ -4,12 +4,12 @@ import './widgets/polygon-widget'
 import { dumpProperties, inspectObject } from './widgets/devTools';
 import {Line} from './widgets/polygon-widget/polygonClass'
 
-let myPolygonA = document.getElementById('myPolygonA');
-//dumpProperties('myPolygon top', myPolygon, 1)
+let myPolygonA = document.getElementById('myPolygon');
+dumpProperties('myPolygonA top', myPolygonA, 1)
+myPolygonA.points = 3
 
-
-let myPolygonB = document.getElementById('myPolygonB');
-myPolygonB.lines[ 0 ].style.fill = 'orange';
+let myPolygonB = document.getElementById('myPolygon2');
+//myPolygonB.lines[ 0 ].style.fill = 'orange';
 
 //set lines[0] to different color to show rotation and connected next point
 //changed in updateProps()
@@ -21,11 +21,11 @@ myPolygonA.points = 10;
 //myPolygon2.lines[0].x1 = 100
 myPolygonB.points = 8;
 myPolygonB.next = 2
-for (let i = 0; i < myPolygonB.points; i++) {
-    if (i % myPolygonB.next == 0)
-        myPolygonB.lines[ i ].style.fill = 'orange'
-    
-}
+// for (let i = 0; i < myPolygonB.points; i++) {
+//     if (i % myPolygonB.next == 0)
+//         myPolygonB.lines[ i ].style.fill = 'orange'
+//     
+// }
  //myPolygon2.lines[0].style.fill = 'orange'
 
 console.log(JSON.stringify(myPolygonA))// this returns an EMPTY OBJECT!!! 😭
@@ -39,8 +39,8 @@ function updateProps() {
     //note: scaling also impacts strokeWidth!
     myPolygonA.scale = .5 + (i % 2)/2;
     myPolygonA.next = i;
-    // console.log(`myPolygon.rotate = ${myPolygon.rotate}`)
-    // console.log(`myPolygon.scale = ${myPolygon.scale}`)
+     console.log(`myPolygon.rotate = ${myPolygonA.rotate}`)
+    console.log(`myPolygon.scale = ${myPolygonA.scale}`)
     i++;
 };
 //to stop animation and logging
@@ -80,7 +80,7 @@ myPolygonA.rotate = 20 // gets applied
 //console.log(myPolygon.rotate)
 
 myPolygonA.scale = 0.5 // gets applied
-//console.log(myPolygon.scale)// but logged as <undefined>
+console.log(myPolygonA.scale)// but logged as <undefined>
 
 //dumpProperties('myPolygon btm', myPolygon,1)
 //inspectObject('myPolygon', myPolygon)
@@ -103,9 +103,9 @@ myPolygonA.scale = 0.5 // gets applied
 // console.log(myPolygon.lines[0].style.fill)
 
 myPolygonA.style.fill = "blue"// gets inherited to lines
-myPolygonA.lines[ 0 ].style.fill = 'limegreen';// directly on line - trumps inherited
+//myPolygonA.lines[ 0 ].style.fill = 'limegreen';// directly on line - trumps inherited
 myPolygonA.style.fill = "aqua"; //only applied to lines without OWN fill!
-
+//myPolygonA.lines[0].style.fill = "limegreen"
 //hmmm instance still as <any>
 // I could define some APIs earlier, but not able to do anything working on lines Array.
 // 
