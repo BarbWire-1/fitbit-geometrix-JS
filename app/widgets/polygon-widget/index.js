@@ -57,6 +57,16 @@ const construct = (el) => {
     let lineStyle = Object.seal(new PolygonStyle(elStyle))
 
     dumpProperties('lineStyle', lineStyle, 1)
+    /**
+     * App: Members of lineStyle:                                                   (app/widgets/devTools.js:9,5)
+[18:08:14]       App:   Level 0:                                                             (app/widgets/devTools.js:11,9)
+[18:08:14]       App: ----------------------                                                 (app/widgets/devTools.js:31,9)
+[18:08:14]       App:   Level 1:                                                             (app/widgets/devTools.js:11,9)
+[18:08:14]       App: ----------------------                                                 (app/widgets/devTools.js:31,9)
+[18:08:14]       App:   Level 2:                                                             (app/widgets/devTools.js:11,9)
+[18:08:14]       App: {"style":{}}                                               (app/widgets/polygon-widget/index.js:79,5)
+[18:08:14]       App:                       
+     */
     class Point {
         constructor(x = 0, y = 0) {
             this.x = x;
@@ -66,20 +76,19 @@ const construct = (el) => {
     class Line extends PolygonStyle {
         constructor(elStyle) {
             super(elStyle)
-            this.style = lineStyle
+           this.style = lineStyle
         }
 
     };
-    let lineAPI = Object.seal({
-        style: new Line()
-    });
+    
     
     let lines = []
-   linesEl.forEach(line => {
-       lines.push(Object.seal({ style: new Line(line) }) ) 
+    linesEl.forEach(line => {
+       lines.push(Object.seal(new Line(line)) ) 
     })
-    console.log(lines[ 0 ])
-
+    console.log(JSON.stringify(lines[ 0 ]))// {"style":{"style":{}}}  haha
+    inspectObject('lines[0]', lines[ 0 ])//style:{}
+    inspectObject('lines[0].style', lines[ 0 ].style)//style:{}
     // PRIVATE VARS AND DEFAULTS
     let _radius = el.radius ?? 100;
     let _points = el.points ?? 5;
@@ -123,7 +132,7 @@ const construct = (el) => {
     
    
     // CALCULATE POINTS AND APPLY TO LINES
-    const redraw = (el) => {
+    const redraw = () => {
         
         // set all lines (back) to 'none'
         // TODO only necessary if points != previous.
@@ -181,7 +190,10 @@ const construct = (el) => {
    
     // Properties set on <use>
     Object.defineProperty(el, 'lines', {
-        get() { return linesEl },
+        get() { return linesEl},
+    });
+    Object.defineProperty(el, 'style', {
+        get() { return lines.style },
     });
     
     Object.defineProperty(el, 'rotate', {

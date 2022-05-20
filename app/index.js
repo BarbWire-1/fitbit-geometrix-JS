@@ -7,7 +7,7 @@ import {Line} from './widgets/polygon-widget/polygonClass'
 let myPolygon = document.getElementById('myPolygon');
 dumpProperties('myPolygon top', myPolygon, 1)
 
-//NOTE: if there are are no dynamic changes, it doesn't even to be "instantiated" here!
+
 let myPolygon2 = document.getElementById('myPolygon2');
 
 //set lines[0] to different color to show rotation and connected next point
@@ -105,5 +105,8 @@ dumpProperties('myPolygon btm', myPolygon,1)
 // console.log(myPolygon.style.fill)
 // console.log(myPolygon.lines[0].style.fill)
 
-myPolygon.style.fill = "blue"
-myPolygon.lines[ 0 ].style.fill = 'orange';
+myPolygon.style.fill = "blue"// gets inherited to lines
+myPolygon.lines[ 0 ].style.fill = 'orange';// directly on line - trumps inherited
+myPolygon.style.fill = "limegreen"; //only applied to lines without OWN fill!
+
+//hmmm instance still as <any>
