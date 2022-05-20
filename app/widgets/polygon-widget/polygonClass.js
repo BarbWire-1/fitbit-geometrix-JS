@@ -1,4 +1,4 @@
-import { inspectObject } from "../devTools";
+import { dumpProperties, inspectObject } from "../devTools";
 import document from 'document'
 let myPolygon = document.getElementById('myPolygon');
 let elStyle = myPolygon.lines[0].style
@@ -17,13 +17,14 @@ class PolygonStyle {
         });
         Object.defineProperty(this, 'fill', {
             set(newValue) { elStyle.fill = newValue },
-            get fill(){return this.style.fill}
+            get fill() {return this.style.fill}
         })
     } 
     
 };
 
 let lineStyle = Object.seal(new PolygonStyle(elStyle))
+dumpProperties('lineStyle', lineStyle,1)
 class Point {
     constructor(x = 0, y = 0) {
         this.x = x;
@@ -35,5 +36,6 @@ export class Line extends PolygonStyle{
     super(elStyle)
         this.style = lineStyle
     }
+    
 };
 
