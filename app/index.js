@@ -14,20 +14,15 @@ let myPolygon2 = document.getElementById('myPolygon2');
 //changed in updateProps()
 // console.log(JSON.stringify(myPolygon.lines))
 myPolygon.lines[ 0 ].style.fill = 'orange';
-// myPolygon.lines[ 0 ].x1 = 0;
 myPolygon.points = 10;
-//myPolygon2.next = 3;
+
 //TODO restrict access to <lines> on style only!!!
 //myPolygon2.lines[0].x1 = 100
-console.log(`myPolygon2.points: ${myPolygon2.points}`)//aaaah... this way 'undefined'
-myPolygon2.points = 8;
-console.log(`myPolygon2.next: ${myPolygon2.next}`)//aaaah... this way 'undefined'
-myPolygon2.next = 2;
-//why doesn't this get applied????????
+
 for (let i = 0; i < myPolygon2.points; i++) {
     if (i % myPolygon2.next == 0)
         myPolygon2.lines[ i ].style.fill = 'orange'
-    console.log(`i: ${i}`)
+    
 }
  //myPolygon2.lines[0].style.fill = 'orange'
 
@@ -106,7 +101,9 @@ dumpProperties('myPolygon btm', myPolygon,1)
 // console.log(myPolygon.lines[0].style.fill)
 
 myPolygon.style.fill = "blue"// gets inherited to lines
-myPolygon.lines[ 0 ].style.fill = 'orange';// directly on line - trumps inherited
-myPolygon.style.fill = "limegreen"; //only applied to lines without OWN fill!
+myPolygon.lines[ 0 ].style.fill = 'limegreen';// directly on line - trumps inherited
+myPolygon.style.fill = "aqua"; //only applied to lines without OWN fill!
 
 //hmmm instance still as <any>
+// I could define some APIs earlier, but not able to do anything working on lines Array.
+// 

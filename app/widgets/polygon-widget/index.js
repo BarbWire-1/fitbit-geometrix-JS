@@ -33,62 +33,64 @@ const construct = (el) => {
   
     
     let elStyle = el.style
-
-    class PolygonStyle {
-        constructor(elStyle) {
-           
-            Object.defineProperty(this, 'opacity', {
-
-                set(newValue) { elStyle.opacity = newValue }
-            });
-            Object.defineProperty(this, 'display', {
-                set(newValue) { elStyle.display = newValue }
-            });
-            Object.defineProperty(this, 'fill', {
-                set(newValue) { elStyle.fill = newValue },
-            })
-            Object.defineProperty(this, 'strokeWidth', {
-                set(newValue) { elStyle.strokeWidth = newValue }
-            })
-        }
-
-    };
-
-    let lineStyle = Object.seal(new PolygonStyle(elStyle))
-
-    dumpProperties('lineStyle', lineStyle, 1)
-    /**
-     * App: Members of lineStyle:                                                   (app/widgets/devTools.js:9,5)
-[18:08:14]       App:   Level 0:                                                             (app/widgets/devTools.js:11,9)
-[18:08:14]       App: ----------------------                                                 (app/widgets/devTools.js:31,9)
-[18:08:14]       App:   Level 1:                                                             (app/widgets/devTools.js:11,9)
-[18:08:14]       App: ----------------------                                                 (app/widgets/devTools.js:31,9)
-[18:08:14]       App:   Level 2:                                                             (app/widgets/devTools.js:11,9)
-[18:08:14]       App: {"style":{}}                                               (app/widgets/polygon-widget/index.js:79,5)
-[18:08:14]       App:                       
-     */
+    
     class Point {
         constructor(x = 0, y = 0) {
             this.x = x;
             this.y = y;
         };
     };
-    class Line extends PolygonStyle {
-        constructor(elStyle) {
-            super(elStyle)
-           this.style = lineStyle
-        }
-
-    };
-    
-    
-    let lines = []
-    linesEl.forEach(line => {
-       lines.push(Object.seal(new Line(line)) ) 
-    })
-    console.log(JSON.stringify(lines[ 0 ]))// {"style":{"style":{}}}  haha
-    inspectObject('lines[0]', lines[ 0 ])//style:{}
-    inspectObject('lines[0].style', lines[ 0 ].style)//style:{}
+// 
+//     class PolygonStyle {
+//         constructor(elStyle) {
+//            
+//             Object.defineProperty(this, 'opacity', {
+// 
+//                 set(newValue) { elStyle.opacity = newValue }
+//             });
+//             Object.defineProperty(this, 'display', {
+//                 set(newValue) { elStyle.display = newValue }
+//             });
+//             Object.defineProperty(this, 'fill', {
+//                 set(newValue) { elStyle.fill = newValue },
+//             })
+//             Object.defineProperty(this, 'strokeWidth', {
+//                 set(newValue) { elStyle.strokeWidth = newValue }
+//             })
+//         }
+// 
+//     };
+// 
+//     let lineStyle = Object.seal(new PolygonStyle(elStyle))
+// 
+//     dumpProperties('lineStyle', lineStyle, 1)
+//     /**
+//      * App: Members of lineStyle:                                                   (app/widgets/devTools.js:9,5)
+// [18:08:14]       App:   Level 0:                                                             (app/widgets/devTools.js:11,9)
+// [18:08:14]       App: ----------------------                                                 (app/widgets/devTools.js:31,9)
+// [18:08:14]       App:   Level 1:                                                             (app/widgets/devTools.js:11,9)
+// [18:08:14]       App: ----------------------                                                 (app/widgets/devTools.js:31,9)
+// [18:08:14]       App:   Level 2:                                                             (app/widgets/devTools.js:11,9)
+// [18:08:14]       App: {"style":{}}                                               (app/widgets/polygon-widget/index.js:79,5)
+// [18:08:14]       App:                       
+//      */
+//    
+//     class Line extends PolygonStyle {
+//         constructor(elStyle) {
+//             super(elStyle)
+//            this.style = lineStyle
+//         }
+// 
+//     };
+//     
+//     
+//     let lines = []
+//     linesEl.forEach(line => {
+//        lines.push(Object.seal(new Line(line)) ) 
+//     })
+//     console.log(JSON.stringify(lines[ 0 ]))// {"style":{"style":{}}}  haha
+//     inspectObject('lines[0]', lines[ 0 ])//style:{}
+//     inspectObject('lines[0].style', lines[ 0 ].style)//style:{}
     // PRIVATE VARS AND DEFAULTS
     let _radius = el.radius ?? 100;
     let _points = el.points ?? 5;
@@ -129,7 +131,7 @@ const construct = (el) => {
         
     })();
     
-    
+   //linesEl.forEach(line => { line.style = el.style })//TypeError: Invalid argument type.
    
     // CALCULATE POINTS AND APPLY TO LINES
     const redraw = () => {
@@ -192,9 +194,9 @@ const construct = (el) => {
     Object.defineProperty(el, 'lines', {
         get() { return linesEl},
     });
-    Object.defineProperty(el, 'style', {
-        get() { return lines.style },
-    });
+    // Object.defineProperty(el, 'style', { //this crashes <use>style and doesn't apply to lines
+    //     get() { return style },
+    // });
     
     Object.defineProperty(el, 'rotate', {
         get() { return rotate },
