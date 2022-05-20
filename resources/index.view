@@ -1,9 +1,9 @@
 <!-- This file is not a part of the widget template. It demonstrates how to use the sample widget code.-->
 <svg>
-    <use id="myPolygon"  href="#polygon" x="50%" y="50%" fill="#66ff00">
+    <use id="myPolygon"  href="#polygonA" x="50%" y="50%" fill="#66ff00">
         <set href="#config" attributeName="text-buffer" to="radius: 100; next: 2; rotate: 0; points: 10; strokeWidth: 1; " />
     </use>
-    <use id="myPolygon2" href="#polygon" x="50%" y="50%" fill="#ff00fb" >
+    <use id="myPolygon2" href="#polygonB" x="50%" y="50%" fill="#ff00fb" >
         <set href="#config" attributeName="text-buffer" to="radius: 50; next: 2; rotate: 10; points: 5; strokeWidth: 4; " />
     </use>
 </svg>

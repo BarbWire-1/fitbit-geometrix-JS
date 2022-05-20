@@ -19,4 +19,13 @@
    
     <text id="config" display="none" text-length="50" />  
   </symbol>
+  
+<symbol id="polygonA" x="0" y="0" type="polygonA">
+    <use  href="#polygon" />
+</symbol>
+
+<symbol id="polygonB" x="0" y="0" type="polygonB">
+    <use href="#polygon" />
+</symbol>
+
 </defs>

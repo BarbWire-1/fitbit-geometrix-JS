@@ -13,7 +13,7 @@ let myPolygon2 = document.getElementById('myPolygon2');
 //set lines[0] to different color to show rotation and connected next point
 //changed in updateProps()
 // console.log(JSON.stringify(myPolygon.lines))
-myPolygon.lines[ 0 ].style.fill = 'orange';
+//myPolygon.lines[ 0 ].style.fill = 'orange';
 myPolygon.points = 10;
 
 //TODO restrict access to <lines> on style only!!!
