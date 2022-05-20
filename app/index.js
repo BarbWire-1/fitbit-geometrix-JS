@@ -2,6 +2,7 @@
 import document from 'document'
 import './widgets/polygon-widget'
 import { dumpProperties, inspectObject } from './widgets/devTools';
+import {Line} from './widgets/polygon-widget/polygonClass'
 
 let myPolygon = document.getElementById('myPolygon');
 
@@ -86,6 +87,10 @@ myPolygon.scale = 0.5 // gets applied
 
 //dumpProperties('myPolygon', myPolygon,1)
 //inspectObject('myPolygon', myPolygon)
+
+let line = Object.seal(new Line())
+line.style.fill = 'red'
+dumpProperties('line', line,1)
 
 
 
