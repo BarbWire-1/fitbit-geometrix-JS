@@ -1,11 +1,11 @@
 
 import document from 'document'
 import './widgets/polygon-widget'
-import { dumpProperties, inspectObject } from './widgets/devTools';
+//import { dumpProperties, inspectObject } from './widgets/devTools';
 import {Line} from './widgets/polygon-widget/polygonClass'
 
 let myPolygonA = document.getElementById('myPolygon');
-dumpProperties('myPolygonA top', myPolygonA, 1)
+//dumpProperties('myPolygonA top', myPolygonA, 1)
 myPolygonA.points = 3
 
 let myPolygonB = document.getElementById('myPolygon2');
@@ -41,6 +41,7 @@ function updateProps() {
     myPolygonA.next = i;
      console.log(`myPolygon.rotate = ${myPolygonA.rotate}`)
     console.log(`myPolygon.scale = ${myPolygonA.scale}`)
+    myPolygonA.radius /= 1.1
     i++;
 };
 //to stop animation and logging

@@ -23,13 +23,14 @@ SOFTWARE.
 */
 
 import { constructWidgets, parseConfig } from "../construct-widgets";
-import { dumpProperties, inspectObject } from "../devTools/";
+//import { dumpProperties, inspectObject } from "../devTools/";
 import {validInput} from "./validation"
 
 const construct = (el) => {
     //GET ELEMENTS FOR POLYGON
     const transformEl = el.getElementById("transform");
     const linesEl = el.getElementsByClassName("lines");
+    const configEl = el.getElementById("config")
     
     const elStyle = el.style
   
@@ -71,13 +72,13 @@ const construct = (el) => {
             switch (attribute.name) {
 
                 case 'radius':
-                    el.radius =  radius = Number(attribute.value);
+                   radius  = Number(attribute.value);
                     break;
                 case 'points':
-                    el.points = points = Number(attribute.value);
+                    points = Number(attribute.value);
                     break;
                 case 'strokeWidth':
-                    el.strokeWidth = strokeWidth = Number(attribute.value);
+                     strokeWidth = Number(attribute.value);
                     break;
                 case 'next':
                     el.next = next = Number(attribute.value);
@@ -155,20 +156,36 @@ const construct = (el) => {
     redraw();
   
 //     //dumpProperties('el', el)
-    
-    const defineProp = (obj, prop, target='') => {
-        Object.defineProperty(obj, prop, {
-            set(newValue) {target[ prop ] = newValue; redraw() },
-           
-        });
-    };
-
-    defineProp(el, 'radius')
-    defineProp(el, 'points')
-    defineProp(el, 'next')
-    defineProp(el, 'rotate')
-    
-    inspectObject('el', el)
+   console.log("test: "+configEl.text.split(';')[0])
+    Object.defineProperty(el, 'radius', {
+        get() { return radius },
+        set(newValue) {
+            configEl.text.split(';')[ 0 ] = radius = newValue;
+            redraw()
+        }
+    });
+    Object.defineProperty(el, 'points', {
+        get() { return points },
+        set(newValue) {
+            points = newValue;
+            redraw()
+        }
+    });
+    Object.defineProperty(el, 'next', {
+        get() { return next },
+        set(newValue) {
+            next = newValue;
+            redraw()
+        }
+    });
+    //If I add this, <rotate> is no longer shown as use's property
+    Object.defineProperty(el, 'rotate', {
+        get() { return transformEl.groupTransform.rotate.angle },
+        set(newValue) {
+            transformEl.groupTransform.rotate.angle = newValue;
+            redraw()
+        }
+    });
     
     return el;
     
