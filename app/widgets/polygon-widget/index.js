@@ -77,7 +77,7 @@ const construct = (el) => {
             switch (attribute.name) {
 
                 case 'radius':
-                   el.radius  = Number(attribute.value);
+                   el.radius  = _radius = Number(attribute.value);
                     break;
                 case 'points':
                     el.points = Number(attribute.value);
@@ -203,21 +203,21 @@ const construct = (el) => {
             }
         },
        get next() { return next },
-        set next(newValue) {
-         next = newValue;
-            redraw();
-        },
+        // set next(newValue) {
+        //  next = newValue;
+        //     redraw();
+        // },
          get radius() { return _radius },
         set radius(newValue) {
             _radius = newValue;
             console.log(_radius)
             redraw();
         },
-        //get rotate() { return rotate },
-        // set rotate(newValue) {
-        //     rotate = transformEl.groupTransform.rotate.angle = newValue;
-        //     redraw();
-        // },
+        get rotate() { return rotate },
+        set rotate(newValue) {
+            rotate = transformEl.groupTransform.rotate.angle = newValue;
+            redraw();
+        },
         get points() { return element.points },
         // set points(newValue) {
         //     points = newValue;
@@ -229,7 +229,18 @@ const construct = (el) => {
         //     redraw();
         // },
         get lines() { return linesEl },
-        get settings() {return configEl},
+        get settings() { return configEl },
+        
+        get scale() {
+            return {
+                get x() { return element.scale.x },
+                set x(newValue) { element.scale.x = newValue },
+                get y() { return element.scale.y },
+                set y(newValue) { element.scale.y = newValue }
+            }
+        }
+       
+       
         
 
        }),
