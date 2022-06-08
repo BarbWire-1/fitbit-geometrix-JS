@@ -31,6 +31,7 @@ const construct = (el) => {
     const transformEl = el.getElementById("transform");
     const linesEl = el.getElementsByClassName("lines");
     const configEl = el.getElementById("config");
+    //TODO add an object containing settings from configEL!!
     // console.log(JSON.stringify(configEl.text));
     // console.log(configEl.text.split(';')[ 0 ]);
     
@@ -48,7 +49,8 @@ const construct = (el) => {
     };
     
     // // PRIVATE VARS AND DEFAULTS
-    let radius = el.radius ?? 100;
+    let _radius// = settings[ 1 ];
+    //TODO now got _radius as private var, tied to config
     let points = el.points ?? 5;
     let next = el.next ?? 1;
     let strokeWidth = el.strokeWidth ?? 4;
@@ -78,7 +80,7 @@ const construct = (el) => {
             switch (attribute.name) {
 
                 case 'radius':
-                   radius  = Number(attribute.value);
+                   _radius  = Number(attribute.value);
                     break;
                 case 'points':
                     points = Number(attribute.value);
@@ -121,7 +123,7 @@ const construct = (el) => {
         let p = []
 
         // recalc radius depending on strokeW to fit inside
-        let iRadius = radius ?? 100;
+        let iRadius = _radius ?? 100;
         iRadius -= Math.round(strokeWidth  / 2);
         const fract = (2 * Math.PI / points);
 
@@ -164,9 +166,9 @@ const construct = (el) => {
 //     //dumpProperties('el', el)
    console.log("test: "+configEl.text.split(';')[0])
     Object.defineProperty(el, 'radius', {
-        get() { return radius },
+        get() { return _radius },
         set(newValue) {
-            configEl.text.split(';')[ 0 ] = radius = newValue;
+            _radius = newValue;
             redraw()
         }
     });

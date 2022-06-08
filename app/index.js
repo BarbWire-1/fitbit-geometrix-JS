@@ -28,7 +28,7 @@ myPolygonB.next = 2
 // }
  //myPolygon2.lines[0].style.fill = 'orange'
 
-console.log(JSON.stringify(myPolygonA))// this returns an EMPTY OBJECT!!! 😭
+console.log(JSON.stringify(myPolygonA))// this now only includes lines-object 😭
 // TODO there must be something fundamentally wrong, in how I create my object LOL
 
 let i = 0;
