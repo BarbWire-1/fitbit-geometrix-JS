@@ -1,7 +1,7 @@
 
 import document from 'document'
 import './widgets/polygon-widget'
-//import { dumpProperties, inspectObject } from './widgets/devTools';
+import { dumpProperties, inspectObject } from './widgets/devTools';
 import {Line} from './widgets/polygon-widget/polygonClass'
 
 let myPolygonA = document.getElementById('myPolygon');
@@ -116,3 +116,20 @@ myPolygonA.style.fill = "aqua"; //only applied to lines without OWN fill!
 
 //strange, now construct A/B separately: for B not all props from config get applied
 // check which and why? (points/next ??)
+
+const createPotatoWidget = (element) => ({
+    get style(){
+        return {
+            get fill() { return element.style.fill },
+            set fill(color) { element.style.fill = color }
+        }
+    },
+    get cx() { return element.cx },
+    //set cx(newValue) {element.cx = newValue}
+});
+
+const potato = Object.seal(createPotatoWidget(document.getElementById('potato')));
+
+potato.style.fill = "red"
+console.log(potato.style.fill)// "red"
+potato.cx =200
