@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 import { constructWidgets, parseConfig } from "../construct-widgets";
+import { inspectObject } from "../devTools";
 //import { dumpProperties, inspectObject } from "../devTools/";
 import {validInput} from "./validation"
 
@@ -34,8 +35,30 @@ const construct = (el) => {
     //TODO add an object containing settings from configEL!!
     // console.log(JSON.stringify(configEl.text));
     // console.log(configEl.text.split(';')[ 0 ]);
+    let settings = [];
+   
+    (function(){
+        const config = el.getElementById('config').text;
+        if (config === "") return;
+
+        const attributes = config.split(';');
+        attributes.forEach(attribute => {
+            const colonIndex = attribute.indexOf(':')
+            if (colonIndex > 0) {   // to ignore trailing ; and malformed attributes
+                const attributeName = attribute.substring(0, colonIndex).trim();
+                console.log(attributeName)
+                const attributeValue = attribute.substring(colonIndex + 1).trim();
+                
+                settings.push({ [ attributeName ]: attributeValue })
+            }
+        });
+    }) ();
     
-    let settings = configEl.text.split(';');
+    
+   console.log(settings.keys)
+settings.radius = _radius = 200
+ inspectObject('settings', settings)
+   
     console.log(JSON.stringify(settings))// array of string-objects: ["radius: 50",...]
     // console.log(`settings[0]: ${settings[ 0 ]}`)
     
@@ -80,13 +103,13 @@ const construct = (el) => {
             switch (attribute.name) {
 
                 case 'radius':
-                   _radius  = Number(attribute.value);
+                   el.radius  = Number(attribute.value);
                     break;
                 case 'points':
-                    points = Number(attribute.value);
+                    el.points = Number(attribute.value);
                     break;
                 case 'strokeWidth':
-                     strokeWidth = Number(attribute.value);
+                     el.strokeWidth = Number(attribute.value);
                     break;
                 case 'next':
                     el.next = next = Number(attribute.value);
@@ -164,37 +187,71 @@ const construct = (el) => {
     redraw();
   
 //     //dumpProperties('el', el)
-   console.log("test: "+configEl.text.split(';')[0])
-    Object.defineProperty(el, 'radius', {
-        get() { return _radius },
-        set(newValue) {
-            _radius = newValue;
-            redraw()
-        }
-    });
-    Object.defineProperty(el, 'points', {
-        get() { return points },
-        set(newValue) {
-            points = newValue;
-            redraw()
-        }
-    });
-    Object.defineProperty(el, 'next', {
-        get() { return next },
-        set(newValue) {
-            next = newValue;
-            redraw()
-        }
-    });
-    //If I add this, <rotate> is no longer shown as use's property
-    Object.defineProperty(el, 'rotate', {
-        get() { return transformEl.groupTransform.rotate.angle },
-        set(newValue) {
-            transformEl.groupTransform.rotate.angle = newValue;
-            redraw()
-        }
-    });
+//    console.log("test: "+configEl.text.split(';')[0])
+//     Object.defineProperty(el, 'radius', {
+//         get() { return _radius },
+//         set(newValue) {
+//             _radius = newValue;
+//             redraw()
+//         }
+//     });
+//     Object.defineProperty(el, 'points', {
+//         get() { return points },
+//         set(newValue) {
+//             points = newValue;
+//             redraw()
+//         }
+//     });
+//     Object.defineProperty(el, 'next', {
+//         get() { return next },
+//         set(newValue) {
+//             next = newValue;
+//             redraw()
+//         }
+//     });
+//     //If I add this, <rotate> is no longer shown as use's property
+//     Object.defineProperty(el, 'rotate', {
+//         get() { return transformEl.groupTransform.rotate.angle },
+//         set(newValue) {
+//             transformEl.groupTransform.rotate.angle = newValue;
+//             redraw()
+//         }
+//     });
     
+    const createPolygonWidget = (element) => ({
+
+       
+        
+        get style() {
+            return {
+                get fill() { return element.style.fill },
+                set fill(color) { element.style.fill = color }
+            }
+        },
+        get next() { return next },
+        set next(newValue) {
+          next = newValue;
+            redraw();
+        },
+        get radius() { return element.radius },
+        set radius(newValue) {
+            element.radius = newValue;
+            redraw();
+        },
+        get points() { return points },
+        set points(newValue) {
+            points = newValue;
+            redraw();
+        },
+        
+       
+        //get cx() { return element.cx },
+        //set cx(newValue) {element.cx = newValue}
+    });
+
+    //const potato = Object.seal(createPotatoWidget(document.getElementById('potato')));
+    el = createPolygonWidget(el)
+    inspectObject('el', el)
     return el;
     
 };
