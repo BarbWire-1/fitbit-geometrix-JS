@@ -3,6 +3,7 @@ import document from 'document'
 import './widgets/polygon-widget'
 import { dumpProperties, inspectObject } from './widgets/devTools';
 import {Line} from './widgets/polygon-widget/polygonClass'
+import { parseConfig } from './widgets/construct-widgets';
 
 let myPolygonA = document.getElementById('myPolygon');
 //dumpProperties('myPolygonA top', myPolygonA, 1)
@@ -118,6 +119,7 @@ myPolygonA.style.fill = "aqua"; //only applied to lines without OWN fill!
 // check which and why? (points/next ??)
 
 const createPotatoWidget = (element) => ({
+   
     get style(){
         return {
             get fill() { return element.style.fill },
@@ -132,4 +134,5 @@ const potato = Object.seal(createPotatoWidget(document.getElementById('potato'))
 
 potato.style.fill = "red"
 console.log(potato.style.fill)// "red"
+dumpProperties('potato', potato,1)
 potato.cx =200
