@@ -30,7 +30,13 @@ const construct = (el) => {
     //GET ELEMENTS FOR POLYGON
     const transformEl = el.getElementById("transform");
     const linesEl = el.getElementsByClassName("lines");
-    const configEl = el.getElementById("config")
+    const configEl = el.getElementById("config");
+    // console.log(JSON.stringify(configEl.text));
+    // console.log(configEl.text.split(';')[ 0 ]);
+    
+    let settings = configEl.text.split(';');
+    console.log(JSON.stringify(settings))// array of string-objects: ["radius: 50",...]
+    // console.log(`settings[0]: ${settings[ 0 ]}`)
     
     const elStyle = el.style
   
