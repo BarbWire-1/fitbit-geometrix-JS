@@ -42,13 +42,13 @@ export const construct = (el) => {
         };
     };
     
-    // // PRIVATE VARS AND DEFAULTS
-    let _radius// = settings[ 1 ];
-  
-    let _points// = el.points ?? 5;
+    // PRIVATE VARS
+    // defaults are now set in symbol config.text
+    let _radius, _points
+    
     let next// = el.next ?? 1;
     let strokeWidth//= el.strokeWidth ?? 4;
-    let rotate// = el.rotate ?? 0;
+    let rotate = transformEl.groupTransform.rotate.angle// = el.rotate ?? 0;
     let scale// = el.scale ?? 0;
    
         
@@ -95,11 +95,11 @@ export const construct = (el) => {
    //linesEl.forEach(line => { line.style = el.style })//TypeError: Invalid argument type.
    
     // CALCULATE POINTS AND APPLY TO LINES
-    const redraw = () => {
+    const recalc = () => {
         
         // set all lines (back) to 'none'
         // TODO only necessary if points != previous.
-        // better check for that or just change for any redraw()???
+        // better check for that or just change for any recalc()???
         // possible to include this in setter for <points>? Perhaps???
         linesEl.forEach(line => {
             line.style.display = 'none'
@@ -145,80 +145,73 @@ export const construct = (el) => {
             i++;
         };
     };
-    // calculate and layout lines
    
-  
-//     //dumpProperties('el', el)
-//    console.log("test: "+configEl.text.split(';')[0])
-   
+   // ABSTRACT SETTINGS NEED TO BE DEFINED ON EL SEPARATELY
     Object.defineProperty(el, 'radius', {
         get() { return _radius },
         set(newValue) {
             _radius = newValue;
-            redraw()
+            recalc()
         }
     });
     Object.defineProperty(el, 'points', {
         get() { return _points },
         set(newValue) {
             _points = newValue;
-            redraw()
+            recalc()
         }
     });
     Object.defineProperty(el, 'next', {
         get() { return next },
         set(newValue) {
             next = newValue;
-            redraw()
+            recalc()
         }
      });
-    //If I add this, <rotate> is no longer shown as use's property
     Object.defineProperty(el, 'rotate', {
-        get() { return transformEl.groupTransform.rotate.angle },
+        get() { return rotate},
         set(newValue) {
-            transformEl.groupTransform.rotate.angle = newValue;
-            redraw()
+            rotate = newValue;
         }
     });
     
-    const createPolygonWidget = (element) => ({
-        
-
+    //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
+    const createPolygonWidget = (element) => ({  
         get style() {
             return {
                 get fill() { return element.style.fill },
                 set fill(color) { element.style.fill = color }
             }
         },
-       get next() { return next },
+        get next() { return next },
         set next(newValue) {
          next = newValue;
-            redraw();
+            recalc();
         },
-         get radius() { return _radius },
+        get radius() { return _radius },
         set radius(newValue) {
             _radius = newValue;
             console.log(_radius)
-            redraw();
+            recalc();
         },
         get rotate() { return rotate },
         set rotate(newValue) {
-            rotate = transformEl.groupTransform.rotate.angle = newValue;
-            redraw();
+            transformEl.groupTransform.rotate.angle = newValue;
+            recalc();
         },
         get points() { return _points },
         set points(newValue) {
             _points = newValue;
-            redraw();
+            recalc();
         },
         get strokeWidth() { return strokeWidth },
         set strokeWidth(newValue) {
             strokeWidth = newValue;
-            redraw();
+            recalc();
         },
         get lines() {
-           
-            // return linesEl;
+           //TODO create style obj element.children.forEach
+            //return linesEl;
             return {
                 get style() {
                     return {
@@ -242,15 +235,9 @@ export const construct = (el) => {
        
         
 
-       })
-        //get cx() { return element.cx },
-        //set cx(newValue) {element.cx = newValue}
-    //});
-       
-    //const potato = Object.seal(createPotatoWidget(document.getElementById('potato')));
-       // el = createPolygonWidget(el)
-    redraw();
-    //inspectObject('el', el)
+    })
+    
+    recalc();
     return createPolygonWidget(el);
     
 };
