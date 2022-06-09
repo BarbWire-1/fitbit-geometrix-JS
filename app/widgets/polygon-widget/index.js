@@ -126,12 +126,12 @@ export const construct = (useEl) => {
     // create style-Objects
     (function () { //IIFE
         _lines = [];
-        const createStyleObject = (element) => ({
+        const createStyleObject = (ele) => ({
             get style() {
                 return {
-                    set fill(newValue) { element.style.fill = newValue },
-                    set opacity(newValue) { element.style.opacity = newValue },
-                    set display(newValue) { element.style.display = newValue },
+                    set fill(newValue) { ele.style.fill = newValue },
+                    set opacity(newValue) { ele.style.opacity = newValue },
+                    set display(newValue) { ele.style.display = newValue },
                 }
             }
         });
@@ -146,14 +146,14 @@ export const construct = (useEl) => {
 
 
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
-    const createPolygonWidget = (element) => ({
+    const createPolygonWidget = (ele) => ({
        
         // settings directly applied to useEl
         style: _style.style,//TODO haha...
-        get x() { return element.x },
-        set x(newValue) { element.x = newValue },
-        get y() { return element.y },
-        set y(newValue) { element.y = newValue },
+        get x() { return ele.x },
+        set x(newValue) { ele.x = newValue },
+        get y() { return ele.y },
+        set y(newValue) { ele.y = newValue },
         
         // following get applied to 'real' elements
         get strokeWidth() { return _strokeWidth },
