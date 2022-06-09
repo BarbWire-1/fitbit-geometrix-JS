@@ -31,10 +31,7 @@ export const construct = (el) => {
     //GET ELEMENTS FOR POLYGON
     const transformEl = el.getElementById("transform");
     const linesEl = el.getElementsByClassName("lines");
-    const configEl = el.getElementById("config");
-    //TODO add an object containing settings from configEL!!
-    // console.log(JSON.stringify(configEl.text));
-    // console.log(configEl.text.split(';')[ 0 ]);
+    
    
     const elStyle = el.style
   
@@ -47,21 +44,12 @@ export const construct = (el) => {
     
     // // PRIVATE VARS AND DEFAULTS
     let _radius// = settings[ 1 ];
-    //TODO now got _radius as private var, tied to config
-    let points = el.points ?? 5;
-    let next = el.next ?? 1;
-    let strokeWidth = el.strokeWidth ?? 4;
-    let rotate = el.rotate ?? 0;
-    let scale = el.scale ?? 0;
-    // FUNCTIONS------------------------------------------------------------------------
-    /**
-     * FUNCTION TO DEFINE PROPERTY
-     * (getter/setter optional bound to different objects)
-     * @param {*} obj    object to set prop on. Depending on use case this or el
-     * @param {*} prop   property
-     * @param {*} target outer object to apply property
-     * @param {*} source optional object to read property, if not set = target
-     */
+  
+    let _points// = el.points ?? 5;
+    let next// = el.next ?? 1;
+    let strokeWidth//= el.strokeWidth ?? 4;
+    let rotate// = el.rotate ?? 0;
+    let scale// = el.scale ?? 0;
    
         
     
@@ -80,16 +68,16 @@ export const construct = (el) => {
                    el.radius  = _radius = Number(attribute.value);
                     break;
                 case 'points':
-                    el.points = Number(attribute.value);
+                    el.points = _points = Number(attribute.value);
                     break;
                 case 'strokeWidth':
-                     el.strokeWidth = Number(attribute.value);
+                     el.strokeWidth = strokeWidth = Number(attribute.value);
                     break;
                 case 'next':
                     el.next = next = Number(attribute.value);
                     break;
                 case 'rotate':
-                    el.rotate  = transformEl.groupTransform.rotate.angle = Number(attribute.value);
+                    el.rotate  = rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
                     break;
                 case 'scale':
                     el.scale = scale = transformEl.groupTransform.scale.x
@@ -122,11 +110,11 @@ export const construct = (el) => {
         // recalc radius depending on strokeW to fit inside
         let iRadius = _radius ?? 100;
         iRadius -= Math.round(strokeWidth  / 2);
-        const fract = (2 * Math.PI / points);
+        const fract = (2 * Math.PI / _points);
 
         let i = 0;
         // calculate and write points to array
-        while (i < points) {
+        while (i < _points) {
             p.push(new Point(0, 0))
             // calculates x,y to start pt0 at (0,-radius)relative to PolygonCenter
             // to start at top, running clockwise
@@ -135,10 +123,10 @@ export const construct = (el) => {
             i++;
         };
              
-        //sets coords of lines depending on points p and <next> 
+        //sets coords of lines depending on _points p and <next> 
         i = 0;
         let npt = el.next
-        while (i < points) {
+        while (i < _points) {
 
             let l = linesEl[ i ];
             //TODO do this connection to element somewhere else later to keep abstract here?
@@ -146,12 +134,12 @@ export const construct = (el) => {
             // set 'used' lines to 'inline'
             l.style.display = 'inline';
                 
-            //start points
+            //start _points
             l.x1 = p[ i ].x;
             l.y1 = p[ i ].y;
 
             //end points
-            let nextPt = p[ (i + npt) % el.points ] ?? p[ 0 ];
+            let nextPt = p[ (i + npt) % _points ] ?? p[ 0 ];
             l.x2 = nextPt.x;
             l.y2 = nextPt.y;
             i++;
@@ -171,9 +159,9 @@ export const construct = (el) => {
         }
     });
     Object.defineProperty(el, 'points', {
-        get() { return points },
+        get() { return _points },
         set(newValue) {
-            points = newValue;
+            _points = newValue;
             redraw()
         }
     });
@@ -218,9 +206,9 @@ export const construct = (el) => {
             rotate = transformEl.groupTransform.rotate.angle = newValue;
             redraw();
         },
-        get points() { return points },
+        get points() { return _points },
         set points(newValue) {
-            points = newValue;
+            _points = newValue;
             redraw();
         },
         get strokeWidth() { return strokeWidth },
@@ -240,7 +228,7 @@ export const construct = (el) => {
                 },
             } 
         },
-        get settings() { return configEl },
+       // get settings() { return configEl },
         
         get scale() {
             return {

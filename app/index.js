@@ -10,13 +10,14 @@ let myPolygonA = Object.seal(construct(document.getElementById('myPolygon')));
 //dumpProperties('myPolygonA', myPolygonA, 1)
 //myPolygonA.points = 3
 inspectObject('myPolygonA', myPolygonA)
-let myPolygonB = document.getElementById('myPolygon2');
-
-myPolygonA.style.fill = 'orange',
-    myPolygonA.next = 1
-
-myPolygonA.rotate = 30
-myPolygonA.lines.style.fill= 'blue'
+let myPolygonB = Object.seal(construct(document.getElementById('myPolygon2')));
+myPolygonB.points = 3
+// 
+// myPolygonA.style.fill = 'orange',
+//     myPolygonA.next = 1
+// 
+// myPolygonA.rotate = 30
+// myPolygonA.lines.style.fill= 'blue'
 // //myPolygonB.lines[ 0 ].style.fill = 'orange';
 // 
 // //set lines[0] to different color to show rotation and connected next point

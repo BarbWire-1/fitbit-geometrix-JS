@@ -18,7 +18,7 @@
     </g>
    
 <text id="config" display="none" text-length="50" >
-   radius: 100; next: 2; rotate: 0; points: 10; strokeWidth: 1; lines: linesG
+   <!-- radius: 100; next: 2; rotate: 0; points: 10; strokeWidth: 1; lines: linesG -->
 </text>
   </symbol>
   
