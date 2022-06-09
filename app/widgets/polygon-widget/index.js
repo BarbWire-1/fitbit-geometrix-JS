@@ -207,7 +207,7 @@ export const construct = (useEl) => {
     });
     Object.defineProperty(useEl, 'next', {
         get() { return _next },
-        set(newValue) { _next = newValue;}
+        set(newValue) { _next = newValue; }
     });
   
     
