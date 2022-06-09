@@ -23,3 +23,5 @@ myPolygonA.style.fill = 'yellow'
 inspectObject('myPolygonA', myPolygonA)
 dumpProperties('myPolygonA', myPolygonA, 1)
 
+myPolygonA.x = 100
+

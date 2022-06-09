@@ -144,11 +144,16 @@ export const construct = (useEl) => {
     let _lines = [];
     linesEl.forEach(line => _lines.push(Object.seal(createStyleObject(line))));
     
-    let useStyle =  createStyleObject(useEl);// this isn't working
+    let useStyle =  createStyleObject(useEl.style);// this isn't working
     
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
     const createPolygonWidget = (element) => ({
+        
         // settings directly applied to useEl
+        get x() { return element.x },
+        set x(newValue) { element.x = newValue },
+        get y() { return element.y },
+        set y(newValue) { element.y = newValue },
         get style() {
             return {
                 get fill() { return element.style.fill },
@@ -157,7 +162,7 @@ export const construct = (useEl) => {
                 set opacity(newValue) { element.style.opacity = newValue },
                 get display() { return element.style.display },
                 set display(newValue) { element.style.display = newValue },
-                // useStyle;
+                 //useStyle
             }
         },
         //get style() {return useStyle},
@@ -185,7 +190,6 @@ export const construct = (useEl) => {
             recalc();
         },
         get lines() {
-            //TODO create style obj .forEach
             return _lines;
         },
         // directly on transformEL, no recalc() needed
@@ -242,6 +246,8 @@ export const construct = (useEl) => {
             }
         }
     });
+   
+    
     
     
     
