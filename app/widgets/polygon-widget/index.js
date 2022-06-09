@@ -69,7 +69,7 @@ export const construct = (el) => {
    
     
     // INITIALISATION:
-    // (function () {   //IIFE
+     (function () {   //IIFE
         
         parseConfig(el, attribute => {
             // This anonymous function is called for every attribute in config.
@@ -102,7 +102,7 @@ export const construct = (el) => {
             };
         });
         
-    // })();
+     })();
     
    //linesEl.forEach(line => { line.style = el.style })//TypeError: Invalid argument type.
    
