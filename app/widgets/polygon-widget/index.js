@@ -233,11 +233,12 @@ export const construct = (useEl) => {
   
     
     recalc();
+    //inspectObject('useEl', useEl)
     return createPolygonWidget(useEl);
     
 };
-
-constructWidgets( 'polygon');
+//now construct in app/index
+constructWidgets('polygon');
 
 
 //TODO 0
