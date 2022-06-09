@@ -42,15 +42,9 @@ export const construct = (useEl) => {
         };
     };
     
-    // PRIVATE VARS
+    // PRIVATE VARS (abstract settings)
     // defaults set in symbol config.text
     let _radius, _points, _rotate, _next, _strokeWidth, _scale
-    
-   
-        
-    
-    
-   
     
     // INITIALISATION:
      (function () {   //IIFE
@@ -81,7 +75,7 @@ export const construct = (useEl) => {
         
      })();
     
-   //linesEl.forEach(line => { line.style = el.style })//TypeError: Invalid argument type.
+   
    
     // CALCULATE POINTS AND APPLY TO LINES
     const recalc = () => {
@@ -204,16 +198,8 @@ export const construct = (useEl) => {
             recalc();
         },
         get lines() {
-           //TODO create style obj element.children.forEach
-            //return linesEl;
-            return {
-                get style() {
-                    return {
-                        get fill() { return element.style.fill },
-                        set fill(color) { element.style.fill = color }
-                    }
-                },
-            } 
+           //TODO create style obj .forEach
+            return linesEl;
         },
         // directly on transformEL, no recalc() needed
         get rotate() { return _rotate },
