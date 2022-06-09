@@ -126,12 +126,11 @@ export const construct = (useEl) => {
         };
     };
     
-    // create an array of line-objects to restrict acces
-    
+   
+    // create style-Object
     const createStyleObject = (element) => ({
         get style() {
-            return {
-                
+            return {    
                 get fill() { return element.style.fill },
                 set fill(newValue) { element.style.fill = newValue },
                 get opacity() { return element.style.opacity },
@@ -141,49 +140,25 @@ export const construct = (useEl) => {
             }
         }   
     });
+    
+    // array with line-styleObjects to expose style on lines only
     let _lines = [];
     linesEl.forEach(line => _lines.push(Object.seal(createStyleObject(line))));
     
-    let useStyle =  createStyleObject(useEl.style);// this isn't working
-    
+    // private styleObject on useEl containing(!) style. ugly!!!
+    let _style = createStyleObject(useEl);
+
+
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
     const createPolygonWidget = (element) => ({
-        
+       
         // settings directly applied to useEl
+        style: _style.style,//TODO haha...
         get x() { return element.x },
         set x(newValue) { element.x = newValue },
         get y() { return element.y },
         set y(newValue) { element.y = newValue },
-        get style() {
-            return {
-                get fill() { return element.style.fill },
-                set fill(newValue) { element.style.fill = newValue },
-                get opacity() { return element.style.opacity },
-                set opacity(newValue) { element.style.opacity = newValue },
-                get display() { return element.style.display },
-                set display(newValue) { element.style.display = newValue },
-                 //useStyle
-            }
-        },
-        //get style() {return useStyle},
-        // abstract settings only used for recalc()
-        // strokeWidth additionally passed to lines
-        get next() { return _next },
-        set next(newValue) {
-            _next = newValue;
-            recalc();
-        },
-        get radius() { return _radius },
-        set radius(newValue) {
-            _radius = newValue;
-            console.log(_radius)
-            recalc();
-        },
-        get points() { return _points },
-        set points(newValue) {
-            _points = newValue;
-            recalc();
-        },
+        
         // following get applied to 'real' elements
         get strokeWidth() { return _strokeWidth },
         set strokeWidth(newValue) {
@@ -204,8 +179,25 @@ export const construct = (useEl) => {
                 get y() { return _scale.y },
                 set y(newValue) { transformEl.groupTransform.scale.y = newValue }
             }
-        }
-
+        },
+        
+        // abstract settings only used for recalc()
+        get next() { return _next },
+        set next(newValue) {
+            _next = newValue;
+            recalc();
+        },
+        get radius() { return _radius },
+        set radius(newValue) {
+            _radius = newValue;
+            console.log(_radius)
+            recalc();
+        },
+        get points() { return _points },
+        set points(newValue) {
+            _points = newValue;
+            recalc();
+        }, 
     });
    
    // ABSTRACT SETTINGS NEED TO BE DEFINED ON useEl SEPARATELY(??)
@@ -239,7 +231,3 @@ export const construct = (useEl) => {
 };
 //now construct in app/index
 constructWidgets('polygon');
-
-
-//TODO 0
-// useStyle

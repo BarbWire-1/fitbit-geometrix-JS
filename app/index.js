@@ -17,7 +17,7 @@ myPolygonA.scale.x = 0.5
 myPolygonA.scale.y = 1
 myPolygonA.lines[ 0 ].style.fill = 'red'
 
-myPolygonA.style.fill = 'yellow'
+myPolygonA.style.fill = 'yellow';
 // inspectObject('myPolygonA', myPolygonA)
 // dumpProperties('myPolygonA', myPolygonA, 1)
 
