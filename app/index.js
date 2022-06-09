@@ -19,9 +19,7 @@ myPolygonA.scale.y = 1
 console.log(JSON.stringify(myPolygonA.lines))
 myPolygonA.lines[ 0 ].style.fill = 'red'
 
-// TODO create Object for lines - style only!
-myPolygonA.lines[0].x1 = 100
-
+myPolygonA.style.fill = 'yellow'
 inspectObject('myPolygonA', myPolygonA)
 dumpProperties('myPolygonA', myPolygonA, 1)
 

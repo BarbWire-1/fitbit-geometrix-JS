@@ -125,6 +125,84 @@ export const construct = (useEl) => {
             i++;
         };
     };
+    
+    // create an array of line-objects to restrict acces
+    
+    const createStyleObject = (element) => ({
+        get style() {
+            return {
+                
+                get fill() { return element.style.fill },
+                set fill(newValue) { element.style.fill = newValue },
+                get opacity() { return element.style.opacity },
+                set opacity(newValue) { element.style.opacity = newValue },
+                get display() { return element.style.display },
+                set display(newValue) { element.style.display = newValue },
+            }
+        }   
+    });
+    let _lines = [];
+    linesEl.forEach(line => _lines.push(Object.seal(createStyleObject(line))));
+    
+    let useStyle =  createStyleObject(useEl);// this isn't working
+    
+    //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
+    const createPolygonWidget = (element) => ({
+        // settings directly applied to useEl
+        get style() {
+            return {
+                get fill() { return element.style.fill },
+                set fill(newValue) { element.style.fill = newValue },
+                get opacity() { return element.style.opacity },
+                set opacity(newValue) { element.style.opacity = newValue },
+                get display() { return element.style.display },
+                set display(newValue) { element.style.display = newValue },
+                // useStyle;
+            }
+        },
+        //get style() {return useStyle},
+        // abstract settings only used for recalc()
+        // strokeWidth additionally passed to lines
+        get next() { return _next },
+        set next(newValue) {
+            _next = newValue;
+            recalc();
+        },
+        get radius() { return _radius },
+        set radius(newValue) {
+            _radius = newValue;
+            console.log(_radius)
+            recalc();
+        },
+        get points() { return _points },
+        set points(newValue) {
+            _points = newValue;
+            recalc();
+        },
+        get strokeWidth() { return _strokeWidth },
+        set strokeWidth(newValue) {
+            _strokeWidth = newValue;
+            recalc();
+        },
+        get lines() {
+            //TODO create style obj .forEach
+            return _lines;
+        },
+        // directly on transformEL, no recalc() needed
+        get rotate() { return _rotate },
+        set rotate(newValue) {
+            transformEl.groupTransform.rotate.angle = newValue;
+        },
+        get scale() {
+            return {
+                get x() { return _scale.x },
+                set x(newValue) { transformEl.groupTransform.scale.x = newValue },
+                get y() { return _scale.y },
+                set y(newValue) { transformEl.groupTransform.scale.y = newValue }
+            }
+        }
+
+    });
    
    // ABSTRACT SETTINGS NEED TO BE DEFINED ON useEl SEPARATELY
     Object.defineProperty(useEl, 'radius', {
@@ -165,57 +243,7 @@ export const construct = (useEl) => {
         }
     });
     
-    //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
-    const createPolygonWidget = (element) => ({  
-        // settings directly applied to useEl
-        get style() {
-            return {
-                get fill() { return element.style.fill },
-                set fill(color) { element.style.fill = color }
-            }
-        },
-        // abstract settings only used for recalc()
-        // strokeWidth additionally passed to lines
-        get next() { return _next },
-        set next(newValue) {
-         _next = newValue;
-            recalc();
-        },
-        get radius() { return _radius },
-        set radius(newValue) {
-            _radius = newValue;
-            console.log(_radius)
-            recalc();
-        },
-        get points() { return _points },
-        set points(newValue) {
-            _points = newValue;
-            recalc();
-        },
-        get strokeWidth() { return _strokeWidth },
-        set strokeWidth(newValue) {
-            _strokeWidth = newValue;
-            recalc();
-        },
-        get lines() {
-           //TODO create style obj .forEach
-            return linesEl;
-        },
-        // directly on transformEL, no recalc() needed
-        get rotate() { return _rotate },
-        set rotate(newValue) {
-            transformEl.groupTransform.rotate.angle = newValue;
-        },
-        get scale() {
-            return {
-                get x() { return _scale.x },
-                set x(newValue) { transformEl.groupTransform.scale.x = newValue },
-                get y() { return _scale.y },
-                set y(newValue) { transformEl.groupTransform.scale.y = newValue }
-            }
-        } 
-
-    })
+    
     
     recalc();
     return createPolygonWidget(useEl);
@@ -226,4 +254,4 @@ constructWidgets(construct, 'polygon');
 
 
 //TODO 0
-//CREATE STYLE ON LINES
+// useStyle, add x,y to useEl
