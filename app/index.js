@@ -15,8 +15,6 @@ myPolygonB.rotate = 30;
 myPolygonA.next = 3
 myPolygonA.scale.x = 0.5
 myPolygonA.scale.y = 1
-
-console.log(JSON.stringify(myPolygonA.lines))
 myPolygonA.lines[ 0 ].style.fill = 'red'
 
 myPolygonA.style.fill = 'yellow'
@@ -26,3 +24,4 @@ dumpProperties('myPolygonA', myPolygonA, 1)
 myPolygonA.x = 100
 myPolygonA.strokeWidth = 10
 
+myPolygonB.lines.x1 = 100//TODO check why this doesn't throw!
