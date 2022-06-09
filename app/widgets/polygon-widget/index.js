@@ -156,7 +156,7 @@ export const construct = (useEl) => {
         set y(newValue) { ele.y = newValue },
         
         // following get applied to 'real' elements
-        get strokeWidth() { return _strokeWidth },
+        get strokeWidth() { return ele.strokeWidth },
         set strokeWidth(newValue) {
             _strokeWidth = newValue;// gets passed inside recalc()
             recalc();
@@ -164,32 +164,32 @@ export const construct = (useEl) => {
         get lines() {
             return _lines;
         },
-        get rotate() { return _rotate },
+        get rotate() { return ele.rotate },
         set rotate(newValue) {
             transformEl.groupTransform.rotate.angle = newValue;
         },
         get scale() {
             return {
-                get x() { return _scale.x },
+                get x() { return ele.scale.x },
                 set x(newValue) { transformEl.groupTransform.scale.x = newValue },
-                get y() { return _scale.y },
+                get y() { return ele.scale.y },
                 set y(newValue) { transformEl.groupTransform.scale.y = newValue }
             }
         },
         
         // abstract settings only used for recalc()
-        get next() { return _next },
+        get next() { return ele.next },
         set next(newValue) {
             _next = newValue;
             recalc();
         },
-        get radius() { return _radius },
+        get radius() { return ele.radius },
         set radius(newValue) {
             _radius = newValue;
             console.log(_radius)
             recalc();
         },
-        get points() { return _points },
+        get points() { return ele.points },
         set points(newValue) {
             _points = newValue;
             recalc();
