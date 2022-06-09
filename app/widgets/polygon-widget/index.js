@@ -237,7 +237,7 @@ export const construct = (useEl) => {
     
 };
 
-constructWidgets(construct, 'polygon');
+constructWidgets( 'polygon');
 
 
 //TODO 0
