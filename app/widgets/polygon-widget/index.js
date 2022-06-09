@@ -27,13 +27,13 @@ import { inspectObject } from "../devTools";
 //import { dumpProperties, inspectObject } from "../devTools/";
 import {validInput} from "./validation"
 
-export const construct = (el) => {
+export const construct = (useEl) => {
     //GET ELEMENTS FOR POLYGON
-    const transformEl = el.getElementById("transform");
-    const linesEl = el.getElementsByClassName("lines");
+    const transformEl = useEl.getElementById("transform");
+    const linesEl = useEl.getElementsByClassName("lines");
     
    
-    const elStyle = el.style
+    const elStyle = useEl.style
   
     class Point {
         constructor(x = 0, y = 0) {
@@ -59,33 +59,33 @@ export const construct = (el) => {
     // INITIALISATION:
      (function () {   //IIFE
         
-        parseConfig(el, attribute => {
+        parseConfig(useEl, attribute => {
             // This anonymous function is called for every attribute in config.
             // attribute is {name:attributeName, value:attributeValue}
             switch (attribute.name) {
 
                 case 'radius':
-                   el.radius  = _radius = Number(attribute.value);
+                   useEl.radius  = _radius = Number(attribute.value);
                     break;
                 case 'points':
-                    el.points = _points = Number(attribute.value);
+                    useEl.points = _points = Number(attribute.value);
                     break;
                 case 'strokeWidth':
-                     el.strokeWidth = strokeWidth = Number(attribute.value);
+                     useEl.strokeWidth = strokeWidth = Number(attribute.value);
                     break;
                 case 'next':
-                    el.next = next = Number(attribute.value);
+                    useEl.next = next = Number(attribute.value);
                     break;
                 case 'rotate':
-                    el.rotate  = rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
+                    useEl.rotate  = rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
                     break;
                 case 'scale':
-                    el.scale = scale = transformEl.groupTransform.scale.x
+                    useEl.scale = scale = transformEl.groupTransform.scale.x
                         = transformEl.groupTransform.scale.y
                         = Number(attribute.value);
                     break;
                 case 'lines':
-                    el.lines = linesEl
+                    useEl.lines = linesEl
 
             };
         });
@@ -125,7 +125,7 @@ export const construct = (el) => {
              
         //sets coords of lines depending on _points p and <next> 
         i = 0;
-        let npt = el.next
+        let npt = next
         while (i < _points) {
 
             let l = linesEl[ i ];
@@ -146,29 +146,29 @@ export const construct = (el) => {
         };
     };
    
-   // ABSTRACT SETTINGS NEED TO BE DEFINED ON EL SEPARATELY
-    Object.defineProperty(el, 'radius', {
+   // ABSTRACT SETTINGS NEED TO BE DEFINED ON useEl SEPARATELY
+    Object.defineProperty(useEl, 'radius', {
         get() { return _radius },
         set(newValue) {
             _radius = newValue;
             recalc()
         }
     });
-    Object.defineProperty(el, 'points', {
+    Object.defineProperty(useEl, 'points', {
         get() { return _points },
         set(newValue) {
             _points = newValue;
             recalc()
         }
     });
-    Object.defineProperty(el, 'next', {
+    Object.defineProperty(useEl, 'next', {
         get() { return next },
         set(newValue) {
             next = newValue;
             recalc()
         }
      });
-    Object.defineProperty(el, 'rotate', {
+    Object.defineProperty(useEl, 'rotate', {
         get() { return rotate},
         set(newValue) {
             rotate = newValue;
@@ -238,7 +238,7 @@ export const construct = (el) => {
     })
     
     recalc();
-    return createPolygonWidget(el);
+    return createPolygonWidget(useEl);
     
 };
 
