@@ -29,22 +29,15 @@ import {validInput} from "./validation"
 
 export const construct = (useEl) => {
     //GET ELEMENTS FOR POLYGON
-    const transformEl = useEl.getElementById("transform");
-    const linesEl = useEl.getElementsByClassName("lines");
-    
-    class Point {
-        constructor(x = 0, y = 0) {
-            this.x = x;
-            this.y = y;
-        };
-    };
+    const transformEl = useEl.getElementById("transform");// needed to rotate/scale
+    const linesEl = useEl.getElementsByClassName("lines");// needed to iterate
     
     // PRIVATE VARS (abstract settings)
     // defaults set in symbol config.text
-    let _radius, _points, _rotate, _next, _strokeWidth, _scale
+    let _radius, _points, _rotate, _next, _strokeWidth, _scale, _style, _lines
     
     // INITIALISATION:
-     (function () {   //IIFE
+    (function () {   //IIFE
         
         parseConfig(useEl, attribute => {
             // This anonymous function is called for every attribute in config.
@@ -70,9 +63,15 @@ export const construct = (useEl) => {
             };
         });
         
-     })();
+    })();
     
-   
+
+    class Point {
+        constructor(x = 0, y = 0) {
+            this.x = x;
+            this.y = y;
+        };
+    };
    
     // CALCULATE POINTS AND APPLY TO LINES
     const recalc = () => {
@@ -124,26 +123,26 @@ export const construct = (useEl) => {
     };
     
    
-    // create style-Object
-    const createStyleObject = (element) => ({
-        get style() {
-            return {    
-                get fill() { return element.style.fill },
-                set fill(newValue) { element.style.fill = newValue },
-                get opacity() { return element.style.opacity },
-                set opacity(newValue) { element.style.opacity = newValue },
-                get display() { return element.style.display },
-                set display(newValue) { element.style.display = newValue },
+    // create style-Objects
+    (function () { //IIFE
+        _lines = [];
+        const createStyleObject = (element) => ({
+            get style() {
+                return {
+                    set fill(newValue) { element.style.fill = newValue },
+                    set opacity(newValue) { element.style.opacity = newValue },
+                    set display(newValue) { element.style.display = newValue },
+                }
             }
-        }   
-    });
-    
-    // array with line-styleObjects to expose style on lines only
-    let _lines = [];
-    linesEl.forEach(line => _lines.push(Object.seal(createStyleObject(line))));
-    
-    // private styleObject on useEl containing(!) style. ugly!!!
-    let _style = Object.seal(createStyleObject(useEl));
+        });
+
+        // Array of line-style-objects to only expose style
+        linesEl.forEach(line => _lines.push(Object.seal(createStyleObject(line))));
+        // private style-object containing (!) style
+        // set on useEl (ugly but ...)
+        _style = Object.seal(createStyleObject(useEl));
+    }());
+
 
 
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
@@ -200,24 +199,15 @@ export const construct = (useEl) => {
    // ABSTRACT SETTINGS NEED TO BE DEFINED ON useEl SEPARATELY(??)
     Object.defineProperty(useEl, 'radius', {
         get() { return _radius },
-        set(newValue) {
-            _radius = newValue;
-           
-        }
+        set(newValue) { _radius = newValue; }
     });
     Object.defineProperty(useEl, 'points', {
         get() { return _points },
-        set(newValue) {
-            _points = newValue;
-          
-        }
+        set(newValue) { _points = newValue; }
     });
     Object.defineProperty(useEl, 'next', {
         get() { return _next },
-        set(newValue) {
-            _next = newValue;
-           
-        }
+        set(newValue) { _next = newValue;}
     });
   
     
