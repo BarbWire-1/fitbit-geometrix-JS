@@ -146,7 +146,7 @@ export const construct = (useEl) => {
     linesEl.forEach(line => _lines.push(Object.seal(createStyleObject(line))));
     
     // private styleObject on useEl containing(!) style. ugly!!!
-    let _style = createStyleObject(useEl);
+    let _style = Object.seal(createStyleObject(useEl));
 
 
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
