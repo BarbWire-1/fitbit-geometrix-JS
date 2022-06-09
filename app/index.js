@@ -12,9 +12,11 @@ let myPolygonA = Object.seal(construct(document.getElementById('myPolygon')));
 inspectObject('myPolygonA', myPolygonA)
 let myPolygonB = document.getElementById('myPolygon2');
 
-myPolygonA.style.fill = 'orange'
+myPolygonA.style.fill = 'orange',
+    myPolygonA.next = 1
 
-
+myPolygonA.rotate = 30
+myPolygonA.lines.style.fill= 'blue'
 // //myPolygonB.lines[ 0 ].style.fill = 'orange';
 // 
 // //set lines[0] to different color to show rotation and connected next point

@@ -89,7 +89,7 @@ export const construct = (el) => {
                     el.next = next = Number(attribute.value);
                     break;
                 case 'rotate':
-                    el.rotate = rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
+                    el.rotate  = transformEl.groupTransform.rotate.angle = Number(attribute.value);
                     break;
                 case 'scale':
                     el.scale = scale = transformEl.groupTransform.scale.x
@@ -203,10 +203,10 @@ export const construct = (el) => {
             }
         },
        get next() { return next },
-        // set next(newValue) {
-        //  next = newValue;
-        //     redraw();
-        // },
+        set next(newValue) {
+         next = newValue;
+            redraw();
+        },
          get radius() { return _radius },
         set radius(newValue) {
             _radius = newValue;
@@ -218,25 +218,36 @@ export const construct = (el) => {
             rotate = transformEl.groupTransform.rotate.angle = newValue;
             redraw();
         },
-        get points() { return element.points },
-        // set points(newValue) {
-        //     points = newValue;
-        //     redraw();
-        // },
-        get strokeWidth() { return element.strokeWidth },
-        // set strokeWidth(newValue) {
-        //     strokeWidth = newValue;
-        //     redraw();
-        // },
-        get lines() { return linesEl },
+        get points() { return points },
+        set points(newValue) {
+            points = newValue;
+            redraw();
+        },
+        get strokeWidth() { return strokeWidth },
+        set strokeWidth(newValue) {
+            strokeWidth = newValue;
+            redraw();
+        },
+        get lines() {
+           
+            // return linesEl;
+            return {
+                get style() {
+                    return {
+                        get fill() { return element.style.fill },
+                        set fill(color) { element.style.fill = color }
+                    }
+                },
+            } 
+        },
         get settings() { return configEl },
         
         get scale() {
             return {
-                get x() { return element.scale.x },
-                set x(newValue) { element.scale.x = newValue },
-                get y() { return element.scale.y },
-                set y(newValue) { element.scale.y = newValue }
+                get x() { return scale.x },
+                set x(newValue) { scale.x = newValue },
+                get y() { return scale.y },
+                set y(newValue) { scale.y = newValue }
             }
         }
        
@@ -260,23 +271,4 @@ constructWidgets(construct, 'polygon');
 
 
 //TODO 0
-/**
- * 
- * APIs:
- * el:      
- *          radius, points, next (abstract values only) + redraw()
- *          strokeWidth => lines.forEach.style.strokeWidth + redraw()
- *          rotate, scale => transformEl.groupTransform
- *          lines (array!)
- *          (use just style and x,y of use for el, or make own?)
- * 
- * lines:
- *          forEach(!!!)
- *          style ONLY!
- */
-
-// TODO test creating abstract prototype and creating el from there?
-// needs to have class line as can't firgure out how to set props on linesEL.forEach?
-
-//All in all: working, but still not happy as I can't find a nice solution to restrict access and "cut" from prototype-chain 
-//TODO API el!
+//CREATE STYLE ON LINES
