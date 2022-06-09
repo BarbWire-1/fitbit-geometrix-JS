@@ -32,9 +32,6 @@ export const construct = (useEl) => {
     const transformEl = useEl.getElementById("transform");
     const linesEl = useEl.getElementsByClassName("lines");
     
-   
-    const elStyle = useEl.style
-  
     class Point {
         constructor(x = 0, y = 0) {
             this.x = x;
@@ -88,7 +85,7 @@ export const construct = (useEl) => {
         let p = []
 
         // recalc radius depending on strokeW to fit inside
-        let iRadius = _radius ?? 100;
+        let iRadius = _radius;
         iRadius -= Math.round(_strokeWidth  / 2);
         const fract = (2 * Math.PI / _points);
 
@@ -162,7 +159,7 @@ export const construct = (useEl) => {
         // following get applied to 'real' elements
         get strokeWidth() { return _strokeWidth },
         set strokeWidth(newValue) {
-            _strokeWidth = newValue;
+            _strokeWidth = newValue;// gets passed inside recalc()
             recalc();
         },
         get lines() {

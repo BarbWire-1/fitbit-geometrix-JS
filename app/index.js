@@ -11,7 +11,7 @@ dumpProperties('myPolygonA', myPolygonA, 1)
 inspectObject('myPolygonA', myPolygonA)
 let myPolygonB = Object.seal(construct(document.getElementById('myPolygon2')));
 myPolygonB.points = 3
-myPolygonB.rotate = 30;
+myPolygonB.rotate = 90;
 myPolygonA.next = 3
 myPolygonA.scale.x = 0.5
 myPolygonA.scale.y = 1
