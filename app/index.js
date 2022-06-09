@@ -24,4 +24,5 @@ inspectObject('myPolygonA', myPolygonA)
 dumpProperties('myPolygonA', myPolygonA, 1)
 
 myPolygonA.x = 100
+myPolygonA.strokeWidth = 10
 

@@ -184,6 +184,7 @@ export const construct = (useEl) => {
             _points = newValue;
             recalc();
         },
+        // following get applied to 'real' elements
         get strokeWidth() { return _strokeWidth },
         set strokeWidth(newValue) {
             _strokeWidth = newValue;
@@ -192,7 +193,6 @@ export const construct = (useEl) => {
         get lines() {
             return _lines;
         },
-        // directly on transformEL, no recalc() needed
         get rotate() { return _rotate },
         set rotate(newValue) {
             transformEl.groupTransform.rotate.angle = newValue;
@@ -208,7 +208,7 @@ export const construct = (useEl) => {
 
     });
    
-   // ABSTRACT SETTINGS NEED TO BE DEFINED ON useEl SEPARATELY
+   // ABSTRACT SETTINGS NEED TO BE DEFINED ON useEl SEPARATELY(??)
     Object.defineProperty(useEl, 'radius', {
         get() { return _radius },
         set(newValue) {
@@ -229,27 +229,8 @@ export const construct = (useEl) => {
             _next = newValue;
             recalc()
         }
-     });
-    Object.defineProperty(useEl, 'rotate', {
-        get() { return _rotate},
-        set(newValue) {
-            _rotate = newValue;
-        }
     });
-    Object.defineProperty(useEl, 'scale', {
-        get scale() {
-            return {
-                get x() { return _scale.x },
-                set x(newValue) { _scale.x = newValue },
-                get y() { return _scale.y },
-                set y(newValue) { _scale.y = newValue }
-            }
-        }
-    });
-   
-    
-    
-    
+  
     
     recalc();
     return createPolygonWidget(useEl);
@@ -260,4 +241,4 @@ constructWidgets(construct, 'polygon');
 
 
 //TODO 0
-// useStyle, add x,y to useEl
+// useStyle
