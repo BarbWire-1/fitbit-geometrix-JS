@@ -213,21 +213,21 @@ export const construct = (useEl) => {
         get() { return _radius },
         set(newValue) {
             _radius = newValue;
-            recalc()
+           
         }
     });
     Object.defineProperty(useEl, 'points', {
         get() { return _points },
         set(newValue) {
             _points = newValue;
-            recalc()
+          
         }
     });
     Object.defineProperty(useEl, 'next', {
         get() { return _next },
         set(newValue) {
             _next = newValue;
-            recalc()
+           
         }
     });
   
