@@ -8,7 +8,7 @@ import { dumpProperties, inspectObject } from './widgets/devTools';
 let myPolygonA = Object.seal(construct(document.getElementById('myPolygon')));
 dumpProperties('myPolygonA', myPolygonA, 1)
 //myPolygonA.points = 3
-//inspectObject('myPolygonA', myPolygonA)
+inspectObject('myPolygonA', myPolygonA)
 let myPolygonB = Object.seal(construct(document.getElementById('myPolygon2')));
 myPolygonB.points = 3
 myPolygonB.rotate = 30;
