@@ -43,8 +43,6 @@ export const construct = (useEl) => {
     };
     
     // PRIVATE VARS
-    // these are abstract settings only used for calculating with no real 
-    // relation to any SVG-element!
     // defaults set in symbol config.text
     let _radius, _points, _rotate, _next, _strokeWidth, _scale
     
@@ -77,14 +75,7 @@ export const construct = (useEl) => {
                 case 'rotate':
                     useEl.rotate  = _rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
                     break;
-                case 'scale':
-                    useEl.scale = _scale = transformEl.groupTransform.scale.x
-                        = transformEl.groupTransform.scale.y
-                        = Number(attribute.value);
-                    break;
-                case 'lines':
-                    useEl.lines = linesEl
-
+            
             };
         });
         
@@ -96,9 +87,6 @@ export const construct = (useEl) => {
     const recalc = () => {
         
         // set all lines (back) to 'none'
-        // TODO only necessary if points != previous.
-        // better check for that or just change for any recalc()???
-        // possible to include this in setter for <points>? Perhaps???
         linesEl.forEach(line => {
             line.style.display = 'none'
         });
@@ -176,21 +164,24 @@ export const construct = (useEl) => {
         get scale() {
             return {
                 get x() { return _scale.x },
-                set x(newValue) { _scale.x= newValue },
+                set x(newValue) { _scale.x = newValue },
                 get y() { return _scale.y },
-                set y(newValue) { _scale.y=  newValue }
+                set y(newValue) { _scale.y = newValue }
             }
         }
-    })
+    });
     
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
     const createPolygonWidget = (element) => ({  
+        // settings directly applied to useEl
         get style() {
             return {
                 get fill() { return element.style.fill },
                 set fill(color) { element.style.fill = color }
             }
         },
+        // abstract settings only used for recalc()
+        // strokeWidth additionally passed to lines
         get next() { return _next },
         set next(newValue) {
          _next = newValue;
@@ -200,11 +191,6 @@ export const construct = (useEl) => {
         set radius(newValue) {
             _radius = newValue;
             console.log(_radius)
-            recalc();
-        },
-        get rotate() { return _rotate },
-        set rotate(newValue) {
-            transformEl.groupTransform.rotate.angle = newValue;
             recalc();
         },
         get points() { return _points },
@@ -229,8 +215,11 @@ export const construct = (useEl) => {
                 },
             } 
         },
-       // get settings() { return configEl },
-        //TODO define scale
+        // directly on transformEL, no recalc() needed
+        get rotate() { return _rotate },
+        set rotate(newValue) {
+            transformEl.groupTransform.rotate.angle = newValue;
+        },
         get scale() {
             return {
                 get x() { return _scale.x },
@@ -238,10 +227,7 @@ export const construct = (useEl) => {
                 get y() { return _scale.y },
                 set y(newValue) { transformEl.groupTransform.scale.y = newValue }
             }
-        }
-       
-       
-        
+        } 
 
     })
     
