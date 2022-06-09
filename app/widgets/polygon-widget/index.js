@@ -27,7 +27,7 @@ import { inspectObject } from "../devTools";
 //import { dumpProperties, inspectObject } from "../devTools/";
 import {validInput} from "./validation"
 
-const construct = (el) => {
+export const construct = (el) => {
     //GET ELEMENTS FOR POLYGON
     const transformEl = el.getElementById("transform");
     const linesEl = el.getElementsByClassName("lines");
@@ -158,7 +158,7 @@ const construct = (el) => {
         };
     };
     // calculate and layout lines
-    redraw();
+   
   
 //     //dumpProperties('el', el)
 //    console.log("test: "+configEl.text.split(';')[0])
@@ -243,15 +243,16 @@ const construct = (el) => {
        
         
 
-       }),
+       })
         //get cx() { return element.cx },
         //set cx(newValue) {element.cx = newValue}
     //});
-
+       
     //const potato = Object.seal(createPotatoWidget(document.getElementById('potato')));
-    el = createPolygonWidget(el)
-    inspectObject('el', el)
-    return el;
+       // el = createPolygonWidget(el)
+    redraw();
+    //inspectObject('el', el)
+    return createPolygonWidget(el);
     
 };
 
