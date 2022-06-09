@@ -6,7 +6,7 @@ logs
 # Dependency directories
 node_modules
 # Tools
-app/widgets/devTools.js
+# app/widgets/devTools.js
 
 # build still included?
 build 
