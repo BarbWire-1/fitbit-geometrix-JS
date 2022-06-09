@@ -13,6 +13,9 @@ inspectObject('myPolygonA', myPolygonA)
 let myPolygonB = Object.seal(construct(document.getElementById('myPolygon2')));
 myPolygonB.points = 3
 myPolygonB.rotate = 30;
+myPolygonA.next = 3
+myPolygonA.scale.x = 0.5
+myPolygonA.scale.y = 1
 // 
 // myPolygonA.style.fill = 'orange',
 //     myPolygonA.next = 1

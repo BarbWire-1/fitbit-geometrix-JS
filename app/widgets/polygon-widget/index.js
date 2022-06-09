@@ -43,13 +43,11 @@ export const construct = (useEl) => {
     };
     
     // PRIVATE VARS
-    // defaults are now set in symbol config.text
-    let _radius, _points
+    // these are abstract settings only used for calculating with no real 
+    // relation to any SVG-element!
+    // defaults set in symbol config.text
+    let _radius, _points, _rotate, _next, _strokeWidth, _scale
     
-    let next// = el.next ?? 1;
-    let strokeWidth//= el.strokeWidth ?? 4;
-    let rotate = transformEl.groupTransform.rotate.angle// = el.rotate ?? 0;
-    let scale// = el.scale ?? 0;
    
         
     
@@ -71,16 +69,16 @@ export const construct = (useEl) => {
                     useEl.points = _points = Number(attribute.value);
                     break;
                 case 'strokeWidth':
-                     useEl.strokeWidth = strokeWidth = Number(attribute.value);
+                     useEl.strokeWidth = _strokeWidth = Number(attribute.value);
                     break;
                 case 'next':
-                    useEl.next = next = Number(attribute.value);
+                    useEl.next = _next = Number(attribute.value);
                     break;
                 case 'rotate':
-                    useEl.rotate  = rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
+                    useEl.rotate  = _rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
                     break;
                 case 'scale':
-                    useEl.scale = scale = transformEl.groupTransform.scale.x
+                    useEl.scale = _scale = transformEl.groupTransform.scale.x
                         = transformEl.groupTransform.scale.y
                         = Number(attribute.value);
                     break;
@@ -109,7 +107,7 @@ export const construct = (useEl) => {
 
         // recalc radius depending on strokeW to fit inside
         let iRadius = _radius ?? 100;
-        iRadius -= Math.round(strokeWidth  / 2);
+        iRadius -= Math.round(_strokeWidth  / 2);
         const fract = (2 * Math.PI / _points);
 
         let i = 0;
@@ -123,14 +121,14 @@ export const construct = (useEl) => {
             i++;
         };
              
-        //sets coords of lines depending on _points p and <next> 
+        //sets coords of lines depending on _points p and <_next> 
         i = 0;
-        let npt = next
+        let npt = _next
         while (i < _points) {
 
             let l = linesEl[ i ];
             //TODO do this connection to element somewhere else later to keep abstract here?
-            l.style.strokeWidth = strokeWidth;
+            l.style.strokeWidth = _strokeWidth;
             // set 'used' lines to 'inline'
             l.style.display = 'inline';
                 
@@ -162,18 +160,28 @@ export const construct = (useEl) => {
         }
     });
     Object.defineProperty(useEl, 'next', {
-        get() { return next },
+        get() { return _next },
         set(newValue) {
-            next = newValue;
+            _next = newValue;
             recalc()
         }
      });
     Object.defineProperty(useEl, 'rotate', {
-        get() { return rotate},
+        get() { return _rotate},
         set(newValue) {
-            rotate = newValue;
+            _rotate = newValue;
         }
     });
+    Object.defineProperty(useEl, 'scale', {
+        get scale() {
+            return {
+                get x() { return _scale.x },
+                set x(newValue) { _scale.x= newValue },
+                get y() { return _scale.y },
+                set y(newValue) { _scale.y=  newValue }
+            }
+        }
+    })
     
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
     const createPolygonWidget = (element) => ({  
@@ -183,9 +191,9 @@ export const construct = (useEl) => {
                 set fill(color) { element.style.fill = color }
             }
         },
-        get next() { return next },
+        get next() { return _next },
         set next(newValue) {
-         next = newValue;
+         _next = newValue;
             recalc();
         },
         get radius() { return _radius },
@@ -194,7 +202,7 @@ export const construct = (useEl) => {
             console.log(_radius)
             recalc();
         },
-        get rotate() { return rotate },
+        get rotate() { return _rotate },
         set rotate(newValue) {
             transformEl.groupTransform.rotate.angle = newValue;
             recalc();
@@ -204,9 +212,9 @@ export const construct = (useEl) => {
             _points = newValue;
             recalc();
         },
-        get strokeWidth() { return strokeWidth },
+        get strokeWidth() { return _strokeWidth },
         set strokeWidth(newValue) {
-            strokeWidth = newValue;
+            _strokeWidth = newValue;
             recalc();
         },
         get lines() {
@@ -222,13 +230,13 @@ export const construct = (useEl) => {
             } 
         },
        // get settings() { return configEl },
-        
+        //TODO define scale
         get scale() {
             return {
-                get x() { return scale.x },
-                set x(newValue) { scale.x = newValue },
-                get y() { return scale.y },
-                set y(newValue) { scale.y = newValue }
+                get x() { return _scale.x },
+                set x(newValue) { transformEl.groupTransform.scale.x = newValue },
+                get y() { return _scale.y },
+                set y(newValue) { transformEl.groupTransform.scale.y = newValue }
             }
         }
        
