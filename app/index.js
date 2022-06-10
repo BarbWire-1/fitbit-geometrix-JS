@@ -1,15 +1,15 @@
 
 import document from 'document'
 //import './widgets/polygon-widget';
-import {construct} from './widgets/polygon-widget/index'
+import {createPolygon} from './widgets/polygon-widget/index'
 import { dumpProperties, inspectObject } from './widgets/devTools';
 
 
-let myPolygonA = Object.seal(construct(document.getElementById('myPolygon')));
+let myPolygonA = createPolygon(document.getElementById('myPolygon'));
 dumpProperties('myPolygonA', myPolygonA, 1)
 //myPolygonA.points = 3
 inspectObject('myPolygonA', myPolygonA)
-let myPolygonB = Object.seal(construct(document.getElementById('myPolygon2')));
+let myPolygonB = createPolygon(document.getElementById('myPolygon2'));
 myPolygonB.points = 3
 myPolygonB.rotate = 90;
 myPolygonA.next = 3
@@ -30,5 +30,5 @@ myPolygonA.lines[0].style.strokeWidth = 5;// this doesn't get applied, but doesn
 
 // polygonObject with default-settings
 // it only gets constructed if instantiated/constructed here!!!
-let PolygonC = Object.seal(construct(document.getElementById('myPolygon3')));
-
+let PolygonC = Object.seal(createPolygon(document.getElementById('myPolygon3')));
+myPolygonA.blah = 3

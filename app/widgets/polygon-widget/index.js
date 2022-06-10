@@ -28,7 +28,7 @@ import { inspectObject } from "../devTools";
 //import { dumpProperties, inspectObject } from "../devTools/";
 import {validInput} from "./validation"
 
-export const construct = (useEl) => {
+export const createPolygon = (useEl) => {
     //GET ELEMENTS FOR POLYGON
     const transformEl = useEl.getElementById("transform");// needed to rotate/scale
     const linesEl = useEl.getElementsByClassName("lines");// needed to iterate
@@ -215,7 +215,7 @@ export const construct = (useEl) => {
     
     recalc();
     //inspectObject('useEl', useEl)
-    return createPolygonWidget(useEl);
+    return Object.seal(createPolygonWidget(useEl));
     
 };
 //now construct in app/index
