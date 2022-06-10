@@ -23,8 +23,9 @@ myPolygonA.style.fill = 'yellow';
 
 myPolygonA.x = 100
 myPolygonA.strokeWidth = 10
-
-myPolygonB.lines.x1 = 100//TODO check why this doesn't throw!
+//myPolygonA. style.display = 'none'
+//myPolygonB.lines[ 0 ].x1 = 100// this throws :)
+myPolygonA.lines[0].style.strokeWidth = 5;// this doesn't get applied, but doesn't throw :(
 
 
 // polygonObject with default-settings

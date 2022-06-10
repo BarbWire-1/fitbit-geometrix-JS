@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+'use strict';
 
 import { constructWidgets, parseConfig } from "../construct-widgets";
 import { inspectObject } from "../devTools";
@@ -124,10 +125,13 @@ export const construct = (useEl) => {
     
    
     // create style-Objects
-    (function () { //IIFE
+    ; (function () { //IIFE
+        'use strict'
         _lines = [];
         const createStyleObject = (ele) => ({
+            
             get style() {
+                
                 return {
                     set fill(newValue) { ele.style.fill = newValue },
                     set opacity(newValue) { ele.style.opacity = newValue },
@@ -135,14 +139,14 @@ export const construct = (useEl) => {
                 }
             }
         });
-
+        //TODO why aren't the style objects sealed??
         // Array of line-style-objects to only expose style
         linesEl.forEach(line => _lines.push(Object.seal(createStyleObject(line))));
         // private style-object containing (!) style
         // set on useEl (ugly but ...)
         _style = Object.seal(createStyleObject(useEl));
     }());
-
+   
 
 
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
@@ -150,6 +154,7 @@ export const construct = (useEl) => {
        
         // settings directly applied to useEl
         style: _style.style,//TODO haha...
+        lines: _lines,
         get x() { return ele.x },
         set x(newValue) { ele.x = newValue },
         get y() { return ele.y },
@@ -160,10 +165,7 @@ export const construct = (useEl) => {
         set strokeWidth(newValue) {
             _strokeWidth = newValue;// gets passed inside recalc()
             recalc();
-        },
-        get lines() {
-            return _lines;
-        },
+        },  
         get rotate() { return ele.rotate },
         set rotate(newValue) {
             transformEl.groupTransform.rotate.angle = newValue;
