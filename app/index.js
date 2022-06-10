@@ -27,8 +27,10 @@ myPolygonA.strokeWidth = 10
 //myPolygonB.lines[ 0 ].x1 = 100// this throws :)
 myPolygonA.lines[0].style.strokeWidth = 5;// this doesn't get applied, but doesn't throw :(
 
-
+myPolygonA.style.strokeWidth = 20
 // polygonObject with default-settings
 // it only gets constructed if instantiated/constructed here!!!
-let PolygonC = Object.seal(createPolygon(document.getElementById('myPolygon3')));
-myPolygonA.blah = 3
+let PolygonC = createPolygon(document.getElementById('myPolygon3'));
+//myPolygonA.blah = 3
+
+

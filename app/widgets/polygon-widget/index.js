@@ -137,7 +137,8 @@ export const createPolygon = (useEl) => {
                     set opacity(newValue) { ele.style.opacity = newValue },
                     set display(newValue) { ele.style.display = newValue },
                 }
-            }
+            },
+           
         });
         //TODO why aren't the style objects sealed??
         // Array of line-style-objects to only expose style
@@ -145,16 +146,17 @@ export const createPolygon = (useEl) => {
         // private style-object containing (!) style
         // set on useEl (ugly but ...)
         _style = Object.seal(createStyleObject(useEl));
+  
     }());
    
-
+    Object.seal(_style.style)
 
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
     const createPolygonWidget = (ele) => ({
        
         // settings directly applied to useEl
-        style: _style.style,//TODO haha...
-        lines: _lines,
+        get style() { return _style.style },//TODO haha...
+        get lines() {return _lines },
         get x() { return ele.x },
         set x(newValue) { ele.x = newValue },
         get y() { return ele.y },
@@ -220,3 +222,7 @@ export const createPolygon = (useEl) => {
 };
 //now construct in app/index
 constructWidgets('polygon');
+
+//TODO i wonder, why style and lines are working excpt missing error on assigning unexposed attributes.
+// the are actuall recognized as any, not as objects
+// inspecting shows empty object (???)
