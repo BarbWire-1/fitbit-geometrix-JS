@@ -193,7 +193,7 @@ export const createPolygon = (useEl) => {
         
     });
    
-    // to draw uses on start:
+    // to draw uses on instantiaton:
     recalc();
     
     
