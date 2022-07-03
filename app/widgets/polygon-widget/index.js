@@ -201,15 +201,15 @@ export const createPolygon = (useEl) => {
    
    // ABSTRACT SETTINGS NEED TO BE DEFINED ON useEl SEPARATELY(??)
     Object.defineProperty(useEl, 'radius', {
-        //get() { return _radius },
+        get() { return _radius },
         set(newValue) { _radius = newValue; }
     });
     Object.defineProperty(useEl, 'points', {
-        //get() { return _points },
+        get() { return _points },
         set(newValue) { _points = newValue; }
     });
     Object.defineProperty(useEl, 'next', {
-        //get() { return _next },
+        get() { return _next },
         set(newValue) { _next = newValue; }
     });
   

@@ -19,3 +19,7 @@ changingPoly.points = 3;
 changingPoly.strokeWidth = 5;
 changingPoly.radius = 40;
 changingPoly.style.fill = "turquoise";
+
+const updateAttributes = () => {
+    
+}
