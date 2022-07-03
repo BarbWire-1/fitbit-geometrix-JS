@@ -1,4 +1,4 @@
-let notValid = ' is not a valid input!';
+let notValid = ' is not a valid input! (range: 3 to 12 points)';
 let range = {
     min: 3,
     max: 12
@@ -26,8 +26,10 @@ export const validInput = (n) => {
         isValid = true;
     } else {
       
-        console.error(n + notValid)
+        console.warn(n + notValid)
     }
     return isValid;
     
+    
 };
+

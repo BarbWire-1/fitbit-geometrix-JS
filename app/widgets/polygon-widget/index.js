@@ -134,11 +134,11 @@ export const createPolygon = (useEl) => {
             }
         },
         
-        get lines() {return _linesStyle },
+        get lines() {return _linesStyle },// individual style: fill only!! else inherited from useEl
         
-        get x() { return ele.x },
+        //get x() { return ele.x },
         set x(newValue) { ele.x = newValue },
-        get y() { return ele.y },
+        // get y() { return ele.y },
         set y(newValue) { ele.y = newValue },
         
         // following get applied to 'real' elements
@@ -149,15 +149,15 @@ export const createPolygon = (useEl) => {
         },  
         get rotate() {
             return {
-                get angle() { return transform.rotate.angle },
+                //get angle() { return transform.rotate.angle },
                 set angle(newValue) { transform.rotate.angle = newValue },
             }
         },
         get scale() {
             return {
-                get x() { return transform.scale.x},
+                //get x() { return transform.scale.x},
                 set x(newValue) { transform.scale.x = newValue },
-                get y() { return transform.scale.y},
+                //get y() { return transform.scale.y},
                 set y(newValue) { transform.scale.y = newValue }
             }
         },
@@ -183,7 +183,7 @@ export const createPolygon = (useEl) => {
    // ABSTRACT SETTINGS NEED TO BE DEFINED ON useEl SEPARATELY(??)
     Object.defineProperty(useEl, 'radius', {
         get() { return _radius },
-        set(newValue) { _radius = newValue; }
+        set(newValue) { _radius = newValue;}
     });
     Object.defineProperty(useEl, 'points', {
         get() { return _points },
@@ -191,14 +191,18 @@ export const createPolygon = (useEl) => {
     });
     Object.defineProperty(useEl, 'next', {
         get() { return _next },
-        set(newValue) { _next = newValue; }
+        set(newValue) { _next = newValue;}
     });
    
-  
-    
+    // to draw uses on start:
     recalc();
-    if(validInput(useEl.points) === true)
-    return Object.seal(createPolygonWidget(useEl));
+    
+    // check for number of points (int betwenn 3 to 12)
+    if (validInput(useEl.points) === true) {
+        return Object.seal(createPolygonWidget(useEl));
+    };
+    
+   
     
 };
 //now construct in app/index
