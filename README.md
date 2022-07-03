@@ -1,5 +1,6 @@
 # fitbit-geometrix-JS
 
+## work in progress
 Widget to create (dynamic) regular polygons in fitbit OS (useless, but fun)
 
 
@@ -15,13 +16,15 @@ After a thorough testing, I'll complete description, and perhaps add another typ
 \
 (I am just 'fishing in muddy waters' and ever again astonished, when things work somehow. So any criticism is highly appreciated 🙂)
 
+
+
 \
-Branch `<new>` includes the same functionality, but also getters for 
-## work in progress
+.
+
 
 ![dynamix](dynamix.gif)
 
-### Acknowledgement
+## Acknowledgement
 This widget uses a version of [Gondwana's widget-factory](https://github.com/gondwanasoft/fitbit-simple-widget) including `config` which provides an easy access to properties of the `<use>` and its children in `SVG` and/or `CSS`.\
 To create your own widget have a look at [Gondwana's fitbit-widget-template](https://github.com/gondwanasoft/fitbit-widget-template).
 
