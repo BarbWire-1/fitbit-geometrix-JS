@@ -59,7 +59,7 @@ export const createPolygon = (useEl) => {
         };
     };
     
-   
+    // TODO split recalc() to execute only necessary changes?
     // CALCULATE POINTS AND APPLY TO LINES
     const recalc = () => {
         
