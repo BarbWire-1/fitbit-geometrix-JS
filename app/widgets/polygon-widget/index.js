@@ -209,5 +209,6 @@ export const createPolygon = (useEl) => {
 constructWidgets('polygon');
 
 // TODO possible to force break for invalid input??
+// TODO possible to detect, where the invalid input is located (for error message)?
 // TODO installation/usage, make this one a demo
 // TODO remove unnecessary getters
