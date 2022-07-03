@@ -89,7 +89,7 @@ export const createPolygon = (useEl) => {
                 line.style.display = 'none'
             });
         }  
-        //apply settings to used line-elements
+        // apply actual settings to used line-elements
         i = 0;
         let npt = _next
         while (i < _points) {
@@ -140,7 +140,7 @@ export const createPolygon = (useEl) => {
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
     const createPolygonWidget = (ele) => ({
         
-        // SETTINGS ON SVG_ELEMENTS IN useEL
+        // SETTINGS ON useEl
         get style() {
             return {
                 set fill(newValue) { ele.style.fill = newValue },
@@ -156,7 +156,7 @@ export const createPolygon = (useEl) => {
         // get y() { return ele.y },
         set y(newValue) { ele.y = newValue },
         
-        // following get applied to 'real' elements
+        // SETTINGS ON MEMBERS of useEL
         get strokeWidth() { return ele.strokeWidth },
         set strokeWidth(newValue) {
             _strokeWidth =  newValue;// gets passed inside recalc()
