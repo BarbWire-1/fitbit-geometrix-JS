@@ -1,26 +1,4 @@
-/**
-* MIT License
 
-Copyright (c) 2022 Barbara Kälin
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
 'use strict';
 
 import { constructWidgets, parseConfig } from "../construct-widgets";
@@ -168,15 +146,20 @@ export const createPolygon = (useEl) => {
             _strokeWidth = newValue;// gets passed inside recalc()
             recalc();
         },  
-        get rotate() { return ele.rotate },
-        set rotate(newValue) {
-            transformEl.groupTransform.rotate.angle = newValue;
+        get rotate() {
+            return {
+                get angle() { return transformEl.groupTransform.rotate.angle },
+                set angle(newValue) { transformEl.groupTransform.rotate.angle = newValue },
+            }
         },
+        // set rotate(newValue) {
+        //     transformEl.groupTransform.rotate.angle = newValue;
+        // },
         get scale() {
             return {
-                get x() { return ele.scale.x },
+                get x() { return transformEl.groupTransform.scale.x},
                 set x(newValue) { transformEl.groupTransform.scale.x = newValue },
-                get y() { return ele.scale.y },
+                get y() { return transformEl.groupTransform.scale.y},
                 set y(newValue) { transformEl.groupTransform.scale.y = newValue }
             }
         },
@@ -212,6 +195,10 @@ export const createPolygon = (useEl) => {
         get() { return _next },
         set(newValue) { _next = newValue; }
     });
+    // Object.defineProperty(useEl, 'scale', {
+    //     get() { return _scale },
+    //     set(newValue) { _scale = newValue; }
+    // });
   
     
     recalc();

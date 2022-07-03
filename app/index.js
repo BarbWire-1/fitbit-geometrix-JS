@@ -10,16 +10,52 @@ let multiColorPoly = createPolygon(document.getElementById('myPolygon2'));
 let scaledPoly = createPolygon(document.getElementById('myPolygon3'));
 let changingPoly = createPolygon(document.getElementById('myPolygon4'));
 
-
+//change fill for individual lines
 for (let i = 0; i < multiColorPoly.points; i++) {
     if (i % 2 == 1) multiColorPoly.lines[ i ].style.fill = "limegreen";
 }
 
+// changes from default settings
 changingPoly.points = 3;
-changingPoly.strokeWidth = 5;
+changingPoly.strokeWidth = 6;
 changingPoly.radius = 40;
-changingPoly.style.fill = "turquoise";
+changingPoly.style.fill = "orange";
+//marks line0 to show "next"-connection
+changingPoly.lines[ 0 ].style.fill = "magenta"
+changingPoly.style.opacity = 0.5;
 
-const updateAttributes = () => {
+
+// examples for dynamic changes
+let i = 0;
+function updateProps() {
+    rotatingPoly.rotate.angle = 15 * i;
+    //console.log(`rotation: ${rotatingPoly.rotate.angle}°`);
     
-}
+    //TODO need to set both, otherwise scale.x = scale.y - to expect or wrong defined??
+    scaledPoly.scale.x = 1 + (i / 24);
+    scaledPoly.scale.y = 1// - (i / 24);
+    //console.log(`scale.x: ${scaledPoly.scale.x}`)
+    
+    changingPoly.next = 1 + ((changingPoly.points-2) % 6);
+    //console.log(`next: ${changingPoly.next}`)
+    changingPoly.points = 3 + (i % 10);
+    changingPoly.radius = 40 + 6 * (i % 24);
+    
+
+    i++;
+};
+
+//to stop animation and logging
+const delay = 1;
+const limit = 24;
+let a = 1;
+
+const limitedInterval = setInterval(() => {
+    updateProps()
+    if (a > limit) {
+        clearInterval(limitedInterval);
+        console.log('-------------------');
+        console.warn('Interval cleared!');
+    };
+    a++;
+}, delay * 1000);
