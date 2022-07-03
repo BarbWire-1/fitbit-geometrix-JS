@@ -55,6 +55,7 @@ export const createPolygon = (useEl) => {
             this.y = y;
         };
     };
+    
    
     // CALCULATE POINTS AND APPLY TO LINES
     const recalc = () => {
@@ -117,7 +118,8 @@ export const createPolygon = (useEl) => {
                 }
             },
         });
-       linesEl.forEach(line => _linesStyle.push(Object.seal(createStyleObject(line))));
+        linesEl.forEach(line => _linesStyle.push(Object.seal(createStyleObject(line))));
+        
     }();
     // TODO why is _linesStyle just shown as <any> in app.index?
     // find a nicer solution for linesStyle?
@@ -200,3 +202,4 @@ constructWidgets('polygon');
 // TODO possible to detect, where the invalid input is located (for error message)?
 // TODO installation/usage, make this one a demo
 // TODO remove unnecessary getters
+// TODO add an interim-object <line> to have better access to linesStyle?
