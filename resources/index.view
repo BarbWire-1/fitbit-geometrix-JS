@@ -9,7 +9,7 @@
     </use>
     
     <use id="myPolygon3" href="#polygon" x="50%" y="50%" fill="#7c03cd">
-        <set href="#config" attributeName="text-buffer" to="radius: 100; next: 1; rotate: 90; points: 4; strokeWidth: 3;" />
+        <set href="#config" attributeName="text-buffer" to="radius: 100; next: 1; rotate: 90; points: 2; strokeWidth: 3;" />
     </use>
     
     <!-- constructed with default settings -->

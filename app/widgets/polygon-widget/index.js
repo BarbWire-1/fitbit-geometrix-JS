@@ -197,13 +197,13 @@ export const createPolygon = (useEl) => {
   
     
     recalc();
-    //inspectObject('useEl', useEl)
+    if(validInput(useEl.points) === true)
     return Object.seal(createPolygonWidget(useEl));
     
 };
 //now construct in app/index
 constructWidgets('polygon');
 
-// TODO add validation
+// TODO possible to force break for invalid input??
 // TODO installation/usage, make this one a demo
 // TODO remove unnecessary getters

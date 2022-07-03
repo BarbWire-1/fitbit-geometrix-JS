@@ -25,7 +25,8 @@ export const validInput = (n) => {
     if (isInt(n) === true && inRange(n, range.min, range.max) == true) {
         isValid = true;
     } else {
-        console.warn(n + notValid)
+      
+        console.error(n + notValid)
     }
     return isValid;
     
