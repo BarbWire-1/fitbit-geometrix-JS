@@ -125,7 +125,8 @@ export const createPolygon = (useEl) => {
 
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
     const createPolygonWidget = (ele) => ({
-      
+        
+        // SETTINGS ON SVG_ELEMENTS IN useEL
         get style() {
             return {
                 set fill(newValue) { ele.style.fill = newValue },
@@ -162,40 +163,27 @@ export const createPolygon = (useEl) => {
             }
         },
         
-        // abstract settings only used for recalc()
-        get next() { return ele.next },
+        // ADDITIONAL ABSTRACT SETTINGS ON useEl-object
+        get next() { return useEl.next },
         set next(newValue) {
             _next = newValue;
             recalc();
         },
-        get radius() { return ele.radius },
+        get radius() { return useEl.radius },
         set radius(newValue) {
             _radius = newValue;
             recalc();
         },
-        get points() { return ele.points },
+        get points() { return useEl.points },
         set points(newValue) {
             _points = newValue;
             recalc();
         }, 
     });
    
-   // ABSTRACT SETTINGS NEED TO BE DEFINED ON useEl SEPARATELY(??)
-    Object.defineProperty(useEl, 'radius', {
-        get() { return _radius },
-        set(newValue) { _radius = newValue;}
-    });
-    Object.defineProperty(useEl, 'points', {
-        get() { return _points },
-        set(newValue) { _points = newValue; }
-    });
-    Object.defineProperty(useEl, 'next', {
-        get() { return _next },
-        set(newValue) { _next = newValue;}
-    });
-   
     // to draw uses on start:
     recalc();
+    
     
     // check for number of points (int betwenn 3 to 12)
     if (validInput(useEl.points) === true) {
