@@ -3,7 +3,7 @@
 
   <symbol id="polygon" x="0" y="0" type="polygon" fill= "red" >
     <g id="transform">
-        <line class="lines " />
+        <line class="lines" />
         <line class="lines" />
         <line class="lines" />
         <line class="lines" />

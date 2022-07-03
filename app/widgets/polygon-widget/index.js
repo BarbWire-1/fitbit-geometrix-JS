@@ -13,11 +13,10 @@ export const createPolygon = (useEl) => {
     
     let transform = transformEl.groupTransform
     
-    
     // PRIVATE VARS
-    // ABSTRACT
+    // abstract
     let _radius, _points, _next
-    // ON SVG-ELEMENTS
+    // on svg-elements
     let _rotate, _strokeWidth, _scale
     
     // array to hold linesStyle objects
@@ -68,7 +67,7 @@ export const createPolygon = (useEl) => {
         // array to keep calculated point-objects for further use in connecting lines
         let p = [];
 
-        // recalc radius depending on strokeW to fit inside
+        // recalc radius depending on strokeWidth to fit inside outer radius
         let iRadius = _radius;
         iRadius -= Math.round(_strokeWidth  / 2);
         const fract = (2 * Math.PI / _points);
@@ -90,15 +89,13 @@ export const createPolygon = (useEl) => {
                 line.style.display = 'none'
             });
         }  
-        //sets coords of lines depending on _points p and <_next> 
+        //apply settings to used line-elements
         i = 0;
         let npt = _next
         while (i < _points) {
            
             let l = linesEl[ i ];
-            //TODO do this connection to element somewhere else later to keep abstract here?
             l.style.strokeWidth = _strokeWidth;
-            // set 'used' lines to 'inline'
             l.style.display = 'inline';
                 
             //start _points
@@ -116,7 +113,7 @@ export const createPolygon = (useEl) => {
     };
     
   
-    // Array of line-style-objects to only expose style
+    // Array of line-style-objects to only expose fill on line-elements
     !function () { //IIFE
         _linesStyle = []
         const createStyleObject = (ele) => ({
@@ -130,8 +127,7 @@ export const createPolygon = (useEl) => {
         linesEl.forEach(line => _linesStyle.push(Object.seal(createStyleObject(line))));
         
     }();
-    // TODO why is _linesStyle just shown as <any> in app.index?
-    // find a nicer solution for linesStyle?
+    
     Object.seal(_linesStyle)
 
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
@@ -156,7 +152,7 @@ export const createPolygon = (useEl) => {
         // following get applied to 'real' elements
         get strokeWidth() { return ele.strokeWidth },
         set strokeWidth(newValue) {
-            _strokeWidth = newValue;// gets passed inside recalc()
+            _strokeWidth =  newValue;// gets passed inside recalc()
             recalc();
         },  
         get rotate() {
