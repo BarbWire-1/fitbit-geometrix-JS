@@ -146,6 +146,7 @@ export const createPolygon = (useEl) => {
                 set fill(newValue) { ele.style.fill = newValue },
                 set opacity(newValue) { ele.style.opacity = newValue },
                 set display(newValue) { ele.style.display = newValue },
+                set strokeWidth(newValue) { _strokeWidth = newValue, recalc() },
             }
         },
         
@@ -157,11 +158,6 @@ export const createPolygon = (useEl) => {
         set y(newValue) { ele.y = newValue },
         
         // SETTINGS ON MEMBERS of useEL
-        get strokeWidth() { return ele.strokeWidth },
-        set strokeWidth(newValue) {
-            _strokeWidth =  newValue;// gets passed inside recalc()
-            recalc();
-        },  
         get rotate() {
             return {
                 //get angle() { return transform.rotate.angle },
