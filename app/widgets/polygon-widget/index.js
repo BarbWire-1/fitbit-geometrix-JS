@@ -14,8 +14,7 @@ export const createPolygon = (useEl) => {
     let transform = transformEl.groupTransform
     
     
-    // PRIVATE VARS (abstract settings)
-    // defaults set in symbol config.text
+    // PRIVATE VARS
     // ABSTRACT
     let _radius, _points, _next
     // ON SVG-ELEMENTS
@@ -26,10 +25,9 @@ export const createPolygon = (useEl) => {
     
     // INITIALISATION:
     (function () {   //IIFE
-        
+        // defaults set in symbol config.text
         parseConfig(useEl, attribute => {
-            // This anonymous function is called for every attribute in config.
-            // attribute is {name:attributeName, value:attributeValue}
+            
             switch (attribute.name) {
 
                 case 'radius':
