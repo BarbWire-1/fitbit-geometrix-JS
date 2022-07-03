@@ -14,10 +14,15 @@ export const createPolygon = (useEl) => {
     let transform = transformEl.groupTransform
     
     
-    // TODO sort these...
     // PRIVATE VARS (abstract settings)
     // defaults set in symbol config.text
-    let _radius, _points, _rotate, _next, _strokeWidth, _scale, _style, _linesStyle
+    // ABSTRACT
+    let _radius, _points, _next
+    // ON SVG-ELEMENTS
+    let _rotate, _strokeWidth, _scale
+    
+    // array to hold linesStyle objects
+    let _linesStyle
     
     // INITIALISATION:
     (function () {   //IIFE
@@ -109,8 +114,8 @@ export const createPolygon = (useEl) => {
     
   
     // Array of line-style-objects to only expose style
-    !function() { //IIFE
-        _linesStyle = [];
+    !function () { //IIFE
+        _linesStyle = []
         const createStyleObject = (ele) => ({
             get style() {
                 return {
