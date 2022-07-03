@@ -4,7 +4,8 @@ import document from 'document'
 import {createPolygon} from './widgets/polygon-widget/index'
 import { dumpProperties, inspectObject } from './widgets/devTools';
 
-
+// the polygon uses only get constructed if declared here!!!
+// => could be constructed dynamically only if needed
 let rotatingPoly = createPolygon(document.getElementById('myPolygon1'));
 let multiColorPoly = createPolygon(document.getElementById('myPolygon2'));
 let scaledPoly = createPolygon(document.getElementById('myPolygon3'));
@@ -59,3 +60,6 @@ const limitedInterval = setInterval(() => {
     };
     a++;
 }, delay * 1000);
+
+// show structure of <rotatingPoly> (same for all polygon-objects)
+dumpProperties('rotatingPoly', rotatingPoly, 1)
