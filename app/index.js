@@ -18,12 +18,12 @@ for (let i = 0; i < multiColorPoly.points; i++) {
 
 // changes from default settings
 changingPoly.points = 3;
-changingPoly.strokeWidth = 6;
+changingPoly.strokeWidth = 4;
 changingPoly.radius = 40;
 changingPoly.style.fill = "orange";
 //marks line0 to show "next"-connection
-changingPoly.lines[ 0 ].style.fill = "magenta"
-changingPoly.style.opacity = 0.5;
+// changingPoly.lines[ 0 ].style.fill = "magenta"
+// changingPoly.style.opacity = 0.5;
 
 // examples for dynamic changes
 let i = 0;
@@ -32,14 +32,17 @@ function updateProps() {
     //console.log(`rotation: ${rotatingPoly.rotate.angle}°`);
     
     //TODO need to set both, otherwise scale.x = scale.y - to expect or wrong defined??
-    scaledPoly.scale.x = 1 + (i / 24);
+    scaledPoly.scale.x = 1 + (i / 36);
     scaledPoly.scale.y = 1// - (i / 24);
     //console.log(`scale.x: ${scaledPoly.scale.x}`)
     
     changingPoly.next = 1 + ((changingPoly.points-2) % 6);
     //console.log(`next: ${changingPoly.next}`)
     changingPoly.points = 3 + (i % 10);
-    changingPoly.radius = 40 + 6 * (i % 24);
+    changingPoly.radius = 40 + 5 * (i % 24);
+    changingPoly.style.fill = i % 2 == 0 ? 'magenta' : 'orange'
+    
+    rotatingPoly.radius = 150 -5*i
     
 
     i++;
