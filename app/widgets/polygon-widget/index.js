@@ -141,6 +141,11 @@ export const createPolygon = (useEl) => {
     const createPolygonWidget = (ele) => ({
         
         // SETTINGS ON useEl
+        //get x() { return ele.x },
+        set x(newValue) { ele.x = newValue },
+        // get y() { return ele.y },
+        set y(newValue) { ele.y = newValue },
+        
         get style() {
             return {
                 set fill(newValue) { ele.style.fill = newValue },
@@ -150,29 +155,8 @@ export const createPolygon = (useEl) => {
             }
         },
         
-        get lines() {return _linesStyle },// individual style: fill only!! else inherited from useEl
-       
-        //get x() { return ele.x },
-        set x(newValue) { ele.x = newValue },
-        // get y() { return ele.y },
-        set y(newValue) { ele.y = newValue },
-        
-        // SETTINGS ON MEMBERS of useEL
-        get rotate() {
-            return {
-                //get angle() { return transform.rotate.angle },
-                set angle(newValue) { transform.rotate.angle = newValue },
-            }
-        },
-        get scale() {
-            return {
-                //get x() { return transform.scale.x},
-                set x(newValue) { transform.scale.x = newValue },
-                //get y() { return transform.scale.y},
-                set y(newValue) { transform.scale.y = newValue }
-            }
-        },
-        
+        get lines() { return _linesStyle },// individual style: fill only!! else inherited from useEl
+
         // ADDITIONAL ABSTRACT SETTINGS ON useEl-object
         get next() { return useEl.next },
         set next(newValue) {
@@ -189,6 +173,24 @@ export const createPolygon = (useEl) => {
             _points = newValue;
             recalc();
         }, 
+        
+        // SETTINGS ON transformEl (member of useEL)
+        get rotate() {
+            return {
+                //get angle() { return transform.rotate.angle },
+                set angle(newValue) { transform.rotate.angle = newValue },
+            }
+        },
+        get scale() {
+            return {
+                //get x() { return transform.scale.x},
+                set x(newValue) { transform.scale.x = newValue },
+                //get y() { return transform.scale.y},
+                set y(newValue) { transform.scale.y = newValue }
+            }
+        },
+        
+        
     });
    
     // to draw uses on start:
