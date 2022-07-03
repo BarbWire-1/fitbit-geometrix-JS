@@ -138,7 +138,7 @@ export const createPolygon = (useEl) => {
         },
         
         get lines() {return _linesStyle },// individual style: fill only!! else inherited from useEl
-        
+       
         //get x() { return ele.x },
         set x(newValue) { ele.x = newValue },
         // get y() { return ele.y },
