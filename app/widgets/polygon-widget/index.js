@@ -11,9 +11,11 @@ export const createPolygon = (useEl) => {
     const transformEl = useEl.getElementById("transform");// needed to rotate/scale
     const linesEl = useEl.getElementsByClassName("lines");// needed to iterate
     
+    
+    // TODO sort these...
     // PRIVATE VARS (abstract settings)
     // defaults set in symbol config.text
-    let _radius, _points, _rotate, _next, _strokeWidth, _scale, _style, _lines
+    let _radius, _points, _rotate, _next, _strokeWidth, _scale, _style, _linesStyle
     
     // INITIALISATION:
     (function () {   //IIFE
@@ -101,40 +103,36 @@ export const createPolygon = (useEl) => {
         };
     };
     
-   
-    // create style-Objects
-    ; (function () { //IIFE
-        'use strict'
-        _lines = [];
+  
+    // Array of line-style-objects to only expose style
+    !function() { //IIFE
+        _linesStyle = [];
         const createStyleObject = (ele) => ({
-            
             get style() {
-                
                 return {
                     set fill(newValue) { ele.style.fill = newValue },
-                    set opacity(newValue) { ele.style.opacity = newValue },
-                    set display(newValue) { ele.style.display = newValue },
+                    // get fill() {return ele.style.fill}
                 }
             },
-           
         });
-        //TODO why aren't the style objects sealed??
-        // Array of line-style-objects to only expose style
-        linesEl.forEach(line => _lines.push(Object.seal(createStyleObject(line))));
-        // private style-object containing (!) style
-        // set on useEl (ugly but ...)
-        _style = Object.seal(createStyleObject(useEl));
-  
-    }());
-   
-    Object.seal(_style.style)
+       linesEl.forEach(line => _linesStyle.push(Object.seal(createStyleObject(line))));
+    }();
+    // TODO why is _linesStyle just shown as <any> in app.index?
+    Object.seal(_linesStyle)
 
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
     const createPolygonWidget = (ele) => ({
-       
-        // settings directly applied to useEl
-        get style() { return _style.style },//TODO haha...
-        get lines() {return _lines },
+      
+        get style() {
+            return {
+                set fill(newValue) { ele.style.fill = newValue },
+                set opacity(newValue) { ele.style.opacity = newValue },
+                set display(newValue) { ele.style.display = newValue },
+            }
+        },
+        
+        get lines() {return _linesStyle },
+        
         get x() { return ele.x },
         set x(newValue) { ele.x = newValue },
         get y() { return ele.y },
@@ -152,9 +150,6 @@ export const createPolygon = (useEl) => {
                 set angle(newValue) { transformEl.groupTransform.rotate.angle = newValue },
             }
         },
-        // set rotate(newValue) {
-        //     transformEl.groupTransform.rotate.angle = newValue;
-        // },
         get scale() {
             return {
                 get x() { return transformEl.groupTransform.scale.x},
@@ -195,10 +190,7 @@ export const createPolygon = (useEl) => {
         get() { return _next },
         set(newValue) { _next = newValue; }
     });
-    // Object.defineProperty(useEl, 'scale', {
-    //     get() { return _scale },
-    //     set(newValue) { _scale = newValue; }
-    // });
+   
   
     
     recalc();
@@ -209,6 +201,6 @@ export const createPolygon = (useEl) => {
 //now construct in app/index
 constructWidgets('polygon');
 
-//TODO i wonder, why style and lines are working excpt missing error on assigning unexposed attributes.
-// the are actuall recognized as any, not as objects
-// inspecting shows empty object (???)
+// TODO add validation
+// TODO installation/usage, make this one a demo
+// TODO remove unnecessary getters

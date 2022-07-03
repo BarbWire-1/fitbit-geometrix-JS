@@ -25,7 +25,6 @@ changingPoly.style.fill = "orange";
 changingPoly.lines[ 0 ].style.fill = "magenta"
 changingPoly.style.opacity = 0.5;
 
-
 // examples for dynamic changes
 let i = 0;
 function updateProps() {
@@ -63,3 +62,5 @@ const limitedInterval = setInterval(() => {
 
 // show structure of <rotatingPoly> (same for all polygon-objects)
 dumpProperties('rotatingPoly', rotatingPoly, 1)
+
+
