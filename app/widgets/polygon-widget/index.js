@@ -2,7 +2,7 @@
 'use strict';
 
 import { constructWidgets, parseConfig } from "../construct-widgets";
-import { inspectObject } from "../devTools";
+import { dumpProperties, inspectObject } from "../devTools";
 //import { dumpProperties, inspectObject } from "../devTools/";
 import {validInput} from "./validation"
 
@@ -33,7 +33,7 @@ export const createPolygon = (useEl) => {
                    _radius = Number(attribute.value);
                     break;
                 case 'points':
-                    //TODO why does this need to be equalled to useEl.points???
+                    //TODO why does this one (only) need to be equalled to useEl.points???
                     useEl.points = _points = Number(attribute.value);
                     break;
                 case 'strokeWidth':
@@ -120,15 +120,22 @@ export const createPolygon = (useEl) => {
             get style() {
                 return {
                     set fill(newValue) { ele.style.fill = newValue },
-                    // get fill() {return ele.style.fill}
+                    get fill() {return ele.style.fill}
                 }
             },
         });
         linesEl.forEach(line => _linesStyle.push(Object.seal(createStyleObject(line))));
-        
     }();
     
     Object.seal(_linesStyle)
+    
+    // TODO ???
+    // inspectObject('_linesStyle[0]', _linesStyle[ 0 ])// style: {}
+    // inspectObject('_linesStyle[0].style', _linesStyle[ 0 ].style)// fill: undefined :(
+    // inspectObject('_linesStyle[0].style.fill', _linesStyle[ 0 ].style.fill)// nothing! ??
+    // linesEl.forEach(line => inspectObject('line', line))
+    // inspectObject('linesEl[0]', linesEl[ 0 ])
+   
 
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
     const createPolygonWidget = (ele) => ({
@@ -206,5 +213,4 @@ constructWidgets('polygon');
 // TODO possible to force break for invalid input??
 // TODO possible to detect, where the invalid input is located (for error message)?
 // TODO installation/usage, make this one a demo
-// TODO remove unnecessary getters
-// TODO add an interim-object <line> to have better access to linesStyle?
+// TODO add an interim-object <line> to have linesStyle as object?

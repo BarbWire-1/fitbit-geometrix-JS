@@ -21,6 +21,7 @@ changingPoly.points = 3;
 changingPoly.strokeWidth = 4;
 changingPoly.radius = 40;
 changingPoly.style.fill = "orange";
+
 //marks line0 to show "next"-connection
 // changingPoly.lines[ 0 ].style.fill = "magenta"
 // changingPoly.style.opacity = 0.5;
@@ -42,7 +43,7 @@ function updateProps() {
     changingPoly.radius = 40 + 5 * (i % 24);
     changingPoly.style.fill = i % 2 == 0 ? 'magenta' : 'orange'
     
-    rotatingPoly.radius = 150 -5*i
+    rotatingPoly.radius = 150 - 5 * i;
     
 
     i++;
