@@ -28,19 +28,20 @@ export const createPolygon = (useEl) => {
             switch (attribute.name) {
 
                 case 'radius':
-                   useEl.radius  = _radius = Number(attribute.value);
+                   _radius = Number(attribute.value);
                     break;
                 case 'points':
+                    //TODO why does this need to be equalled to useEl.points???
                     useEl.points = _points = Number(attribute.value);
                     break;
                 case 'strokeWidth':
-                     useEl.strokeWidth = _strokeWidth = Number(attribute.value);
+                    _strokeWidth = Number(attribute.value);
                     break;
                 case 'next':
-                    useEl.next = _next = Number(attribute.value);
+                    _next = Number(attribute.value);
                     break;
                 case 'rotate':
-                    useEl.rotate  = _rotate = transform.rotate.angle = Number(attribute.value);
+                    _rotate = transform.rotate.angle = Number(attribute.value);
                     break;
             
             };
