@@ -118,6 +118,7 @@ export const createPolygon = (useEl) => {
        linesEl.forEach(line => _linesStyle.push(Object.seal(createStyleObject(line))));
     }();
     // TODO why is _linesStyle just shown as <any> in app.index?
+    // find a nicer solution for linesStyle?
     Object.seal(_linesStyle)
 
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
