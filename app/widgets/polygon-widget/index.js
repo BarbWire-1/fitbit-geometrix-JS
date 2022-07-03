@@ -64,12 +64,9 @@ export const createPolygon = (useEl) => {
     // CALCULATE POINTS AND APPLY TO LINES
     const recalc = () => {
         
-        // set all lines (back) to 'none'
-        linesEl.forEach(line => {
-            line.style.display = 'none'
-        });
+        let prevPoints;
         // array to keep calculated point-objects for further use in connecting lines
-        let p = []
+        let p = [];
 
         // recalc radius depending on strokeW to fit inside
         let iRadius = _radius;
@@ -86,12 +83,18 @@ export const createPolygon = (useEl) => {
             p[ i ].y = Math.round(iRadius * -Math.cos(i * fract));
             i++;
         };
-             
+        // to remove possible settings on previous used lines
+        if (prevPoints != _points) {
+            // set all lines (back) to 'none'
+            linesEl.forEach(line => {
+                line.style.display = 'none'
+            });
+        }  
         //sets coords of lines depending on _points p and <_next> 
         i = 0;
         let npt = _next
         while (i < _points) {
-
+           
             let l = linesEl[ i ];
             //TODO do this connection to element somewhere else later to keep abstract here?
             l.style.strokeWidth = _strokeWidth;
@@ -107,7 +110,9 @@ export const createPolygon = (useEl) => {
             l.x2 = nextPt.x;
             l.y2 = nextPt.y;
             i++;
+           
         };
+        prevPoints = _points;
     };
     
   
