@@ -190,7 +190,6 @@ export const createPolygon = (useEl) => {
         get radius() { return ele.radius },
         set radius(newValue) {
             _radius = newValue;
-            console.log(_radius)
             recalc();
         },
         get points() { return ele.points },

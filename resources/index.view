@@ -3,10 +3,16 @@
     <use id="myPolygon1"  href="#polygon" x="50%" y="50%" fill="#66ff00" opacity = "0.5">
         <set href="#config" attributeName="text-buffer" to="radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6;" />
     </use>
+    
     <use id="myPolygon2" href="#polygon" x="50%" y="50%" fill="#ff00fb" >
         <set href="#config" attributeName="text-buffer" to="radius: 70; next: 1; rotate: 0; points: 12; strokeWidth: 4;" />
     </use>
-    <use id="myPolygon3" href="#polygon" x="50%" y="50%" fill="orange" />
+    
+    <use id="myPolygon3" href="#polygon" x="50%" y="50%" fill="orange">
+        <set href="#config" attributeName="text-buffer" to="radius: 100; next: 1; rotate: 90; points: 4; strokeWidth: 2;" />
+    </use>
+    
+    <!-- constructed with default settings -->
     <use id="myPolygon4" href="#polygon" x="50%" y="50%"  />
 
 </svg>

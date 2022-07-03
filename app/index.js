@@ -14,3 +14,8 @@ let changingPoly = createPolygon(document.getElementById('myPolygon4'));
 for (let i = 0; i < multiColorPoly.points; i++) {
     if (i % 2 == 1) multiColorPoly.lines[ i ].style.fill = "limegreen";
 }
+
+changingPoly.points = 3;
+changingPoly.strokeWidth = 5;
+changingPoly.radius = 40;
+changingPoly.style.fill = "turquoise";
