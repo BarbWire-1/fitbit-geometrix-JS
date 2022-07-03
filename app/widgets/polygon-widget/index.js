@@ -11,6 +11,8 @@ export const createPolygon = (useEl) => {
     const transformEl = useEl.getElementById("transform");// needed to rotate/scale
     const linesEl = useEl.getElementsByClassName("lines");// needed to iterate
     
+    let transform = transformEl.groupTransform
+    
     
     // TODO sort these...
     // PRIVATE VARS (abstract settings)
@@ -38,7 +40,7 @@ export const createPolygon = (useEl) => {
                     useEl.next = _next = Number(attribute.value);
                     break;
                 case 'rotate':
-                    useEl.rotate  = _rotate = transformEl.groupTransform.rotate.angle = Number(attribute.value);
+                    useEl.rotate  = _rotate = transform.rotate.angle = Number(attribute.value);
                     break;
             
             };
@@ -147,16 +149,16 @@ export const createPolygon = (useEl) => {
         },  
         get rotate() {
             return {
-                get angle() { return transformEl.groupTransform.rotate.angle },
-                set angle(newValue) { transformEl.groupTransform.rotate.angle = newValue },
+                get angle() { return transform.rotate.angle },
+                set angle(newValue) { transform.rotate.angle = newValue },
             }
         },
         get scale() {
             return {
-                get x() { return transformEl.groupTransform.scale.x},
-                set x(newValue) { transformEl.groupTransform.scale.x = newValue },
-                get y() { return transformEl.groupTransform.scale.y},
-                set y(newValue) { transformEl.groupTransform.scale.y = newValue }
+                get x() { return transform.scale.x},
+                set x(newValue) { transform.scale.x = newValue },
+                get y() { return transform.scale.y},
+                set y(newValue) { transform.scale.y = newValue }
             }
         },
         
