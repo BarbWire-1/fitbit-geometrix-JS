@@ -4,13 +4,7 @@ import document from 'document'
 import {createPolygon} from './widgets/polygon-widget/index'
 import { dumpProperties, inspectObject } from './widgets/devTools';
 
-// import css from "rollup-plugin-import-css";
-// 
-// export default {
-//     input: "index.js",
-//     output: { file: "dist/index.js", format: "esm" },
-//     plugins: [ css() ]
-// };
+
 
 // the polygon uses only get constructed if declared here!!!
 // => could be constructed dynamically only if needed

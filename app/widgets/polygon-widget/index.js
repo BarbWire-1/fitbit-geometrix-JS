@@ -6,15 +6,6 @@ import { dumpProperties, inspectObject } from "../devTools";
 //import { dumpProperties, inspectObject } from "../devTools/";
 import { validInput } from "./validation"
 
-//TEST TO INVOKE STYLES.CSS
-//import { styled } from 'styled-components';
-//import {createComponent} from 'styled-components'
-// import "../../../resources/styles.css"//error: Error: Unexpected token (Note that you need plugins to import files that are not JavaScript)
-// <link rel="stylesheet" href="styles.css"></link>//Unhandled exception: ReferenceError: createComponent is not defined
-
-
-
-
 
 export const createPolygon = (useEl) => {
     //GET ELEMENTS FOR POLYGON
