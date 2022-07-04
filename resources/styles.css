@@ -1,5 +1,5 @@
 
- #rotatingPoly #config {
+ #myPolygon1 #config {
    text-buffer: "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6"
  }
  
@@ -17,4 +17,18 @@
   /* even this doesn't do... buhuhuuuuu */
   #changingPoly {
     x: 168;
+  }
+  
+  /* needs the id from index.view SVG. Guess applies to useEl BEFORE creating Object */
+  /* settings on useEL working, settings from #config still doen't get applied*/
+  #myPolygon4 {
+    x: 100;
+  }
+  
+  #rotatingPoly #config {
+    text-buffer: "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6"
+  }
+  
+  #rotatingPoly {
+    text-buffer: "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6"
   }

@@ -31,35 +31,36 @@ export const createPolygon = (useEl) => {
     
     // array to hold linesStyle objects
     let _linesStyle
-    
-    // INITIALISATION:
-    (function () {   //IIFE
-        // defaults set in symbol config.text
-        parseConfig(useEl, attribute => {
-            
-            switch (attribute.name) {
-
-                case 'radius':
-                   _radius = Number(attribute.value);
-                    break;
-                case 'points':
-                    //TODO why does this one (only) need to be equalled to useEl.points???
-                    useEl.points = _points = Number(attribute.value);
-                    break;
-                case 'strokeWidth':
-                    _strokeWidth = Number(attribute.value);
-                    break;
-                case 'next':
-                    _next = Number(attribute.value);
-                    break;
-                case 'rotate':
-                    _rotate = transform.rotate.angle = Number(attribute.value);
-                    break;
-            
-            };
-        });
-        
-    })();
+   
+//     // INITIALISATION:
+//     (function () {   //IIFE
+//         // defaults set in symbol config.text
+//         parseConfig(useEl, attribute => {
+//             
+//             switch (attribute.name) {
+// 
+//                 case 'radius':
+//                    _radius = Number(attribute.value);
+//                     break;
+//                 case 'points':
+//                     //TODO why does this one (only) need to be equalled to useEl.points???
+//                     useEl.points = _points = Number(attribute.value);
+//                     break;
+//                 case 'strokeWidth':
+//                     _strokeWidth = Number(attribute.value);
+//                     break;
+//                 case 'next':
+//                     _next = Number(attribute.value);
+//                     break;
+//                 case 'rotate':
+//                     _rotate = transform.rotate.angle = Number(attribute.value);
+//                     break;
+//             
+//             };
+//         });
+//        
+//         
+//     })();
     
 
     class Point {
@@ -204,9 +205,39 @@ export const createPolygon = (useEl) => {
         
         
     });
+    
+    // INITIALISATION:
+    (function () {   //IIFE
+        // defaults set in symbol config.text
+        parseConfig(useEl, attribute => {
+
+            switch (attribute.name) {
+
+                case 'radius':
+                    _radius = Number(attribute.value);
+                    break;
+                case 'points':
+                    //TODO why does this one (only) need to be equalled to useEl.points???
+                    useEl.points = _points = Number(attribute.value);
+                    break;
+                case 'strokeWidth':
+                    _strokeWidth = Number(attribute.value);
+                    break;
+                case 'next':
+                    _next = Number(attribute.value);
+                    break;
+                case 'rotate':
+                    _rotate = transform.rotate.angle = Number(attribute.value);
+                    break;
+
+            };
+        });
+
+        recalc();
+    })();
    
     // to draw uses on instantiaton:
-    recalc();
+  
     
     
     // check for number of points (int betwenn 3 to 12)
