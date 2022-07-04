@@ -4,7 +4,8 @@
 import { constructWidgets, parseConfig } from "../construct-widgets";
 import { dumpProperties, inspectObject } from "../devTools";
 //import { dumpProperties, inspectObject } from "../devTools/";
-import {validInput} from "./validation"
+import { validInput } from "./validation"
+//import "../../../resources/styles.css"//error: Error: Unexpected token (Note that you need plugins to import files that are not JavaScript)
 
 export const createPolygon = (useEl) => {
     //GET ELEMENTS FOR POLYGON
