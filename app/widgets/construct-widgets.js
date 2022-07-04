@@ -22,6 +22,7 @@
 
 
 import document from 'document';
+import { inspectObject } from './devTools';
 
 export const constructWidgets = (construct, widgetType) => {
   // Finds widget elements of the specified type in the current document and calls construct() for each instance.
@@ -57,5 +58,6 @@ export const parseConfig = (useEl, callback) => {
   });
     i++;
     console.log(`call ${i}, obj ${useEl.id}:`)
-    console.log(JSON.stringify(configObj))
+    //console.log(JSON.stringify(configObj))
+    inspectObject(`config ${useEl.id}`, configObj)
 }
