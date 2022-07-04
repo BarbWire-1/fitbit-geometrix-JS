@@ -25,5 +25,8 @@
   "scripts": {
     "build": "fitbit-build",
     "debug": "fitbit"
+  },
+  "dependencies": {
+    "rollup-plugin-import-css": "^3.0.3"
   }
 }
