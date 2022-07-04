@@ -1,7 +1,7 @@
 
 'use strict';
 
-import { constructWidgets, parseConfig } from "../construct-widgets";
+import { constructWidgets, parseConfig, configObj } from "../construct-widgets";
 import { dumpProperties, inspectObject } from "../devTools";
 //import { dumpProperties, inspectObject } from "../devTools/";
 import { validInput } from "./validation"
@@ -63,7 +63,7 @@ export const createPolygon = (useEl) => {
         
     })();
     
-
+    console.error(`Delete after testing!! ${useEl.id} configObj: ${JSON.stringify(configObj)}`)
     class Point {
         constructor(x = 0, y = 0) {
             this.x = x;
