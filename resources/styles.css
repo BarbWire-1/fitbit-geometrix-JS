@@ -29,3 +29,13 @@
   y: 4;
 }
 */
+/* #myPolygon3 #config {
+   text-buffer: "radius: 100; next: 1; rotate: 90; points: 4; strokeWidth: 3"
+}
+
+#changingPoly #config {
+    text-buffer: "radius: 100; next: 1; rotate: 90; points: 4; strokeWidth: 3"
+ } */
+ #rotatingPoly #config {
+   text-buffer: "150; next: 1; rotate: 0; points: 12; strokeWidth: 6"
+ }

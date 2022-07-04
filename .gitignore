@@ -15,3 +15,5 @@ Backup -f
 .vscode
 *.yaml
 *.txt
+
+_README.md

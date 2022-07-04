@@ -10,7 +10,7 @@ export const createPolygon = (useEl) => {
     //GET ELEMENTS FOR POLYGON
     const transformEl = useEl.getElementById("transform");// needed to rotate/scale
     const linesEl = useEl.getElementsByClassName("lines");// needed to iterate
-    
+    const configEl = useEl.getElementById("config");
     let transform = transformEl.groupTransform
     
     // PRIVATE VARS
@@ -156,7 +156,7 @@ export const createPolygon = (useEl) => {
         },
         
         get lines() { return _linesStyle },// individual style: fill only!! else inherited from useEl
-
+        get config() {return configEl.text},
         // ADDITIONAL ABSTRACT SETTINGS ON useEl-object
         get next() { return useEl.next },
         set next(newValue) {
