@@ -33,8 +33,9 @@ export const createPolygon = (useEl) => {
     let _linesStyle
    
     // INITIALISATION:
-    (function () {   //IIFE
+    // (function () {   //IIFE
         // defaults set in symbol config.text
+   
         parseConfig(useEl, attribute => {
             
             switch (attribute.name) {
@@ -44,7 +45,7 @@ export const createPolygon = (useEl) => {
                     break;
                 case 'points':
                     //TODO why does this one (only) need to be equalled to useEl.points???
-                    useEl.points = _points = Number(attribute.value);
+                     useEl.points = _points = Number(attribute.value);
                     break;
                 case 'strokeWidth':
                     _strokeWidth = Number(attribute.value);
@@ -53,14 +54,14 @@ export const createPolygon = (useEl) => {
                     _next = Number(attribute.value);
                     break;
                 case 'rotate':
-                    _rotate = transform.rotate.angle = Number(attribute.value);
+                  _rotate = transform.rotate.angle = Number(attribute.value);
                     break;
             
             };
         });
        
         
-    })();
+    // })();
     
 
     class Point {
@@ -177,6 +178,7 @@ export const createPolygon = (useEl) => {
                     configEl.text = newValue;
                     createPolygon(useEl);
                     console.log(configEl.text)
+                    
                 }
             }
         },
@@ -249,9 +251,9 @@ export const createPolygon = (useEl) => {
 // 
 //    
 //     //})();
-   
+//    
     // to draw uses on instantiaton:
-    recalc();
+     recalc();
     // TODO: recalc() now forces default settings, trumpin newValue from config.text
     
     // check for number of points (int betwenn 3 to 12)
@@ -259,7 +261,7 @@ export const createPolygon = (useEl) => {
         return Object.seal(createPolygonWidget(useEl));
     };
     
-   
+  
     
 };
 //now construct in app/index
