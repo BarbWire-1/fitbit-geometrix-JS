@@ -25,7 +25,7 @@ export const createPolygon = (useEl) => {
     
     // PRIVATE VARS
     // abstract
-    let _radius, _points, _next
+    let _radius, _points, _next, poly
     // on svg-elements
     let _rotate, _strokeWidth, _scale
     
@@ -176,7 +176,7 @@ export const createPolygon = (useEl) => {
                 get text() { return configEl.text },
                 set text(newValue) {
                     configEl.text = newValue;
-                    createPolygon(useEl);
+                    poly = createPolygon(useEl);
                     console.log(configEl.text)
                     
                 }
@@ -259,6 +259,7 @@ export const createPolygon = (useEl) => {
     // check for number of points (int betwenn 3 to 12)
     if (validInput(useEl.points) === true) {
         return Object.seal(createPolygonWidget(useEl));
+        //return poly
     };
     
   

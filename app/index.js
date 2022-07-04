@@ -75,7 +75,7 @@ const limitedInterval = setInterval(() => {
 // // show structure of <rotatingPoly> (same for all polygon-objects)
 // dumpProperties('rotatingPoly', rotatingPoly, 1)
 // 
-console.log(rotatingPoly.config.text)//radius: 100; next: 1; rotate: 0; points: 5; strokeWidth: 3 // defaults
+//console.log(rotatingPoly.config.text)//radius: 100; next: 1; rotate: 0; points: 5; strokeWidth: 3 // defaults
 // 
 // //This now gets applied on StaticRange, but then overwritten with defaults (???)
- rotatingPoly.config.text = "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6;"
+rotatingPoly.config.text = "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6;"
