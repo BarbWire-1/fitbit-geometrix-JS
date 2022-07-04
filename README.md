@@ -16,7 +16,12 @@ After a thorough testing, I'll complete description, and perhaps add another typ
 \
 (I am just 'fishing in muddy waters' and ever again astonished, when things work somehow. So any criticism is highly appreciated 🙂)
 
-THIS APPROACH CURRENTLY DOES NOT SUPPORT ANY CSS ON THE WIDGET-OBJECTS!! (looking for ideas to solve that)
+THIS APPROACH CURRENTLY DOES NOT SUPPORT ANY CSS ON THE CONFIG-ATTRIBUTES!! (looking for ideas to solve that, but perhaps not possible, as they don't have another corresponding SVG-Element then config.text itself?) In branch testCSS I added <config> to object and <parseConfig>into the setter, but still not applied if set in styles.css text-buffer - at least unnecessarily working from app/index.js ;)
+
+
+Testing ...
+
+
 
 
 
