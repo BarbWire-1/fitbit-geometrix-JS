@@ -214,3 +214,10 @@ constructWidgets('polygon');
 // TODO possible to detect, where the invalid input is located (for error message)?
 // TODO installation/usage, make this one a demo
 // TODO add an interim-object <line> to have linesStyle as object?
+
+// TODO CSS on config not working this way.
+// seems, that styles.css is not invoked on constructing objects in app/index.js?
+// although polygon.css including the defaults in config does.
+// change parseConfig in a named function and call it on constructing?
+// or somehow force to read from styles.css?
+// a processing-sequence problem?
