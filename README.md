@@ -16,6 +16,8 @@ After a thorough testing, I'll complete description, and perhaps add another typ
 \
 (I am just 'fishing in muddy waters' and ever again astonished, when things work somehow. So any criticism is highly appreciated 🙂)
 
+THIS APPROACH CURRENTLY DOES NOT SUPPORT ANY CSS ON THE WIDGET-OBJECTS!! (looking for ideas to solve that)
+
 
 
 \

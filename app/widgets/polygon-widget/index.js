@@ -215,7 +215,7 @@ constructWidgets('polygon');
 // TODO installation/usage, make this one a demo
 // TODO add an interim-object <line> to have linesStyle as object?
 
-// TODO CSS on config not working this way.
+// TODO CSS on config and/or object or useEl not working this way.
 // seems, that styles.css is not invoked on constructing objects in app/index.js?
 // although polygon.css including the defaults in config does.
 // change parseConfig in a named function and call it on constructing?
