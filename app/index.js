@@ -14,7 +14,7 @@ import { dumpProperties, inspectObject } from './widgets/devTools';
 
 // the polygon uses only get constructed if declared here!!!
 // => could be constructed dynamically only if needed
-let rotatingPoly = createPolygon(document.getElementById('rotatingPoly'));
+let rotatingPoly = createPolygon(document.getElementById('myPolygon1'));
 let multiColorPoly = createPolygon(document.getElementById('myPolygon2'));
 let scaledPoly = createPolygon(document.getElementById('myPolygon3'));
 let changingPoly = createPolygon(document.getElementById('myPolygon4'));
@@ -80,5 +80,5 @@ const limitedInterval = setInterval(() => {
 // //This now gets applied, as parseConfig() in setter, but still not running under CSS
 //  rotatingPoly.config.text = "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6"
 // gets applied and keeps prev setting for other attributes
-// rotatingPoly.config.text = " points: 4"
+rotatingPoly.config.text = " points: 4"
 
