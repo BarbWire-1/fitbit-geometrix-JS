@@ -76,5 +76,6 @@ const limitedInterval = setInterval(() => {
 dumpProperties('rotatingPoly', rotatingPoly, 1)
 
 console.log(rotatingPoly.config.text)
-console.log(rotatingPoly.getElementById("myPolygon1").config.text)//Unhandled exception: TypeError: Expected a function.// EH???
-console.log(document.getElementById("myPolygon1").config.text)//Unhandled exception: TypeError: Expected a function.// EH???
+
+//This now gets applied on StaticRange, but then overwritten with defaults (???)
+rotatingPoly.config.text = "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6;"

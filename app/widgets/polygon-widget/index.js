@@ -32,35 +32,35 @@ export const createPolygon = (useEl) => {
     // array to hold linesStyle objects
     let _linesStyle
    
-//     // INITIALISATION:
-//     (function () {   //IIFE
-//         // defaults set in symbol config.text
-//         parseConfig(useEl, attribute => {
-//             
-//             switch (attribute.name) {
-// 
-//                 case 'radius':
-//                    _radius = Number(attribute.value);
-//                     break;
-//                 case 'points':
-//                     //TODO why does this one (only) need to be equalled to useEl.points???
-//                     useEl.points = _points = Number(attribute.value);
-//                     break;
-//                 case 'strokeWidth':
-//                     _strokeWidth = Number(attribute.value);
-//                     break;
-//                 case 'next':
-//                     _next = Number(attribute.value);
-//                     break;
-//                 case 'rotate':
-//                     _rotate = transform.rotate.angle = Number(attribute.value);
-//                     break;
-//             
-//             };
-//         });
-//        
-//         
-//     })();
+    // INITIALISATION:
+    (function () {   //IIFE
+        // defaults set in symbol config.text
+        parseConfig(useEl, attribute => {
+            
+            switch (attribute.name) {
+
+                case 'radius':
+                   _radius = Number(attribute.value);
+                    break;
+                case 'points':
+                    //TODO why does this one (only) need to be equalled to useEl.points???
+                    useEl.points = _points = Number(attribute.value);
+                    break;
+                case 'strokeWidth':
+                    _strokeWidth = Number(attribute.value);
+                    break;
+                case 'next':
+                    _next = Number(attribute.value);
+                    break;
+                case 'rotate':
+                    _rotate = transform.rotate.angle = Number(attribute.value);
+                    break;
+            
+            };
+        });
+       
+        
+    })();
     
 
     class Point {
@@ -168,8 +168,21 @@ export const createPolygon = (useEl) => {
         
         get lines() { return _linesStyle },// individual style: fill only!! else inherited from useEl
         
-        get config() { return configEl.text },
-        set config(newValue) {configEl.text = newValue},
+        
+        //TODO only for testing behaviour of <config>!______________________________________________________________________
+        get config() {
+            return {
+                get text() { return configEl.text },
+                set text(newValue) {
+                    configEl.text = newValue;
+                    createPolygon(useEl);
+                    console.log(configEl.text)
+                }
+            }
+        },
+        //___________________________________________________________________________________________________________________
+        
+        
         // ADDITIONAL ABSTRACT SETTINGS ON useEl-object
         get next() { return useEl.next },
         set next(newValue) {
@@ -206,39 +219,40 @@ export const createPolygon = (useEl) => {
         
     });
     
-    // INITIALISATION:
-    (function () {   //IIFE
-        // defaults set in symbol config.text
-        parseConfig(useEl, attribute => {
-
-            switch (attribute.name) {
-
-                case 'radius':
-                    _radius = Number(attribute.value);
-                    break;
-                case 'points':
-                    //TODO why does this one (only) need to be equalled to useEl.points???
-                    useEl.points = _points = Number(attribute.value);
-                    break;
-                case 'strokeWidth':
-                    _strokeWidth = Number(attribute.value);
-                    break;
-                case 'next':
-                    _next = Number(attribute.value);
-                    break;
-                case 'rotate':
-                    _rotate = transform.rotate.angle = Number(attribute.value);
-                    break;
-
-            };
-        });
-
-        recalc();
-    })();
+//     // INITIALISATION:
+//     //(function () {   //IIFE
+//         // defaults set in symbol config.text
+//    parseConfig(useEl, attribute => {
+// 
+//             switch (attribute.name) {
+// 
+//                 case 'radius':
+//                     _radius = Number(attribute.value);
+//                     break;
+//                 case 'points':
+//                     //TODO why does this one (only) need to be equalled to useEl.points???
+//                     useEl.points = _points = Number(attribute.value);
+//                     break;
+//                 case 'strokeWidth':
+//                     _strokeWidth = Number(attribute.value);
+//                     break;
+//                 case 'next':
+//                     _next = Number(attribute.value);
+//                     break;
+//                 case 'rotate':
+//                     _rotate = transform.rotate.angle = Number(attribute.value);
+//                     break;
+// 
+//          };
+//          
+//         });
+// 
+//    
+//     //})();
    
     // to draw uses on instantiaton:
-  
-    
+    recalc();
+    // TODO: recalc() now forces default settings, trumpin newValue from config.text
     
     // check for number of points (int betwenn 3 to 12)
     if (validInput(useEl.points) === true) {
