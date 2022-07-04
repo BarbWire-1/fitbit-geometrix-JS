@@ -77,4 +77,4 @@ dumpProperties('rotatingPoly', rotatingPoly, 1)
 
 console.log(rotatingPoly.config.text)
 console.log(rotatingPoly.getElementById("myPolygon1").config.text)//Unhandled exception: TypeError: Expected a function.// EH???
-
+console.log(document.getElementById("myPolygon1").config.text)//Unhandled exception: TypeError: Expected a function.// EH???
