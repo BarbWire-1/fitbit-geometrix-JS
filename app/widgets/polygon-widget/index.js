@@ -41,7 +41,7 @@ export const createPolygon = (useEl) => {
             switch (attribute.name) {
 
                 case 'radius':
-                   _radius = Number(attribute.value);
+                   useEl.radius = _radius = Number(attribute.value);
                     break;
                 case 'points':
                     //TODO why does this one (only) need to be equalled to useEl.points???
@@ -185,7 +185,7 @@ export const createPolygon = (useEl) => {
                                 break;
                             case 'points':
                                 //TODO why does this one (only) need to be equalled to useEl.points???
-                                useEl.points = _points = Number(attribute.value);
+                                _points = Number(attribute.value);
                                 break;
                             case 'strokeWidth':
                                 _strokeWidth = Number(attribute.value);

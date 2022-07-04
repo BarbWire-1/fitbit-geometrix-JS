@@ -37,19 +37,25 @@ export const constructWidgets = (construct, widgetType) => {
       }
   });
 }
-
+let i = 0;
 export const parseConfig = (useEl, callback) => {
   // Calls callback with {name:attributeName, value:attributeValue} for every value found in el's config element.
   const config = useEl.getElementById('config').text;
   if (config === "") return;
 
+    let configObj = []; 
   const attributes = config.split(';');
   attributes.forEach(attribute => {
     const colonIndex = attribute.indexOf(':')
     if (colonIndex > 0) {   // to ignore trailing ; and malformed attributes
       const attributeName = attribute.substring(0, colonIndex).trim();
       const attributeValue = attribute.substring(colonIndex+1).trim();
-      callback({name:attributeName, value:attributeValue});
+        callback({ name: attributeName, value: attributeValue });
+        configObj.push({ name: attributeName, value: attributeValue });
+        
     }
   });
+    i++;
+    console.log(`call ${i}, obj ${useEl.id}:`)
+    console.log(JSON.stringify(configObj))
 }
