@@ -78,7 +78,7 @@ const limitedInterval = setInterval(() => {
 //console.log(rotatingPoly.config.text)//radius: 100; next: 1; rotate: 0; points: 5; strokeWidth: 3 // defaults
 // 
 // //This now gets applied, as parseConfig() in setter, but still not running under CSS
-rotatingPoly.config.text = "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6"
+// rotatingPoly.config.text = "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6"
 // gets applied and keeps prev setting for other attributes
 // rotatingPoly.config.text = " points: 4"
 

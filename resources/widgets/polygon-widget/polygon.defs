@@ -1,6 +1,6 @@
 <defs>
-    <link rel="stylesheet" href="polygon.css" />
-    <link rel="stylesheet" href="../../../resources/styles.css" />
+    <!-- <link rel="stylesheet" href="polygon.css" /> NOT NEEDED -->
+<link rel="stylesheet" href="../../../resources/styles.css" /><!--NOT APPLIED-->
     <symbol id="polygon" x="0" y="0" type="polygon" fill= "red" >
         <g id="transform">
             <line class="lines" />
@@ -18,7 +18,8 @@
         </g>
     
         <text id="config" display="none" text-length="70" >
-           radius: 100; next: 1; rotate: 0; points: 5; strokeWidth: 3
+           <!-- radius: 100; next: 1; rotate: 0; points: 5; strokeWidth: 3 -->
         </text>
     </symbol>
+
 </defs>
