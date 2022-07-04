@@ -67,4 +67,6 @@ const limitedInterval = setInterval(() => {
 // show structure of <rotatingPoly> (same for all polygon-objects)
 dumpProperties('rotatingPoly', rotatingPoly, 1)
 
+rotatingPoly.config.text = "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6"
+
 

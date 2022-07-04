@@ -1,5 +1,6 @@
 <!-- This file is not a part of the widget template. It demonstrates how to use the sample widget code.-->
 <svg>
+    <!-- TODO settings in styles.css, but currently CSS not working -->
     <use id="myPolygon1"  href="#polygon" x="50%" y="50%" fill="#66ff00" opacity = "0.5">
         <!-- <set href="#config" attributeName="text-buffer" to="radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6;" /> -->
     </use>

@@ -156,7 +156,9 @@ export const createPolygon = (useEl) => {
         },
         
         get lines() { return _linesStyle },// individual style: fill only!! else inherited from useEl
-        get config() {return configEl.text},
+        
+        get config() { return configEl.text },
+        set config(newValue) {configEl.text = newValue},
         // ADDITIONAL ABSTRACT SETTINGS ON useEl-object
         get next() { return useEl.next },
         set next(newValue) {
