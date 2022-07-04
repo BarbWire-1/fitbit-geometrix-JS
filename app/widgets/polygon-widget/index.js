@@ -32,9 +32,9 @@ export const createPolygon = (useEl) => {
     // array to hold linesStyle objects
     let _linesStyle
    
-    // INITIALISATION:
-    // (function () {   //IIFE
-        // defaults set in symbol config.text
+    INITIALISATION:
+    (function () {   //IIFE
+        //defaults set in symbol config.text
    
         parseConfig(useEl, attribute => {
             
@@ -61,7 +61,7 @@ export const createPolygon = (useEl) => {
         });
        
         
-    // })();
+    })();
     
 
     class Point {
@@ -176,7 +176,30 @@ export const createPolygon = (useEl) => {
                 get text() { return configEl.text },
                 set text(newValue) {
                     configEl.text = newValue;
-                    poly = createPolygon(useEl);
+                    parseConfig(useEl, attribute => {
+
+                        switch (attribute.name) {
+
+                            case 'radius':
+                                _radius = Number(attribute.value);
+                                break;
+                            case 'points':
+                                //TODO why does this one (only) need to be equalled to useEl.points???
+                                useEl.points = _points = Number(attribute.value);
+                                break;
+                            case 'strokeWidth':
+                                _strokeWidth = Number(attribute.value);
+                                break;
+                            case 'next':
+                                _next = Number(attribute.value);
+                                break;
+                            case 'rotate':
+                                _rotate = transform.rotate.angle = Number(attribute.value);
+                                break;
+
+                        };
+                    });
+
                     console.log(configEl.text)
                     
                 }
@@ -221,45 +244,14 @@ export const createPolygon = (useEl) => {
         
     });
     
-//     // INITIALISATION:
-//     //(function () {   //IIFE
-//         // defaults set in symbol config.text
-//    parseConfig(useEl, attribute => {
-// 
-//             switch (attribute.name) {
-// 
-//                 case 'radius':
-//                     _radius = Number(attribute.value);
-//                     break;
-//                 case 'points':
-//                     //TODO why does this one (only) need to be equalled to useEl.points???
-//                     useEl.points = _points = Number(attribute.value);
-//                     break;
-//                 case 'strokeWidth':
-//                     _strokeWidth = Number(attribute.value);
-//                     break;
-//                 case 'next':
-//                     _next = Number(attribute.value);
-//                     break;
-//                 case 'rotate':
-//                     _rotate = transform.rotate.angle = Number(attribute.value);
-//                     break;
-// 
-//          };
-//          
-//         });
-// 
-//    
-//     //})();
-//    
+
     // to draw uses on instantiaton:
-     recalc();
-    // TODO: recalc() now forces default settings, trumpin newValue from config.text
-    
+    recalc();
+
     // check for number of points (int betwenn 3 to 12)
     if (validInput(useEl.points) === true) {
         return Object.seal(createPolygonWidget(useEl));
-        //return poly
+       
     };
     
   
@@ -280,3 +272,6 @@ constructWidgets('polygon');
 // or somehow force to read from styles.css?
 // a processing-sequence problem?
 // or structural? as object isn't identical with useEl, but wraps it?
+
+// With parseConfig() in setter of config.text,text set in index.js now gets applied
+// still no access on <config> from styles.css

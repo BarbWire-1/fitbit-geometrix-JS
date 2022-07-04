@@ -14,7 +14,7 @@ import { dumpProperties, inspectObject } from './widgets/devTools';
 
 // the polygon uses only get constructed if declared here!!!
 // => could be constructed dynamically only if needed
-let rotatingPoly = createPolygon(document.getElementById('myPolygon1'));
+let rotatingPoly = createPolygon(document.getElementById('rotatingPoly'));
 let multiColorPoly = createPolygon(document.getElementById('myPolygon2'));
 let scaledPoly = createPolygon(document.getElementById('myPolygon3'));
 let changingPoly = createPolygon(document.getElementById('myPolygon4'));
@@ -77,5 +77,8 @@ const limitedInterval = setInterval(() => {
 // 
 //console.log(rotatingPoly.config.text)//radius: 100; next: 1; rotate: 0; points: 5; strokeWidth: 3 // defaults
 // 
-// //This now gets applied on StaticRange, but then overwritten with defaults (???)
-rotatingPoly.config.text = "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6;"
+// //This now gets applied, as parseConfig() in setter, but still not running under CSS
+rotatingPoly.config.text = "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6"
+// gets applied and keeps prev setting for other attributes
+rotatingPoly.config.text = " points: 4"
+
