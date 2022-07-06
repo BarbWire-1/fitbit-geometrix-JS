@@ -21,7 +21,29 @@ export const createPolygon = (useEl) => {
     let _rotate, _strokeWidth, _scale
     
     // array to hold linesStyle objects
-    let _linesStyle
+    //let _linesStyle
+    
+    class LineStyle {
+        constructor(styleBase) {
+            Object.defineProperty(this, 'fill', {
+                get() { return styleBase.fill },
+                set(newValue) { styleBase.fill = newValue },
+
+            })
+        }
+    };
+
+    let linesAPI = [];
+    linesEl.forEach(line => {
+        linesAPI.push(Object.seal({
+            style: Object.seal(new LineStyle(line.style)),
+        }))
+    });
+
+
+    Object.defineProperty(useEl, 'lines', {
+        get lines() { return linesAPI }
+    });
     
     // INITIALISATION:
     (function () {   //IIFE
@@ -114,21 +136,21 @@ export const createPolygon = (useEl) => {
     };
     
   
-    // Array of line-style-objects to only expose fill on line-elements
-    !function () { //IIFE
-        _linesStyle = []
-        const createStyleObject = (ele) => ({
-            get style() {
-                return {
-                    set fill(newValue) { ele.style.fill = newValue },
-                    get fill() {return ele.style.fill}
-                }
-            },
-        });
-        linesEl.forEach(line => _linesStyle.push(Object.seal(createStyleObject(line))));
-    }();
-    
-    Object.seal(_linesStyle)
+    // // Array of line-style-objects to only expose fill on line-elements
+    // !function () { //IIFE
+    //     _linesStyle = []
+    //     const createStyleObject = (ele) => ({
+    //         get style() {
+    //             return {
+    //                 set fill(newValue) { ele.style.fill = newValue },
+    //                 get fill() {return ele.style.fill}
+    //             }
+    //         },
+    //     });
+    //     linesEl.forEach(line => _linesStyle.push(Object.seal(createStyleObject(line))));
+    // }();
+    // 
+    // Object.seal(_linesStyle)
     
     // TODO ???
     // inspectObject('_linesStyle[0]', _linesStyle[ 0 ])// style: {}
@@ -156,7 +178,7 @@ export const createPolygon = (useEl) => {
             }
         },
         
-        get lines() { return _linesStyle },// individual style: fill only!! else inherited from useEl
+        get lines() { return linesAPI },// individual style: fill only!! else inherited from useEl
         
         get config() { return configEl.text },
         set config(newValue) {configEl.text = newValue},
