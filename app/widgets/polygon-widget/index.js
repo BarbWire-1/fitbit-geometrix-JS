@@ -19,9 +19,7 @@ export const createPolygon = (useEl) => {
     let _radius, _points, _next
     // on svg-elements
     let _rotate, _strokeWidth, _scale
-    
-    // array to hold linesStyle objects
-    //let _linesStyle
+   
     
     class LineStyle {
         constructor(styleBase) {
@@ -135,31 +133,6 @@ export const createPolygon = (useEl) => {
         prevPoints = _points;
     };
     
-  
-    // // Array of line-style-objects to only expose fill on line-elements
-    // !function () { //IIFE
-    //     _linesStyle = []
-    //     const createStyleObject = (ele) => ({
-    //         get style() {
-    //             return {
-    //                 set fill(newValue) { ele.style.fill = newValue },
-    //                 get fill() {return ele.style.fill}
-    //             }
-    //         },
-    //     });
-    //     linesEl.forEach(line => _linesStyle.push(Object.seal(createStyleObject(line))));
-    // }();
-    // 
-    // Object.seal(_linesStyle)
-    
-    // TODO ???
-    // inspectObject('_linesStyle[0]', _linesStyle[ 0 ])// style: {}
-    // inspectObject('_linesStyle[0].style', _linesStyle[ 0 ].style)// fill: undefined :(
-    // inspectObject('_linesStyle[0].style.fill', _linesStyle[ 0 ].style.fill)// nothing! ??
-    // linesEl.forEach(line => inspectObject('line', line))
-    // inspectObject('linesEl[0]', linesEl[ 0 ])
-   
-
     //CREATE AN OBJECT INCLUDING ALL EXPOSED PROPERTIES
     const createPolygonWidget = (ele) => ({
         
@@ -245,3 +218,6 @@ constructWidgets('polygon');
 // or somehow force to read from styles.css?
 // a processing-sequence problem?
 // or structural? as object isn't identical with useEl, but wraps it?
+
+//TODO: switch back to APIs instead of wrapping.
+//add a config object for settings!!!
