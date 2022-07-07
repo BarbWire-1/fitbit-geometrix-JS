@@ -20,7 +20,7 @@ for (let i = 0; i < multiColorPoly.points; i++) {
 
 // changes from default settings
 changingPoly.points = 3;
-changingPoly.style.strokeWidth = 2;
+changingPoly.style.strokeWidth = 3;
 changingPoly.radius = 40;
 changingPoly.style.fill = "orange";
 

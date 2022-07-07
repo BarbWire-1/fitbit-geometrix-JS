@@ -4,6 +4,7 @@
 import { constructWidgets, parseConfig } from "../construct-widgets";
 import { dumpProperties, inspectObject } from "../devTools";
 //import { dumpProperties, inspectObject } from "../devTools/";
+import { Point, LineStyle, PolygonStyle } from "./classesAPIs"
 import { validInput } from "./validation"
 
 
@@ -12,15 +13,24 @@ export const createPolygon = (useEl) => {
     const transformEl = useEl.getElementById("transform");// needed to rotate/scale
     const linesEl = useEl.getElementsByClassName("lines");// needed to iterate
     const configEl = useEl.getElementById("config");
-    let transform = transformEl.groupTransform
+    
+    const transform = transformEl.groupTransform;
+    const elStyle = useEl.style;// needed to use in constructor 
+    
     
     // PRIVATE VARS
     // abstract
     let _radius, _points, _next
     // on svg-elements
     let _rotate, _strokeWidth, _scale
-   
     
+    class Point {
+        constructor(x = 0, y = 0) {
+            this.x = x;
+            this.y = y;
+        };
+    };
+
     class LineStyle {
         constructor(styleBase) {
             Object.defineProperty(this, 'fill', {
@@ -31,17 +41,27 @@ export const createPolygon = (useEl) => {
         }
     };
 
-    let linesAPI = [];
+    const linesAPI = [];
     linesEl.forEach(line => {
         linesAPI.push(Object.seal({
             style: Object.seal(new LineStyle(line.style)),
+            
         }))
+        
     });
+    
+    class PolygonStyle extends LineStyle {
+        constructor(_style) {
+            super(_style),
+                Object.defineProperty(this, 'strokeWidth', {
+                    get() { return _strokeWidth },
+                    set(newValue) { _strokeWidth = newValue; recalc() },
 
+                })
+            
+        }
+    };
 
-    Object.defineProperty(useEl, 'lines', {
-        get lines() { return linesAPI }
-    });
     
     // INITIALISATION:
     (function () {   //IIFE
@@ -73,12 +93,7 @@ export const createPolygon = (useEl) => {
     })();
     
 
-    class Point {
-        constructor(x = 0, y = 0) {
-            this.x = x;
-            this.y = y;
-        };
-    };
+   
     
     // TODO split recalc() to execute only necessary changes?
     // CALCULATE POINTS AND APPLY TO LINES
@@ -141,17 +156,9 @@ export const createPolygon = (useEl) => {
         set x(newValue) { ele.x = newValue },
         // get y() { return ele.y },
         set y(newValue) { ele.y = newValue },
-        
-        get style() {
-            return {
-                set fill(newValue) { ele.style.fill = newValue },
-                set opacity(newValue) { ele.style.opacity = newValue },
-                set display(newValue) { ele.style.display = newValue },
-                set strokeWidth(newValue) { _strokeWidth = newValue, recalc() },
-            }
-        },
-        
-        get lines() { return linesAPI },// individual style: fill only!! else inherited from useEl
+        style: Object.seal(new PolygonStyle(elStyle)),
+        lines: linesAPI,
+       
         
         get config() { return configEl.text },
         set config(newValue) {configEl.text = newValue},
@@ -209,7 +216,7 @@ constructWidgets('polygon');
 // TODO possible to force break for invalid input??
 // TODO possible to detect, where the invalid input is located (for error message)?
 // TODO installation/usage, make this one a demo
-// TODO add an interim-object <line> to have linesStyle as object?
+
 
 // TODO CSS on config and/or object or useEl not working this way.
 // seems, that styles.css is not invoked on constructing objects in app/index.js?
