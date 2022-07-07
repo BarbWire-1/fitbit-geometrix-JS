@@ -18,3 +18,12 @@
   #changingPoly {
     x: 168;
   }
+  
+  /* mpfff... when did I crash this??? */
+  #rotatingPoly {
+    fill: turquoise
+  }
+  
+  #myPolygon1 { /*so gets applied on useEl-id!!!!! not on polygon-object!!!!!*/
+    fill: #3e97e0
+  }

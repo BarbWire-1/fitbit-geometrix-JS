@@ -1,7 +1,7 @@
 
 <svg>
     <!-- TODO settings in styles.css currently not working -->
-    <use id="myPolygon1"  href="#polygon" x="50%" y="50%" fill="#66ff00" opacity = "0.5">
+    <use id="myPolygon1"  href="#polygon" x="50%" y="50%"   opacity = "0.5">
         <set href="#config" attributeName="text-buffer" to="radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6;" />
     </use>
     

@@ -1,7 +1,7 @@
 <defs>
  
 
-    <symbol id="polygon" x="0" y="0" type="polygon" fill= "red" >
+    <symbol id="polygon" x="0" y="0" type="polygon"  >
         <g id="transform">
             <line class="lines" />
             <line class="lines" />

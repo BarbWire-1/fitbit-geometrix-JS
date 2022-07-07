@@ -133,17 +133,17 @@ export const createPolygon = (useEl) => {
         lines: linesAPI,
        
         // ADDITIONAL ABSTRACT SETTINGS ON useEl-object
-        get next() { return useEl.next },
+        get next() { return ele.next },
         set next(newValue) {
             _next = newValue;
             recalc();
         },
-        get radius() { return useEl.radius },
+        get radius() { return ele.radius },
         set radius(newValue) {
             _radius = newValue;
             recalc();
         },
-        get points() { return useEl.points },
+        get points() { return ele.points },
         set points(newValue) {
             _points = newValue;
             recalc();
@@ -228,3 +228,6 @@ constructWidgets('polygon');
 //TODO: switch back to APIs instead of wrapping.
 //add a config object for settings, taking defaults from config.text and then later able to override?
 // still not sure, why styless.css config.text not invoked on load :(
+    
+//fill eg gets applied from styles.css, but on useEl.id NOT on getElementById!!!
+// really a good reason to switch from wrapper, but each try destroyed objStructure, and I don't understand why
