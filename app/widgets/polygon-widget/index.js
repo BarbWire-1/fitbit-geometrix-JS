@@ -63,34 +63,7 @@ export const createPolygon = (useEl) => {
     };
 
     
-    // INITIALISATION:
-    (function () {   //IIFE
-        // defaults set in symbol config.text
-        parseConfig(useEl, attribute => {
-            
-            switch (attribute.name) {
-
-                case 'radius':
-                   _radius = Number(attribute.value);
-                    break;
-                case 'points':
-                    //TODO why does this one (only) need to be equalled to useEl.points???
-                    useEl.points = _points = Number(attribute.value);
-                    break;
-                case 'strokeWidth':
-                    _strokeWidth = Number(attribute.value);
-                    break;
-                case 'next':
-                    _next = Number(attribute.value);
-                    break;
-                case 'rotate':
-                    _rotate = transform.rotate.angle = Number(attribute.value);
-                    break;
-            
-            };
-        });
-        
-    })();
+    
     
 
    
@@ -159,9 +132,6 @@ export const createPolygon = (useEl) => {
         style: Object.seal(new PolygonStyle(elStyle)),
         lines: linesAPI,
        
-        
-        get config() { return configEl.text },
-        set config(newValue) {configEl.text = newValue},
         // ADDITIONAL ABSTRACT SETTINGS ON useEl-object
         get next() { return useEl.next },
         set next(newValue) {
@@ -198,8 +168,37 @@ export const createPolygon = (useEl) => {
         
     });
    
+    // INITIALISATION:
+    (function () {   //IIFE
+        // defaults set in symbol config.text
+        parseConfig(useEl, attribute => {
+
+            switch (attribute.name) {
+
+                case 'radius':
+                    _radius = Number(attribute.value);
+                    break;
+                case 'points':
+                    //TODO why does this one (only) need to be equalled to useEl.points???
+                    useEl.points = _points = Number(attribute.value);
+                    break;
+                case 'strokeWidth':
+                    _strokeWidth = Number(attribute.value);
+                    break;
+                case 'next':
+                    _next = Number(attribute.value);
+                    break;
+                case 'rotate':
+                    _rotate = transform.rotate.angle = Number(attribute.value);
+                    break;
+
+            };
+        });
     // to draw uses on instantiaton:
     recalc();
+
+    })();
+    
     
     
     // check for number of points (int betwenn 3 to 12)
@@ -227,4 +226,5 @@ constructWidgets('polygon');
 // or structural? as object isn't identical with useEl, but wraps it?
 
 //TODO: switch back to APIs instead of wrapping.
-//add a config object for settings!!!
+//add a config object for settings, taking defaults from config.text and then later able to override?
+// still not sure, why styless.css config.text not invoked on load :(

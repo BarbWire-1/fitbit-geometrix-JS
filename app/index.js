@@ -1,7 +1,7 @@
 
 import document from 'document'
 //import './widgets/polygon-widget';
-import {createPolygon} from './widgets/polygon-widget/index'
+import {createPolygon} from './widgets/polygon-widget'
 import { dumpProperties, inspectObject } from './widgets/devTools';
 
 
@@ -69,6 +69,6 @@ const limitedInterval = setInterval(() => {
 // show structure of <rotatingPoly> (same for all polygon-objects)
 dumpProperties('rotatingPoly', rotatingPoly, 1)
 
-rotatingPoly.config.text = "radius: 150; next: 1; rotate: 0; points: 12; strokeWidth: 6"
+
 
 
