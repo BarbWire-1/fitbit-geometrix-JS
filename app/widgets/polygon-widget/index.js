@@ -125,10 +125,11 @@ export const createPolygon = (useEl) => {
     const createPolygonWidget = (ele) => ({
         
         // SETTINGS ON useEl
-        //get x() { return ele.x },
+        get x() { return ele.x },
         set x(newValue) { ele.x = newValue },
-        // get y() { return ele.y },
+        get y() { return ele.y },
         set y(newValue) { ele.y = newValue },
+     
         style: Object.seal(new PolygonStyle(elStyle)),
         lines: linesAPI,
        

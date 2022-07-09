@@ -71,4 +71,16 @@ dumpProperties('rotatingPoly', rotatingPoly, 1)
 
 
 
+const getProperties = (obj) => {
+    for (let key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+           let val = obj[ key ];
+          
+            if (typeof val === 'object') {
+                console.log(`${key}: ${JSON.stringify(val)}`);
+            }
+        }
+    }
+};
 
+getProperties(rotatingPoly.lines)
